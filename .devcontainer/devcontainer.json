@@ -1,0 +1,18 @@
+{
+    "name": "Node.js Dev Container",
+    "context": "..",  // 確保這是 Dockerfile 的正確上下文
+    "dockerFile": "Dockerfile",  // Dockerfile 的相對路徑
+    "customizations": {
+      "vscode": {
+        "settings": {
+          "terminal.integrated.shell.linux": "/bin/bash"  // Linux 終端設置
+        },
+        "extensions": [
+          "dbaeumer.vscode-eslint",  // 你希望安裝的 VS Code 擴展
+          "ms-azuretools.vscode-docker"
+        ]
+      }
+    },
+    "postCreateCommand": "npm install"  // 在容器創建後執行的命令
+  }
+  
