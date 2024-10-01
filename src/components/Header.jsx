@@ -1,14 +1,34 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import useLoadingStore from '../stores/useLoadingStore'; // 導入狀態 store
 import CartIcon from './headerItem/CartIcon';
 import '../styles/Header.css';
 
 // Header Component
 const Header = ({ title, leftIcon, rightIcon, onLeftClick, onRightClick }) => {
+  const { isLoading, setIsLoading } = useLoadingStore(); // get state from store
+
+  // loading screen test
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false); // update loading state to false when loading completed
+    }, 2000); // Test 2000ms loading time
+
+    return () => clearTimeout(timer);
+  }, [setIsLoading]);
+
+  if (isLoading) {
+    return (
+      <div className="loading-screen">
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
   return (
-      <header className="header">
+    <header className="header">
       <div className="icon" onClick={onLeftClick}>
         <FontAwesomeIcon icon={leftIcon} />
       </div>
@@ -31,7 +51,6 @@ Header.propTypes = {
 };
 
 // Default Props
-// Can change props if you want
 Header.defaultProps = {
   title: 'NTOU Takeout',
   leftIcon: faUser,
