@@ -1,25 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import '../../styles/CartIcon.css';
+import useCartStore from '../../stores/cartStore'; // Import the store
 
 const CartIcon = () => {
-  const [cartCount, setCartCount] = useState(0);
-  
-
-  const fetchCartCount = async () => {
-    try {
-      const response = await fetch('/api/cart'); // Change to our API
-      const data = await response.json();
-      setCartCount(data.count); // assume there's a count in API data
-    } catch (error) {
-      console.error('Failed to fetch cart count:', error);
-    }
-  };
+  const { cartCount, fetchCartCount } = useCartStore(); // Zustand store hook
 
   useEffect(() => {
-    fetchCartCount(); // fetch while loading
-  }, []);
+    fetchCartCount(); // Fetch cart count on component mount
+  }, [fetchCartCount]);
 
   return (
     <div className="cart-icon-container">
