@@ -2,6 +2,10 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const SidebarButton = ({icon, text,textStyle, iconSize, iconColor, onClick, style }) => {
+    const handleSidebarClick = (e,logText) => {
+        console.log(logText);
+        e.stopPropagation();
+      };
   return (
     <button
       className={`flex items-center text-left transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 hover:duration-300 ${style}`}

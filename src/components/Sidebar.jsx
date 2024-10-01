@@ -2,22 +2,23 @@
 import React from 'react';
 import useSidebarStore from '../stores/sidebarStore';
 import SidebarButton from './SidebarButton';
+import useThemeStore from '../stores/themeStore';
 import {
-  faSignInAlt,
   faHistory,
   faHeart,
-  faBug,
   faLanguage,
   faCog,
   faSignOutAlt,
   faStore,
   faUser,
   faCircleQuestion,
+  faMoon,
+  faSun,
 } from '@fortawesome/free-solid-svg-icons';
 
 const Sidebar = () => {
   const { isOpen, closeSidebar } = useSidebarStore();
-  
+  const { themeMode, toggleTheme } = useThemeStore();
   const handleSidebarClick = (e,logText) => {
     console.log(logText);
     e.stopPropagation();
@@ -26,9 +27,9 @@ const Sidebar = () => {
   return (
     <>
         <div
-            className={`fixed inset-y-0 left-0 bg-white w-4/5 max-w-md transform ${
+            className={`fixed inset-y-0 left-0 bg-white w-4/5 max-w-md ${
             isOpen ? 'translate-x-0' : '-translate-x-full'
-            } transition-transform duration-300 z-50`}
+            } transition-transform duration-300`}
         >
             <div>
                 <div className="p-4">
@@ -39,7 +40,7 @@ const Sidebar = () => {
                     iconSize="2xl"
                     iconColor={"#053766"}
                     onClick={(e) => handleSidebarClick(e,"登入")}
-                    style={"py-8 "}
+                    style={"py-8"}
                 />
                 <SidebarButton
                     text="商家瀏覽紀錄"
@@ -89,17 +90,24 @@ const Sidebar = () => {
                     onClick={(e) => handleSidebarClick(e,"設定")}
                     style={"px-4 py-4"}
                 />
-                <SidebarButton
-                    text="登出"
-                    icon={faSignOutAlt}
-                    iconSize="lg"
-                    iconColor={"#606162"}
-                    onClick={(e) => handleSidebarClick(e,"登出")}
-                    style={"px-4 py-4"}
-                />
+                </div>
+                <div className="pb-8 px-4 absolute bottom-0 left-0 w-4/5 flex justify-between">
+                    <SidebarButton
+                        text="登出"
+                        icon={faSignOutAlt}
+                        iconSize="lg"
+                        iconColor={"#606162"}
+                        onClick={(e) => handleSidebarClick(e, "登出")}
+                    />
+                    <SidebarButton
+                        icon={themeMode ? faMoon : faSun}
+                        iconSize="lg"
+                        iconColor={themeMode ? "#606162" : "#FFD43B"}
+                        onClick={(e) => handleSidebarClick(e, "切換暗色/亮色模式", toggleTheme)}
+                    />
                 </div>
             </div>
-        </div>
+        </div>  
     </>
   );
 };
