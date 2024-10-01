@@ -2,19 +2,21 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
-import useLoadingStore from '../stores/useLoadingStore'; // import state store
+import useLoadingStore from '../stores/loadingStore';
 import CartIcon from './headerItem/CartIcon';
 import '../styles/Header.css';
 
 // Header Component
 const Header = ({ title, leftIcon, rightIcon, onLeftClick, onRightClick }) => {
-  const { isLoading, setIsLoading } = useLoadingStore(); // get state from store
+  
+  // get state from store
+  const { isLoading, setIsLoading } = useLoadingStore();
 
-  // loading screen test
+  // loading screen test, test 2000ms loading time
   useEffect(() => {
     const timer = setTimeout(() => {
-      setIsLoading(false); // update loading state to false when loading completed
-    }, 2000); // Test 2000ms loading time
+      setIsLoading(false);
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, [setIsLoading]);
