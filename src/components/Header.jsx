@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
-import useLoadingStore from '../stores/useLoadingStore'; // 導入狀態 store
+import useLoadingStore from '../stores/useLoadingStore'; // import state store
 import CartIcon from './headerItem/CartIcon';
 import '../styles/Header.css';
 
