@@ -1,4 +1,5 @@
 //import {owo} from './assets/card.svg'
+//import merchant from './components/Merchant'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookmark as hollowFaBookmark } from '@fortawesome/free-regular-svg-icons/faBookmark';//hollow
 import { faBookmark as solidFaBookmark } from '@fortawesome/free-solid-svg-icons/faBookmark';
