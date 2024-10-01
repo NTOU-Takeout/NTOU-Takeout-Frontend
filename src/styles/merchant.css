@@ -1,4 +1,3 @@
-/* Store card */
 .store-card {
   position: relative;
   width: 361px;
@@ -6,18 +5,16 @@
   background: #FFFFFF;
   border: 2px solid #D9D9D9;
   border-radius: 23px;
-  overflow: hidden; /* Ensures image doesn't overflow the card */
+  overflow: hidden; 
 }
 
-/* Image section */
 .store-image {
   position: relative;
   width: 100%;
-  height: 154px; /* Adjust height to fit the design */
-  object-fit: cover; /* Ensures the image covers the area without distortion */
+  height: 154px; 
+  object-fit: cover; 
 }
 
-/* Frame 1 (gray line section) */
 .store-details {
   box-sizing: border-box;
   position: absolute;
@@ -28,10 +25,8 @@
   border-top: 2px solid #D9D9D9;
 }
 
-/* 商家名稱 */
 .store-name {
   position: absolute;
-  /*width: 72px;*/
   height: 22px;
   left: 20px;
   top: 17px;
@@ -43,44 +38,41 @@
   color: #000000;
 }
 
-/* Rating group */
 .rating-group {
   position: absolute;
   width: 75px;
   height: 20px;
   left: 271px;
   top: 57px;
+  display: flex; 
+  align-items: center; 
 }
 
-/* Star icon */
 .star-icon {
   position: absolute;
   width: 20px;
-  height: 20px;
+  height: 15px;
   left: 0;
   top: 0;
-  
 }
 
-/* Rating text */
+.star-rating {
+  display: flex; 
+  align-items: center; 
+}
+
 .rating-text {
-  position: absolute;
-  width: 57px;
-  height: 15px;
-  left: 18px;
-  top: 2px;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter';
   font-style: normal;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 13px; 
   line-height: 15px;
-  color: #000000;
+  margin-bottom: -1px;
+  color: #8E8686; 
 }
 
-/* 距離您約...公里 */
 .distance-text {
   position: absolute;
-  /*width: 69px;*/
   height: 12px;
   left: 20px;
   top: 39px;
@@ -92,10 +84,8 @@
   color: #8E8686;
 }
 
-/* 平均花費約100~200 */
 .price-text {
   position: absolute;
-  /*width: 94px;*/
   height: 12px;
   left: 20px;
   top: 61px;
@@ -107,7 +97,6 @@
   color: #5D8031;
 }
 
-/* Bookmark icon */
 .bookmark-icon {
   position: absolute;
   width: 24px;
@@ -116,12 +105,11 @@
   top: 13px;
 }
 
-/* Bookmark icon vector */
 .bookmark-vector {
   position: absolute;
   left: 20.83%;
   right: 20.83%;
   top: 12.5%;
   bottom: 12.5%;
-  background: #D9D9D9; /* Replace with actual bookmark vector */
+  background: #D9D9D9; 
 }
