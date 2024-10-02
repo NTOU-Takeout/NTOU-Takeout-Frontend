@@ -6,9 +6,6 @@ import useLoadingStore from '../stores/loadingStore';
 import CartIcon from './headerItem/CartIcon';
 
 // Header Component
-<<<<<<< HEAD
-const Header = ({ title, leftIcon, rightIcon, onLeftClick, onRightClick }) => {
-=======
 const Header = ({
   title = 'NTOU Takeout', // 預設標題
   leftIcon = faUser, // 預設左側圖標
@@ -16,7 +13,6 @@ const Header = ({
   onLeftClick = () => {}, // 預設左側按鈕事件
   onRightClick = () => {}, // 預設右側按鈕事件
 }) => {
->>>>>>> 1c7cc47 (Fix Header component bugs)
   
   // get state from store
   const { isLoading, setIsLoading } = useLoadingStore();
@@ -25,11 +21,7 @@ const Header = ({
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-<<<<<<< HEAD
-    }, 2000);
-=======
     }, 500);
->>>>>>> 1c7cc47 (Fix Header component bugs)
 
     return () => clearTimeout(timer);
   }, [setIsLoading]);
