@@ -4,10 +4,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import useLoadingStore from '../stores/loadingStore';
 import CartIcon from './headerItem/CartIcon';
-import '../styles/Header.css';
 
 // Header Component
-const Header = ({ title, leftIcon, rightIcon, onLeftClick, onRightClick }) => {
+const Header = ({
+  title = 'NTOU Takeout',
+  leftIcon = faUser,
+  rightIcon = faShoppingCart,
+  onLeftClick = () => {},
+  onRightClick = () => {},
+}) => {
   
   // get state from store
   const { isLoading, setIsLoading } = useLoadingStore();
@@ -16,32 +21,32 @@ const Header = ({ title, leftIcon, rightIcon, onLeftClick, onRightClick }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
+    }, 500);
 
     return () => clearTimeout(timer);
   }, [setIsLoading]);
 
   if (isLoading) {
     return (
-      <div className="loading-screen">
-        <p>Loading...</p>
+      <div className="flex justify-center items-center h-screen bg-gray-200">
+        <p className="text-[1.5rem] text-gray-800">Loading...</p>
       </div>
     );
   }
 
   return (
-    <header className="header">
-      <div className="icon" onClick={onLeftClick}>
+    <header className="fixed top-0 left-0 w-full width-100 flex justify-between items-center bg-white shadow-md transition-shadow duration-300 ease-in-out p-2">
+      <div className="text-xl cursor-pointer" onClick={onLeftClick}>
         <FontAwesomeIcon icon={leftIcon} />
       </div>
-      <h1 className="title">
-        <a href="/"> {title} </a>
+      <h1 className="font-noto font-bold text-2xl m-0">
+        <a href="/">{title}</a>
       </h1>
-      <div className="icon" onClick={onRightClick}>
-        <CartIcon></CartIcon>
+      <div className="text-xl cursor-pointer " onClick={onRightClick}>
+        <CartIcon />
       </div>
     </header>
-  );
+  );  
 };
 
 Header.propTypes = {
@@ -50,15 +55,6 @@ Header.propTypes = {
   rightIcon: PropTypes.object,
   onLeftClick: PropTypes.func,
   onRightClick: PropTypes.func,
-};
-
-// Default Props
-Header.defaultProps = {
-  title: 'NTOU Takeout',
-  leftIcon: faUser,
-  rightIcon: faShoppingCart,
-  onLeftClick: () => {},
-  onRightClick: () => {},
 };
 
 export default Header;
