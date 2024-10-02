@@ -6,12 +6,14 @@ const SidebarButton = ({icon, text,textStyle, iconSize, iconColor, onClick, styl
     const handleClick = (e) => {
         console.log({text});
         e.stopPropagation();
-        onClick();
+        if (onClick){
+          onClick();
+        }
         console.log(useThemeStore.getState().themeMode);
       };
   return (
     <button
-      className={`flex items-center text-left transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 hover:duration-300 ${style}`}
+      className={`flex items-center text-left  ${style}`}
       onClick={handleClick}
     >
     {icon && (
