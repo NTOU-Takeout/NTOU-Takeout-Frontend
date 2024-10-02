@@ -7,11 +7,11 @@ import CartIcon from './headerItem/CartIcon';
 
 // Header Component
 const Header = ({
-  title = 'NTOU Takeout', // 預設標題
-  leftIcon = faUser, // 預設左側圖標
-  rightIcon = faShoppingCart, // 預設右側圖標
-  onLeftClick = () => {}, // 預設左側按鈕事件
-  onRightClick = () => {}, // 預設右側按鈕事件
+  title = 'NTOU Takeout',
+  leftIcon = faUser,
+  rightIcon = faShoppingCart,
+  onLeftClick = () => {},
+  onRightClick = () => {},
 }) => {
   
   // get state from store
