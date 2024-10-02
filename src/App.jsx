@@ -1,10 +1,12 @@
 import Header from './components/Header';
 import Merchant from './components/Merchant';
+import Searchbar from './components/Searchbar';
 function App() {
     //{name, distance, costDownLimit, costUpLimit, starRate, starNumber }
     return (
         <div>
             <Header></Header>
+            <Searchbar></Searchbar>
             <Merchant 
                 id={0}
                 name="海洋大學店" 
