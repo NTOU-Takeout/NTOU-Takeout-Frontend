@@ -26,5 +26,3 @@ dist-ssr
 Dockerfile
 .dockerignore
 .devcontainer/
-
-./components/merchantPage
