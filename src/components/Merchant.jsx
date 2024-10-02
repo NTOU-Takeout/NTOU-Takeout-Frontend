@@ -5,7 +5,7 @@ import { faBookmark as solidFaBookmark } from '@fortawesome/free-solid-svg-icons
 import { faStar as hollowStar } from '@fortawesome/free-regular-svg-icons';
 import {faStar as solidStar} from '@fortawesome/free-solid-svg-icons/faStar';
 import useBookmarkStore from '../stores/bookmarkStore'; // import state store
-import '../styles/merchant.css'
+
 const Merchant = ( {id,name, distance, costDownLimit, costUpLimit, starRate, starNumber } ) => {
     const {isMarked, setIsMarked}=useBookmarkStore();
     console.log(id);
