@@ -1,10 +1,6 @@
 import React, { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
-<<<<<<< HEAD
-import '../../styles/CartIcon.css';
-=======
->>>>>>> 1c7cc47 (Fix Header component bugs)
 import useCartStore from '../../stores/cartStore';
 
 const CartIcon = () => {
