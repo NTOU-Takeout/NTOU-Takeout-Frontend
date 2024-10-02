@@ -1,7 +1,11 @@
 import { create } from 'zustand';
 
 const useCartStore = create((set) => ({
+<<<<<<< HEAD
   cartCount: 0,
+=======
+  cartCount: 10,
+>>>>>>> 1c7cc47 (Fix Header component bugs)
   setCartCount: (count) => set({ cartCount: count }),
   fetchCartCount: async () => {
     try {
