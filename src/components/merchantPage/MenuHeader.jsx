@@ -5,13 +5,13 @@ import { faArrowLeft, faShareNodes, faStar, faInfoCircle } from '@fortawesome/fr
 import useLoadingStore from '../../stores/loadingStore';
 
 const MenuHeader = ({
-    title = '海洋大學店',          // 預設標題
-    distance = 100,               // 預設距離
-    averageCost = 800,           // 預設平均消費
-    rating = 4.2,                // 預設評分
-    reviews = 100,               // 預設評價數
-    informationLink = 'https://google.com', // 預設資訊連結
-    bannerLink = 'https://i.imgur.com/S1OPVB6.jpeg', // 預設橫幅連結
+    title = '海洋大學店',          // default title
+    distance = 100,               //  default distance
+    averageCost = 800,           // default average cost
+    rating = 4.2,                // default rating
+    reviews = 100,               // default reviews
+    informationLink = 'https://google.com', // defaults information link
+    bannerLink = 'https://i.imgur.com/S1OPVB6.jpeg', // default banner link
 }) => {
     
     // get state from store
