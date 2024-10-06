@@ -1,8 +1,11 @@
 import Header from './components/Header';
 import Merchant from './components/Merchant';
 import Searchbar from './components/Searchbar';
+<<<<<<< HEAD
 import MenuHeader from './components/merchantPage/MenuHeader';
 
+=======
+>>>>>>> de91e1c14d5f0429cacde01c9c12ccf54e9460db
 function App() {
     //{name, distance, costDownLimit, costUpLimit, starRate, starNumber }
     return (
@@ -28,8 +31,15 @@ function App() {
                 starRate={3.2} 
                 starNumber={12} >
             </Merchant>
+<<<<<<< HEAD
             {/* <MenuHeader></MenuHeader> */}
         </div>
     )
 }
+=======
+        </div>
+    )
+}
+
+>>>>>>> de91e1c14d5f0429cacde01c9c12ccf54e9460db
 export default App;
