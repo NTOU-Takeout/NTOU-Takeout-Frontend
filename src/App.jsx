@@ -4,8 +4,8 @@ import MenuHeader from './components/merchantPage/MenuHeader';
 function App() {
     return (
         <div>
-            <Header></Header>
-            {/* <MenuHeader></MenuHeader> */}
+            {/* <Header></Header> */}
+            <MenuHeader></MenuHeader>
         </div>
     )
 }
