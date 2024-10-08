@@ -17,10 +17,11 @@ function App() {
                 onLeftClick={toggleSidebar}
             />
             <Sidebar></Sidebar>
+            
+            <Searchbar></Searchbar>
             {/* <Merchant 
         <div>
             <Header></Header>
-            <Searchbar></Searchbar>
             <Merchant 
                 id={0}
                 name="海洋大學店" 
