@@ -2,6 +2,7 @@ import Header from './components/Header';
 import Merchant from './components/Merchant';
 import useSidebarStore from './stores/sidebarStore';
 import Sidebar from './components/Sidebar';
+import Searchbar from './components/Searchbar';
 function App() {
     const toggleSidebar= useSidebarStore((state) => state.toggleSidebar);
     const isOpen=useSidebarStore((state)=>state.isOpen);
@@ -15,6 +16,10 @@ function App() {
             />
             <Sidebar></Sidebar>
             {/* <Merchant 
+        <div>
+            <Header></Header>
+            <Searchbar></Searchbar>
+            <Merchant 
                 id={0}
                 name="海洋大學店" 
                 distance={1.6} 

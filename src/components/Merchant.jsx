@@ -1,9 +1,8 @@
-import React,{ useEffect } from 'react';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookmark as hollowFaBookmark } from '@fortawesome/free-regular-svg-icons/faBookmark';//hollow
 import { faBookmark as solidFaBookmark } from '@fortawesome/free-solid-svg-icons/faBookmark';
-import { faStar as hollowStar } from '@fortawesome/free-regular-svg-icons';
-import {faStar as solidStar} from '@fortawesome/free-solid-svg-icons/faStar';
+import { faStar as solidStar } from '@fortawesome/free-solid-svg-icons/faStar';
 import useBookmarkStore from '../stores/bookmarkStore'; // import state store
 
 const Merchant = ( {id,name, distance, costDownLimit, costUpLimit, starRate, starNumber } ) => {
