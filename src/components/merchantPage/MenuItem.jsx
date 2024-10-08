@@ -3,7 +3,7 @@ import React from 'react';
 const MenuItemCard = ({
     itemName = '原味飯糰',          // default itemName
     price = 30,               // default price
-    description = '綠聽吧之位子宜寧，各話又，正見跳免還「沒古六更是三肖」。',
+    description = '綠聽吧之位子宜寧，各話又，正見跳免還「沒古六更是三肖」。', // default description
 }) => {
   return (
     <div className="MenuItem block">
