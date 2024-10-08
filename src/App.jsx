@@ -1,9 +1,21 @@
 import Header from './components/Header';
 import Merchant from './components/Merchant';
+import useSidebarStore from './stores/sidebarStore';
+import Sidebar from './components/Sidebar';
 import Searchbar from './components/Searchbar';
 function App() {
-    //{name, distance, costDownLimit, costUpLimit, starRate, starNumber }
+    const toggleSidebar= useSidebarStore((state) => state.toggleSidebar);
+    const isOpen=useSidebarStore((state)=>state.isOpen);
+    const closeSidebar=useSidebarStore((state)=>state.closeSidebar);
+
     return (
+        <div 
+        >
+            <Header
+                onLeftClick={toggleSidebar}
+            />
+            <Sidebar></Sidebar>
+            {/* <Merchant 
         <div>
             <Header></Header>
             <Searchbar></Searchbar>
@@ -25,7 +37,7 @@ function App() {
                 costUpLimit={124} 
                 starRate={3.2} 
                 starNumber={12} >
-            </Merchant>
+            </Merchant> */}
         </div>
     )
 }
