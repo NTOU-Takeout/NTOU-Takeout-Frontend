@@ -6,17 +6,9 @@ function App() {
     const toggleSidebar= useSidebarStore((state) => state.toggleSidebar);
     const isOpen=useSidebarStore((state)=>state.isOpen);
     const closeSidebar=useSidebarStore((state)=>state.closeSidebar);
-    const handleContentClick = () => {
-        if (isOpen) {
-            closeSidebar();
-        }
-    };
+
     return (
         <div 
-            className={`relative min-h-screen transition-all duration-300  ${
-                isOpen ? 'bg-slate-950 bg-opacity-20' : ''
-            }`}
-            onClick={handleContentClick}
         >
             <Header
                 onLeftClick={toggleSidebar}
