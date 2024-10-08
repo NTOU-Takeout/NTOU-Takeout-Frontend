@@ -34,18 +34,21 @@ const Header = ({
     );
   }
 
-  return (
-    <header className="fixed top-0 left-0 w-full width-100 flex justify-between items-center bg-white shadow-md transition-shadow duration-300 ease-in-out p-2">
-      <div className="text-xl cursor-pointer" onClick={onLeftClick}>
-        <FontAwesomeIcon icon={leftIcon} />
+    return (
+      <div className="Header z-0">
+            <header className="relative top-0 left-0 w-full width-100 flex justify-between items-center bg-white shadow-md transition-shadow duration-300 ease-in-out p-2">
+                <div className="text-xl cursor-pointer" onClick={onLeftClick}>
+                    <FontAwesomeIcon icon={leftIcon} />
+                </div>
+                <h1 className="font-noto font-bold text-2xl m-0">
+                    <a href="/">{title}</a>
+                </h1>
+                <div className="text-xl cursor-pointer " onClick={onRightClick}>
+                    <CartIcon />
+                </div>
+            </header>
       </div>
-      <h1 className="font-noto font-bold text-2xl m-0">
-        <a href="/">{title}</a>
-      </h1>
-      <div className="text-xl cursor-pointer " onClick={onRightClick}>
-        <CartIcon />
-      </div>
-    </header>
+    
   );  
 };
 

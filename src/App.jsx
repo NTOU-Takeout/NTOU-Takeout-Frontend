@@ -17,7 +17,6 @@ function App() {
                 onLeftClick={toggleSidebar}
             />
             <Sidebar></Sidebar>
-            
             <Searchbar></Searchbar>
             {/* <Merchant 
         <div>
