@@ -7,7 +7,7 @@ const MenuItemCard = ({
 }) => {
   return (
     <div className="MenuItem block">
-      <div className="flex m-8 max-w-xl bg-white text-white rounded-lg overflow-hidden shadow-lg">
+      <div className="flex m-8 max-w-xl bg-white text-white rounded-lg overflow-hidden shadow-lg font-notoTC">
         {/* Image */}
         <div className="w-1/2">
           <img 
