@@ -48,7 +48,7 @@ const MenuHeader = ({
                 <FontAwesomeIcon icon={faShareNodes} className="text-slate-800" />
             </div>
             {/* Store information */}
-            <div className="bg-white rounded-t-2xl p-4 relative -top-24 left-0 right-0 z-10">
+            <div className="bg-white rounded-t-2xl p-4 relative -top-8 left-0 right-0 z-10 font-notoTC">
                 <div className="flex items-center justify-between">
                     <div className="flex flex-col">
                         <h2 className="text-xl font-bold">{title}</h2>
@@ -57,8 +57,8 @@ const MenuHeader = ({
                     </div>
                     <div className="flex items-center mt-10">
                         <FontAwesomeIcon icon={faStar} className="text-yellow-400 ml-2 mt-1" />
-                        <span className="text-gray-400 ml-1 mt-0.5">({reviews})</span>
                         <span className="text-xl font-semibold">&nbsp;{rating}</span>
+                        <span className="text-gray-400 ml-1 mt-0.5">({reviews}+)</span>
                     </div>
                     <div className="absolute top-4 right-4 text-xl text-gray-500">
                         <FontAwesomeIcon icon={faInfoCircle} />
