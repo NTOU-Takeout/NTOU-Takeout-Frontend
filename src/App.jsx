@@ -3,6 +3,8 @@ import Merchant from './components/Merchant';
 import useSidebarStore from './stores/sidebarStore';
 import Sidebar from './components/Sidebar';
 import Searchbar from './components/Searchbar';
+import MenuHeader from './components/merchantPage/MenuHeader';
+
 function App() {
     const toggleSidebar= useSidebarStore((state) => state.toggleSidebar);
     const isOpen=useSidebarStore((state)=>state.isOpen);
@@ -15,10 +17,11 @@ function App() {
                 onLeftClick={toggleSidebar}
             />
             <Sidebar></Sidebar>
+            <Searchbar></Searchbar>
+            {/* <MenuHeader></MenuHeader> */}
             {/* <Merchant 
         <div>
             <Header></Header>
-            <Searchbar></Searchbar>
             <Merchant 
                 id={0}
                 name="海洋大學店" 
@@ -37,9 +40,9 @@ function App() {
                 costUpLimit={124} 
                 starRate={3.2} 
                 starNumber={12} >
-            </Merchant> */}
+            </Merchant>
+            {/* <MenuHeader></MenuHeader> */}
         </div>
     )
 }
-
 export default App;
