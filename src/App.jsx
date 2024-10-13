@@ -15,6 +15,7 @@ function App() {
         <div>
             <Header onLeftClick={toggleSidebar}/>
             <Sidebar></Sidebar>
+            <Searchbar></Searchbar>
             <MerchantList></MerchantList>
         </div>
     )
