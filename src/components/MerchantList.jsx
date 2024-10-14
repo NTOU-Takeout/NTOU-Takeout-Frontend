@@ -37,7 +37,7 @@ function MerchantList() {
 
       setMerchants((prevMerchants) => [...prevMerchants, ...newMerchants]);
 
-      if (merchants.length + newMerchants.length >= 50) {
+      if (merchants.length + newMerchants.length >= 500) {
         setHasMore(preValue => false);
       }
       setLoading(preValue => false);
