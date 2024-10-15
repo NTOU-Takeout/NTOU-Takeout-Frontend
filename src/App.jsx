@@ -13,12 +13,12 @@ function App() {
     return (
         <div 
         >
-            <Header
+            {/* <Header
                 onLeftClick={toggleSidebar}
             />
             <Sidebar></Sidebar>
-            <Searchbar></Searchbar>
-            {/* <MenuHeader></MenuHeader> */}
+            <Searchbar></Searchbar> */}
+            <MenuHeader></MenuHeader>
             {/* <Merchant 
         <div>
             <Header></Header>
