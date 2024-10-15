@@ -4,6 +4,7 @@ import useSidebarStore from './stores/sidebarStore';
 import Sidebar from './components/Sidebar';
 import Searchbar from './components/Searchbar';
 import MenuHeader from './components/merchantPage/MenuHeader';
+import MenuItem from './components/merchantPage/MenuItem';
 
 function App() {
     const toggleSidebar= useSidebarStore((state) => state.toggleSidebar);
