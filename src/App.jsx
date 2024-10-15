@@ -19,6 +19,7 @@ function App() {
             />
             <Sidebar></Sidebar>
             <Searchbar></Searchbar>
+            {/* <MenuHeader></MenuHeader> */}
             {/* <Merchant 
         <div>
             <Header></Header>
@@ -40,9 +41,9 @@ function App() {
                 costUpLimit={124} 
                 starRate={3.2} 
                 starNumber={12} >
-            </Merchant> */}
+            </Merchant>
+            {/* <MenuHeader></MenuHeader> */}
         </div>
     )
 }
-
 export default App;
