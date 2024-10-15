@@ -5,9 +5,9 @@ const Navbar = () => {
     const { navbarItems, nowPage, setNowPage } = useNavStore();
 
     return (
-    <nav className="bg-white p-4">
+    <nav className="bg-white p-4 flex">
       {/* Navbar Items */}
-      <ul className="mt-2 flex space-x-4 text-gray-400 text-lg font-notoTC">
+      <ul className="mt-2 flex space-x-4 text-gray-400 text-lg font-notoTC relative -top-12">
         {navbarItems.map((item, index) => (
           <li
             key={index}
