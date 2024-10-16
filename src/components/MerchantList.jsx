@@ -17,17 +17,24 @@ function MerchantList() {
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
 
-  const observer = useRef(); // 保存 IntersectionObserver 实例
-  const lastElementRef = useRef(null); // 用于跟踪最后一个 Merchant 元素
+  const observer = useRef(); 
+  const lastElementRef = useRef(null);
+
+  const merchantCountRef = useRef(merchants.length);
+
+  
+  useEffect(() => {
+    merchantCountRef.current = merchants.length;
+  }, [merchants.length]);
 
   const loadMoreMerchants = useCallback(() => {
     if (loading || !hasMore) return;
 
-    setLoading(preValue => true);
+    setLoading(true);
     setTimeout(() => {
       const newMerchants = Array.from({ length: 9 }).map((_, index) => ({
-        id: merchants.length + index,
-        name: `新商家 ${merchants.length + index}`,
+        id: merchantCountRef.current + index,
+        name: `新商家 ${merchantCountRef.current + index}`,
         distance: (Math.random() * 10).toFixed(1),
         costDownLimit: Math.floor(Math.random() * 100),
         costUpLimit: Math.floor(Math.random() * 200),
@@ -36,13 +43,15 @@ function MerchantList() {
       }));
 
       setMerchants((prevMerchants) => [...prevMerchants, ...newMerchants]);
+      
+      merchantCountRef.current += newMerchants.length;
 
-      if (merchants.length + newMerchants.length >= 500) {
-        setHasMore(preValue => false);
+      if (merchantCountRef.current >= 500) {
+        setHasMore(false);
       }
-      setLoading(preValue => false);
+      setLoading(false);
     }, 2000);
-  }, [loading, hasMore, merchants]);
+  }, [loading, hasMore]);
 
   useEffect(() => {
     observer.current = new IntersectionObserver((entries) => {
