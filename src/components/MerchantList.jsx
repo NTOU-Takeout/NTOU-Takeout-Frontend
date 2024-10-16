@@ -18,14 +18,8 @@ function MerchantList() {
   const [loading, setLoading] = useState(false);
 
   const observer = useRef(); 
-  const lastElementRef = useRef(null);
-
-  const merchantCountRef = useRef(merchants.length);
-
   
-  useEffect(() => {
-    merchantCountRef.current = merchants.length;
-  }, [merchants.length]);
+
 
   const loadMoreMerchants = useCallback(() => {
     if (loading || !hasMore) return;
@@ -34,8 +28,8 @@ function MerchantList() {
     setTimeout(() => {
       setMerchants((prevMerchants) => {
         const newMerchants = Array.from({ length: 9 }).map((_, index) => ({
-            id: merchantCountRef.current + index,
-            name: `新商家 ${merchantCountRef.current + index}`,
+            id: prevMerchants.length + index,
+            name: `新商家 ${prevMerchants.length + index}`,
             distance: (Math.random() * 10).toFixed(1),
             costDownLimit: Math.floor(Math.random() * 100),
             costUpLimit: Math.floor(Math.random() * 200),
@@ -54,29 +48,26 @@ function MerchantList() {
     }, 2000);
   }, [loading, hasMore]);
 
-  useEffect(() => {
-    observer.current = new IntersectionObserver((entries) => {
-      const [entry] = entries;
-      if (entry.isIntersecting && hasMore) {
-        loadMoreMerchants();
+  const lastElementRef = useCallback(
+    (node) => {
+      if (loading) return;
+      if (observer.current) observer.current.disconnect();
+  
+      if (node) {
+        observer.current = new IntersectionObserver((entries) => {
+          if (entries[0].isIntersecting && hasMore && !loading) {
+            loadMoreMerchants();
+          }
+        });
+  
+        observer.current.observe(node);
       }
-    });
-
-    const currentObserver = observer.current;
-
-    if (lastElementRef.current) {
-      currentObserver.observe(lastElementRef.current);
-    }
-
-    return () => {
-      if (lastElementRef.current) {
-        currentObserver.unobserve(lastElementRef.current);
-      }
-    };
-  }, [loadMoreMerchants, hasMore]);
+    },
+    [loading, hasMore, loadMoreMerchants]
+  );
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center space-y-6">
+    <div className="-z-40-50 min-h-screen  flex flex-col items-center justify-center space-y-6">
       {merchants.map((merchant, index) => {
         const isLastElement = index === merchants.length - 1;
         return (
