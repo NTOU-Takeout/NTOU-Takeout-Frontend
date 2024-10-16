@@ -3,6 +3,7 @@ import Merchant from './components/Merchant';
 import useSidebarStore from './stores/sidebarStore';
 import Sidebar from './components/Sidebar';
 import Searchbar from './components/Searchbar';
+import MenuSectionPage from './components/MenuSectionPage';
 import MenuHeader from './components/merchantPage/MenuHeader';
 
 function App() {
@@ -18,7 +19,9 @@ function App() {
             />
             <Sidebar></Sidebar>
             <Searchbar></Searchbar>
-            <MenuHeader></MenuHeader> 
+            
+            <MenuSectionPage></MenuSectionPage>
+            
             
         </div>
     )
