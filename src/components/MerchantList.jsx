@@ -32,23 +32,24 @@ function MerchantList() {
 
     setLoading(true);
     setTimeout(() => {
-      const newMerchants = Array.from({ length: 9 }).map((_, index) => ({
-        id: merchantCountRef.current + index,
-        name: `新商家 ${merchantCountRef.current + index}`,
-        distance: (Math.random() * 10).toFixed(1),
-        costDownLimit: Math.floor(Math.random() * 100),
-        costUpLimit: Math.floor(Math.random() * 200),
-        starRate: (Math.random() * 5).toFixed(1),
-        starNumber: Math.floor(Math.random() * 100),
-      }));
-
-      setMerchants((prevMerchants) => [...prevMerchants, ...newMerchants]);
-      
-      merchantCountRef.current += newMerchants.length;
-
-      if (merchantCountRef.current >= 500) {
-        setHasMore(false);
-      }
+      setMerchants((prevMerchants) => {
+        const newMerchants = Array.from({ length: 9 }).map((_, index) => ({
+            id: merchantCountRef.current + index,
+            name: `新商家 ${merchantCountRef.current + index}`,
+            distance: (Math.random() * 10).toFixed(1),
+            costDownLimit: Math.floor(Math.random() * 100),
+            costUpLimit: Math.floor(Math.random() * 200),
+            starRate: (Math.random() * 5).toFixed(1),
+            starNumber: Math.floor(Math.random() * 100),
+        }));
+    
+        if (prevMerchants.length + newMerchants.length >= 500) {
+          setHasMore(false);
+        }
+    
+        return [...prevMerchants, ...newMerchants];
+      });
+    
       setLoading(false);
     }, 2000);
   }, [loading, hasMore]);
