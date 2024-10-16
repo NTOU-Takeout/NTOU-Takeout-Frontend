@@ -1,15 +1,13 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect} from 'react';
 import Merchant from './Merchant';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 
 
 function MerchantList() {
-  const [items, setItems] = useState([]); // 存放段落與商店的結構化數據
+  const [items, setItems] = useState([]);
   const initialParagraph=["套餐","主食","甜點","飲料"];
-  const generateInitialData = () => {
-    return Array.from({ length: 4 }).map((_, index) => ({
+  useEffect(() => {
+    setItems(Array.from({ length: 4 }).map((_, index) => ({
       type: 'paragraph',
       text: `${initialParagraph[index]}`,
       merchants: Array.from({ length: 5 }).map((_, i) => ({
@@ -21,17 +19,14 @@ function MerchantList() {
             starRate: (Math.random() * 5).toFixed(1),
             starNumber: Math.floor(Math.random() * 100),
       })),
-    }));
-  };
-  useEffect(() => {
-    setItems(generateInitialData()); // 加載初始段落與商店項目
+    }))
+  );
   }, []);
   return (
     <div className="min-h-screen flex flex-col items-center justify-center container mx-auto p-4">
       {items.map((item, index) => (
         <div key={index}>
           <p className="text-lg font-medium my-4">{item.text}</p>
-
           {item.merchants.map((merchant, i) => (
             <Merchant
             id={merchant.id}
