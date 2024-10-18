@@ -33,9 +33,8 @@ const MenuHeader = ({
             </div>
         );
     }
-    
     return (
-        <header className="fixed top-0 left-0 w-full width-100 menu-header">
+        <header className="reletive top-0 left-0 w-full menu-header">
             <div
                 className="banner bg-cover bg-center h-64 relative before:content-[''] before:absolute before:w-full before:h-full before:backdrop-blur-sm"
                 style={{ backgroundImage: `url(${bannerLink})` }}
@@ -66,9 +65,8 @@ const MenuHeader = ({
                 </div>
             </div>
         </header>
-    );   
     
-    
+    )
 };
 
 MenuHeader.propTypes = {

@@ -6,6 +6,8 @@ import Searchbar from './components/Searchbar';
 import MenuSectionPage from './components/MenuSectionPage';
 import MerchantList from './components/MerchantList';
 import MenuHeader from './components/merchantPage/MenuHeader';
+import MenuNavbar from './components/merchantPage/MenuNavbar';
+import MenuItem from './components/merchantPage/MenuItem';
 
 function App() {
     const toggleSidebar= useSidebarStore((state) => state.toggleSidebar);
@@ -13,8 +15,11 @@ function App() {
     const closeSidebar=useSidebarStore((state)=>state.closeSidebar);
 
     return (
-        <div>
-            <Header onLeftClick={toggleSidebar}/>
+        <div 
+        >
+            {/* <Header
+                onLeftClick={toggleSidebar}
+            />
             <Sidebar></Sidebar>
             <Searchbar></Searchbar>
             
@@ -23,6 +28,9 @@ function App() {
             
             {/*<MenuHeader></MenuHeader>*/}
             <MerchantList></MerchantList>
+            <Searchbar></Searchbar> 
+            <MenuHeader></MenuHeader>
+            <MenuNavbar></MenuNavbar>
         </div>
     )
 }
