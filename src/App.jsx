@@ -4,6 +4,7 @@ import useSidebarStore from './stores/sidebarStore';
 import Sidebar from './components/Sidebar';
 import Searchbar from './components/Searchbar';
 import MenuHeader from './components/merchantPage/MenuHeader';
+import MenuNavbar from './components/merchantPage/MenuNavbar';
 
 function App() {
     const toggleSidebar= useSidebarStore((state) => state.toggleSidebar);
@@ -19,6 +20,7 @@ function App() {
             <Sidebar></Sidebar>
             <Searchbar></Searchbar> */}
             <MenuHeader></MenuHeader>
+            <MenuNavbar></MenuNavbar>
             {/* <Merchant 
         <div>
             <Header></Header>
