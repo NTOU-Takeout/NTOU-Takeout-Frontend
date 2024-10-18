@@ -43,4 +43,10 @@ const MenuItemCard = ({
   );
 };
 
+MenuItemCard.propTypes = {
+    itemName: PropTypes.string,
+    price: PropTypes.number,
+    description: PropTypes.string,
+};
+
 export default MenuItemCard;
