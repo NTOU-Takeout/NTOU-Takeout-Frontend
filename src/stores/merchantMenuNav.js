@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 
-// 定義 Zustand store
 const useNavStore = create((set) => ({
   navbarItems: ['套餐', '主食', '甜點'],  // Default nav items
   nowPage: 0,  // Now page nav
