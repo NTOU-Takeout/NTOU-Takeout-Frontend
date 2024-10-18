@@ -33,7 +33,6 @@ const MenuHeader = ({
             </div>
         );
     }
-    
     return (
         <header className="reletive top-0 left-0 w-full menu-header">
             <div
@@ -66,9 +65,8 @@ const MenuHeader = ({
                 </div>
             </div>
         </header>
-    );   
     
-    
+    )
 };
 
 MenuHeader.propTypes = {
