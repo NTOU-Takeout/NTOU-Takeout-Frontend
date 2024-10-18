@@ -1,5 +1,5 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 const MenuItemCard = ({
     itemName = '原味飯糰',          // default itemName
     price = 30,               // default price
