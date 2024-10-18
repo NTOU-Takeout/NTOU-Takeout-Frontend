@@ -26,11 +26,12 @@ function App() {
             <MenuSectionPage></MenuSectionPage>
             
             
-            {/*<MenuHeader></MenuHeader>*/}
+            {/*<MenuHeader></MenuHeader>
             <MerchantList></MerchantList>
-            <Searchbar></Searchbar> 
+            <Searchbar></Searchbar> */}
             <MenuHeader></MenuHeader>
             <MenuNavbar></MenuNavbar>
+            <MenuSectionPage></MenuSectionPage>
         </div>
     )
 }
