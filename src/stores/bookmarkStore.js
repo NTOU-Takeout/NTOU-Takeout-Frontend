@@ -1,10 +1,13 @@
-import {create} from 'zustand';
+import { create } from 'zustand';
 
-const bookmarkStore = create((set) => ({
-    isMarked: false,
-    setIsMarked: (markedState)=> set({isMarked: markedState})
+const useBookmarkStore = create((set) => ({
+  markedMerchants: {}, 
+  toggleBookmark: (id) => set((state) => ({
+    markedMerchants: {
+      ...state.markedMerchants,
+      [id]: !state.markedMerchants[id],
+    },
+  })),
 }));
 
-export default bookmarkStore;
-
-
+export default useBookmarkStore;
