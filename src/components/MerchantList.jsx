@@ -2,25 +2,33 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Merchant from './Merchant';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-
-const initialMerchants = [
-  { id: 0, name: "海洋大學店", distance: 1.6, costDownLimit: 98, costUpLimit: 123, starRate: 4.8, starNumber: 71 },
-  { id: 1, name: "海", distance: 2.5, costDownLimit: 12, costUpLimit: 124, starRate: 3.2, starNumber: 12 },
-  { id: 2, name: "海洋大學店", distance: 1.6, costDownLimit: 98, costUpLimit: 123, starRate: 4.8, starNumber: 71 },
-  { id: 3, name: "海", distance: 2.5, costDownLimit: 12, costUpLimit: 124, starRate: 3.2, starNumber: 12 },
-  { id: 4, name: "海洋大學店", distance: 1.6, costDownLimit: 98, costUpLimit: 123, starRate: 4.8, starNumber: 71 },
-  { id: 5, name: "海", distance: 2.5, costDownLimit: 12, costUpLimit: 124, starRate: 3.2, starNumber: 12 },
-];
+import getStoreClient from '../api/store/getStoreClient';
+// const initialMerchants = [
+//   { id: 0, name: "海洋大學店", distance: 1.6, costDownLimit: 98, costUpLimit: 123, starRate: 4.8, starNumber: 71 },
+//   { id: 1, name: "海", distance: 2.5, costDownLimit: 12, costUpLimit: 124, starRate: 3.2, starNumber: 12 },
+//   { id: 2, name: "海洋大學店", distance: 1.6, costDownLimit: 98, costUpLimit: 123, starRate: 4.8, starNumber: 71 },
+//   { id: 3, name: "海", distance: 2.5, costDownLimit: 12, costUpLimit: 124, starRate: 3.2, starNumber: 12 },
+//   { id: 4, name: "海洋大學店", distance: 1.6, costDownLimit: 98, costUpLimit: 123, starRate: 4.8, starNumber: 71 },
+//   { id: 5, name: "海", distance: 2.5, costDownLimit: 12, costUpLimit: 124, starRate: 3.2, starNumber: 12 },
+// ];
 
 function MerchantList() {
-  const [merchants, setMerchants] = useState(initialMerchants);
+  const [merchants, setMerchants] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
 
   const observer = useRef(); 
   
+  const fetchMerchantsIdList = useCallback(async () => {
+    const result = await getStoreClient.getStoreIdList();
+    console.log(result);
+  }, []);
 
+  useEffect(() => {
+    fetchMerchantsIdList();
+  }, [fetchMerchantsIdList]);
 
+  
   const loadMoreMerchants = useCallback(() => {
     if (loading || !hasMore) return;
 
