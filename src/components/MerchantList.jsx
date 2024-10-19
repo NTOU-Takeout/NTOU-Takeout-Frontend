@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Merchant from './Merchant';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
@@ -10,57 +10,51 @@ function MerchantList() {
   const [loading, setLoading] = useState(false);
   const merchantIdList = useRef([]);
   const observer = useRef(); 
-  const LOAD_SIZE = 6;
+  const LOAD_SIZE = 3;
 
+  //fetch mercantIdList to initialize all sotre list id
   useEffect(() => {
     const fetchMerchantIds = async () => {
       setLoading(true);
       try {
         merchantIdList.current = await getStoreClient.getStoreIdList();
-        console.log("fetchMerchantsIdList:", merchantIdList.current);
-        // 初始加载商家数据
+        console.log("merchantIdList:", merchantIdList.current);
         await fetchMerchantsByIdList(merchantIdList.current.slice(0, LOAD_SIZE));
       } catch (error) {
         console.error(error);
       } finally {
         setLoading(false);
       }
-    };
-  
+    };  
     fetchMerchantIds();
   }, []);
   
-  
-  
+  //fetch merchant by given id list
   const fetchMerchantsByIdList = useCallback(async (idList) => {
-    setLoading(true); // 开始加载
+    setLoading(true); 
     let newMerchants = [];
     try {
-      console.log("idList:", idList);
-      if (idList.length < LOAD_SIZE) {
-        setHasMore(false);
-      }
       newMerchants = await getStoreClient.getMerchantsByIdList(idList);
     } catch (error) {
       console.error(error);
     } finally {
-      newMerchants.forEach((merchant) => {
-        merchant.businessHour = "fuck";
-        console.log("merchant businesshour:", merchant.businessHour);
-      });
       setMerchants((prevMerchants) => [...prevMerchants, ...newMerchants]);
-      console.log("???newMerchants:", newMerchants);
-      setLoading(false); 
+      setLoading(false);
     }
   }, []);
 
+  //load more merchants used by infinite scroll
   const loadMoreMerchants = useCallback(async () => {
+    if(merchantIdList.current.length == merchants.length){
+      setHasMore(false);
+    }
     if (loading || !hasMore) return;
   
     const nextIdList = merchantIdList.current.slice(merchants.length, merchants.length + LOAD_SIZE);
     await fetchMerchantsByIdList(nextIdList);
   }, [loading, hasMore, fetchMerchantsByIdList, merchants]);
   
+  //useEffect to observe the last element of the list
   const lastElementRef = useCallback(
     (node) => {
       if (loading) return;
@@ -72,14 +66,12 @@ function MerchantList() {
             loadMoreMerchants();
           }
         });
-  
         observer.current.observe(node);
       }
     },
     [loading, hasMore, loadMoreMerchants]
   );
 
-  console.log("sssss:",merchants.length);
   return (
     <div className="-z-40-50 min-h-screen  flex flex-col items-center justify-center space-y-6">
       {merchants.map((merchant, index) => {
@@ -87,11 +79,11 @@ function MerchantList() {
         return (
           <div
             key={merchant.id}
-            // ref={isLastElement ? lastElementRef : null}
+            ref={isLastElement ? lastElementRef : null}
             className="flex justify-center"
           >
             <Merchant
-              id={merchants.length}
+              id={merchants.length-1}
               name={merchant.name}
               averageSpend={merchant.averageSpend}
               rating={merchant.rating}

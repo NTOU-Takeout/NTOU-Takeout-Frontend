@@ -10,7 +10,7 @@ const getStoreClient = {
     return data; 
   },
   getMerchantsByIdList : async (idList) => {
-    const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/store/getStoresByIdList`, {
+    const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/store/getStoresByIds`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
