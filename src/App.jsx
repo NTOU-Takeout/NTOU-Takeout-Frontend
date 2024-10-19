@@ -7,6 +7,7 @@ import MerchantList from './components/MerchantList';
 import MenuHeader from './components/merchantPage/MenuHeader';
 import MenuNavbar from './components/merchantPage/MenuNavbar';
 import MenuItem from './components/merchantPage/MenuItem';
+import MenuDishDetail from './components/merchantPage/MenuDishDetail';
 
 function App() {
     const toggleSidebar= useSidebarStore((state) => state.toggleSidebar);
@@ -21,8 +22,9 @@ function App() {
             />
             <Sidebar></Sidebar>
             <Searchbar></Searchbar> */}
-            <MenuHeader></MenuHeader>
-            <MenuNavbar></MenuNavbar>
+            {/* <MenuHeader></MenuHeader>
+            <MenuNavbar></MenuNavbar> */}
+            <MenuDishDetail></MenuDishDetail>
             {/* <Merchant 
         <div>
             <Header></Header>
