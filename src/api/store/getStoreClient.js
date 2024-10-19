@@ -9,13 +9,19 @@ const getStoreClient = {
     const data = await response.json();
     return data; 
   },
-  getMerchantDetails: async (id) => {
-    const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/store/getDetails?id=${id}`);
+  getMerchantsByIdList : async (idList) => {
+    const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/store/getStoresByIdList`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(idList)
+    });
     if (!response.ok) {
-      throw new Error(`Failed to fetch details for merchant ID: ${id}`);
+      throw new Error(`Failed to fetch details for merchant ID: ${idList}`);
     }
     const data = await response.json();
-    return data; // 返回商家详情对象
+    return data; 
   },
 };
 
