@@ -1,53 +1,61 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Merchant from './Merchant';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-
-const initialMerchants = [
-  { id: 0, name: "海洋大學店", distance: 1.6, costDownLimit: 98, costUpLimit: 123, starRate: 4.8, starNumber: 71 },
-  { id: 1, name: "海", distance: 2.5, costDownLimit: 12, costUpLimit: 124, starRate: 3.2, starNumber: 12 },
-  { id: 2, name: "海洋大學店", distance: 1.6, costDownLimit: 98, costUpLimit: 123, starRate: 4.8, starNumber: 71 },
-  { id: 3, name: "海", distance: 2.5, costDownLimit: 12, costUpLimit: 124, starRate: 3.2, starNumber: 12 },
-  { id: 4, name: "海洋大學店", distance: 1.6, costDownLimit: 98, costUpLimit: 123, starRate: 4.8, starNumber: 71 },
-  { id: 5, name: "海", distance: 2.5, costDownLimit: 12, costUpLimit: 124, starRate: 3.2, starNumber: 12 },
-];
+import getStoreClient from '../api/store/getStoreClient';
 
 function MerchantList() {
-  const [merchants, setMerchants] = useState(initialMerchants);
+  const [merchants, setMerchants] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
-
+  const merchantIdList = useRef([]);
   const observer = useRef(); 
+  const LOAD_SIZE = 2;
+
+  //fetch mercantIdList to initialize all sotre list id
+  useEffect(() => {
+    const fetchMerchantIds = async () => {
+      setLoading(true);
+      try {
+        merchantIdList.current = await getStoreClient.getStoreIdList();
+        console.log("merchantIdList:", merchantIdList.current);
+        await fetchMerchantsByIdList(merchantIdList.current.slice(0, LOAD_SIZE));
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };  
+    fetchMerchantIds();
+  }, []);
   
-
-
-  const loadMoreMerchants = useCallback(() => {
-    if (loading || !hasMore) return;
-
-    setLoading(true);
-    setTimeout(() => {
-      setMerchants((prevMerchants) => {
-        const newMerchants = Array.from({ length: 9 }).map((_, index) => ({
-            id: prevMerchants.length + index,
-            name: `新商家 ${prevMerchants.length + index}`,
-            distance: (Math.random() * 10).toFixed(1),
-            costDownLimit: Math.floor(Math.random() * 100),
-            costUpLimit: Math.floor(Math.random() * 200),
-            starRate: (Math.random() * 5).toFixed(1),
-            starNumber: Math.floor(Math.random() * 100),
-        }));
-    
-        if (prevMerchants.length + newMerchants.length >= 500) {
-          setHasMore(false);
-        }
-    
-        return [...prevMerchants, ...newMerchants];
-      });
-    
+  //fetch merchant by given id list
+  const fetchMerchantsByIdList = useCallback(async (idList) => {
+    setLoading(true); 
+    let newMerchants = [];
+    try {
+      newMerchants = await getStoreClient.getMerchantsByIdList(idList);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      console.log("newMerchants:", newMerchants);
+      setMerchants((prevMerchants) => [...prevMerchants, ...newMerchants]);
       setLoading(false);
-    }, 2000);
-  }, [loading, hasMore]);
+    }
+  }, []);
 
+  //load more merchants used by infinite scroll
+  const loadMoreMerchants = useCallback(async () => {
+    if(merchantIdList.current.length == merchants.length){
+      setHasMore(false);
+    }
+    if (loading || !hasMore) return;
+  
+    const nextIdList = merchantIdList.current.slice(merchants.length, merchants.length + LOAD_SIZE);
+    await fetchMerchantsByIdList(nextIdList);
+  }, [loading, hasMore, fetchMerchantsByIdList, merchants]);
+  
+  //useEffect to observe the last element of the list
   const lastElementRef = useCallback(
     (node) => {
       if (loading) return;
@@ -59,7 +67,6 @@ function MerchantList() {
             loadMoreMerchants();
           }
         });
-  
         observer.current.observe(node);
       }
     },
@@ -77,17 +84,16 @@ function MerchantList() {
             className="flex justify-center"
           >
             <Merchant
-              id={merchant.id}
+              id={merchants.length-1}
               name={merchant.name}
-              distance={merchant.distance}
-              costDownLimit={merchant.costDownLimit}
-              costUpLimit={merchant.costUpLimit}
-              starRate={merchant.starRate}
-              starNumber={merchant.starNumber}
+              averageSpend={merchant.averageSpend}
+              rating={merchant.rating}
+              picture={merchant.picture}
               className="w-[300px] h-[200px] bg-white border border-gray-300 rounded-xl shadow-lg"
             />
           </div>
         );
+        
       })}
       {loading && (
         <div className="flex justify-center items-center mt-4">
