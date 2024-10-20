@@ -10,7 +10,7 @@ function MerchantList() {
   const [loading, setLoading] = useState(false);
   const merchantIdList = useRef([]);
   const observer = useRef(); 
-  const LOAD_SIZE = 3;
+  const LOAD_SIZE = 2;
 
   //fetch mercantIdList to initialize all sotre list id
   useEffect(() => {
@@ -38,6 +38,7 @@ function MerchantList() {
     } catch (error) {
       console.error(error);
     } finally {
+      console.log("newMerchants:", newMerchants);
       setMerchants((prevMerchants) => [...prevMerchants, ...newMerchants]);
       setLoading(false);
     }
