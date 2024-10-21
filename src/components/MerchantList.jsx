@@ -3,7 +3,7 @@ import Merchant from './Merchant';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import getStoreClient from '../api/store/getStoreClient';
-
+import { Link } from 'react-router-dom';
 function MerchantList() {
   const [merchants, setMerchants] = useState([]);
   const [hasMore, setHasMore] = useState(true);
@@ -78,6 +78,7 @@ function MerchantList() {
       {merchants.map((merchant, index) => {
         const isLastElement = index === merchants.length - 1;
         return (
+          <Link key={merchant.id} to={`/menu/${merchant.id}`}>
           <div
             key={merchant.id}
             ref={isLastElement ? lastElementRef : null}
@@ -92,6 +93,7 @@ function MerchantList() {
               className="w-[300px] h-[200px] bg-white border border-gray-300 rounded-xl shadow-lg"
             />
           </div>
+          </Link> 
         );
         
       })}
