@@ -8,18 +8,16 @@ import { faPhone } from '@fortawesome/free-solid-svg-icons';
 import { faClock } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
-const storeName="好想水餃";
-const starRate="4.9";
-const solidStar=4;
-const locationURL="\"https://maps.google.com\"";
-const locationName="基隆市中正區北寧路2號 (Google map)";
-const telNumber="0987-114-514";
-const costDownLimit="100";
-const costUpLimit="200";
-
-const MenuInfo = ({ onClose,
 
 
+const MenuInfo = ({ onClose,storeName="好想水餃",
+    starRate="4.9",
+    solidStar=4,
+    locationURL="\"https://maps.google.com\"",
+    locationName="基隆市中正區北寧路2號 (Google map)",
+    telNumber="0987-114-514",
+    costDownLimit="100",
+    costUpLimit="200"
  }) => {
     return (
         <div className="fixed z-50 left-1/2 w-[80%] transform -translate-x-1/2 -translate-y-1/2 max-w-sm p-4 bg-white shadow-md rounded-xl mx-auto ">
