@@ -24,7 +24,7 @@ const MenuInfo = ({ onClose,storeName="好想水餃",
         <div className="fixed z-50 left-1/2 w-[80%] transform -translate-x-1/2 -translate-y-1/2 max-w-sm p-4 bg-white shadow-md rounded-xl mx-auto ">
 
             {/* Close button */}
-            <div className="absolute top-2 right-2 bg-white shadow-md rounded-lg flex justify-center items-center">
+            <div className="absolute top-2 right-2  rounded-lg flex justify-center items-center">
                 <button className="text-gray-500 hover:text-gray-700 p-2">
                     <FontAwesomeIcon 
                         icon={faTimes} 
