@@ -7,6 +7,7 @@ import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { faPhone } from '@fortawesome/free-solid-svg-icons';
 import { faClock } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faCoins } from '@fortawesome/free-solid-svg-icons';
 
 
 
@@ -36,40 +37,40 @@ const MenuInfo = ({ onClose,storeName="好想水餃",
 
             <div className="flex items-center mt-1">
                 <div className=" font-medium text-[13px] leading-[15px] text-gray-600 mb-[-1px]">{starRate}</div>
-                <div className="ml-2 text-yellow-500">
+                <div className=" text-yellow-500">
                     {[...Array(solidStar)].map((_, i) => (
-                        <FontAwesomeIcon key={i} icon={faStar} className="inline-block h-5 w-5" />
+                        <FontAwesomeIcon key={i} icon={faStar} className="inline-block h-4 w-4" />
                     ))}
                     {[...Array(5-solidStar)].map((_, i) => (
-                        <FontAwesomeIcon key={i} icon={faStar} className="inline-block h-5 w-5 text-gray-300" />    
+                        <FontAwesomeIcon key={i} icon={faStar} className="inline-block h-4 w-4 text-gray-300" />    
                     ))}
                     
                 </div>
             </div>
             <div className="mt-4">
                 <a href={locationURL} className="flex items-center text-blue-600 hover:underline">
-                    <FontAwesomeIcon icon={faMapMarkerAlt} className="w-5 h-5 mr-2" />
+                    <FontAwesomeIcon icon={faMapMarkerAlt} className="w-4 h-4 mr-2" />
                     {locationName}
                 </a>
             </div>
             <div className="mt-2 flex items-center">
-                <FontAwesomeIcon icon={faPhone} className="w-5 h-5 mr-2" />
+                <FontAwesomeIcon icon={faPhone} className="w-4 h-4 mr-2" />
                 {telNumber}
             </div>
 
             <div className="mt-2">
                 <div className="flex items-center">
-                    <FontAwesomeIcon icon={faClock} className="w-5 h-5 mr-2" />
+                    <FontAwesomeIcon icon={faClock} className="w-4 h-4 mr-2" />
                     <span>星期二：10:00 ~ 23:00</span>
                 </div>
-                <div className="mt-1">星期三：12:00 ~ 23:00</div>
-                <div className="mt-1">星期四：13:00 ~ 23:00</div>
-                <div className="mt-1">星期五：08:00 ~ 24:00</div>
-                <div className="mt-1">星期六：10:00 ~ 23:00</div>
-                <div className="mt-1">星期日：10:00 ~ 23:00</div>
+                <div className="ml-6">星期三：12:00 ~ 23:00</div>
+                <div className="ml-6">星期四：13:00 ~ 23:00</div>
+                <div className="ml-6">星期五：08:00 ~ 24:00</div>
+                <div className="ml-6">星期六：10:00 ~ 23:00</div>
+                <div className="ml-6">星期日：10:00 ~ 23:00</div>
             </div>
             <div className="mt-4 flex items-center">
-                <FontAwesomeIcon icon={faUser} className="w-5 h-5 mr-2" />
+                <FontAwesomeIcon icon={faCoins} className="w-4 h-4 mr-2" />
                 <span>每人 {costDownLimit} ~ {costUpLimit} 元</span>
             </div>
         </div>
