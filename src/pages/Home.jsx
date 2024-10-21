@@ -7,8 +7,6 @@ import MerchantList from '../components/MerchantList';
 
 function Home(){
     const toggleSidebar= useSidebarStore((state) => state.toggleSidebar);
-
-
     return (
         <div>
             <Header onLeftClick={toggleSidebar}/>
