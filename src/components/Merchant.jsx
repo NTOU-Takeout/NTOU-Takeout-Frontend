@@ -5,7 +5,6 @@ import { faStar as solidStar } from '@fortawesome/free-solid-svg-icons/faStar';
 import useBookmarkStore from '../stores/bookmarkStore'; 
 import PropTypes from 'prop-types';
 
-
 const Merchant = (props) => {
     const { markedMerchants, toggleBookmark } = useBookmarkStore();
     const {id, name, averageSpend, rating, picture} = props;
@@ -16,6 +15,7 @@ const Merchant = (props) => {
     };
 
     return (
+        
         <div className="relative w-[361px] h-[241px] m-2 bg-white border-2
                         border-gray-300 rounded-2xl overflow-hidden">
         <img src={picture} alt="Store Image" 
@@ -40,6 +40,7 @@ const Merchant = (props) => {
             </div>
         </div>
         </div>
+
     );
 };
 Merchant.propTypes = {

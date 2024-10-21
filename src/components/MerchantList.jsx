@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef, memo } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   useQuery,
   useInfiniteQuery,
@@ -8,7 +8,7 @@ import Merchant from './Merchant';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import getStoreClient from '../api/store/getStoreClient';
-
+import { Link } from 'react-router-dom';
 function MerchantList() {
   const merchantIdListRef = useRef([]); 
   const LOAD_SIZE = 2;
@@ -83,19 +83,21 @@ function MerchantList() {
       {data?.pages.map((page) =>
         page.map((merchant) => {
           return (
-            <div
-              key={merchant.id}
-              className="flex justify-center"
-            >
-              <Merchant
-                id={merchant.id}
-                name={merchant.name}
-                averageSpend={merchant.averageSpend}
-                rating={merchant.rating}
-                picture={merchant.picture}
-                className="w-[300px] h-[200px] bg-white border border-gray-300 rounded-xl shadow-lg"
-              />
-            </div>
+            <Link key={merchant.id} to={`/menu/${merchant.id}`}>
+              <div
+                key={merchant.id}
+                className="flex justify-center"
+              >
+                <Merchant
+                  id={merchant.id}
+                  name={merchant.name}
+                  averageSpend={merchant.averageSpend}
+                  rating={merchant.rating}
+                  picture={merchant.picture}
+                  className="w-[300px] h-[200px] bg-white border border-gray-300 rounded-xl shadow-lg"
+                />
+              </div>
+            </Link>
           );
         })
       )}
