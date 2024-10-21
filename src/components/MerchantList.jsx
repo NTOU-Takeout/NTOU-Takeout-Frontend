@@ -47,28 +47,31 @@ function MerchantList() {
     error: merchantsError,
   } = useInfiniteQuery({
     queryKey: ['merchants'],
-    enabled: !!isMerchantIdListLoading,
     queryFn: async  ({ pageParam }) => {
-      console.log("pageParam:", pageParam);
-      const start = pageParam * LOAD_SIZE;
-      const end = start + LOAD_SIZE;
-      const idList = merchantIdListRef.current.slice(start, end);
-      if (idList.length === 0) {
-        return [];
-      }
-      const merchants = await getStoreClient.getMerchantsByIdList(idList);
-      console.log("merchants:", merchants);
-      return merchants;
+        console.log("pageParam:", pageParam);
+        const start = pageParam * LOAD_SIZE;
+        const end = start + LOAD_SIZE;
+        const idList = merchantIdListRef.current.slice(start, end);
+        
+        if (idList.length === 0) {
+            return [];
+        }
+
+        const merchants = await getStoreClient.getMerchantsByIdList(idList);
+        console.log("merchants:", merchants);
+
+        return merchants;
     },
     initialPageParam: 0,
     getNextPageParam: (lastPage,allPages) => {
-      const nextPage = allPages.length;
-      const totalMerchants = merchantIdList?.length || 0;
-      if (nextPage * LOAD_SIZE < totalMerchants) {
-        return nextPage;
-      } else {
-        return undefined; // No more pages
-      }
+        const nextPage = allPages.length;
+        const totalMerchants = merchantIdList?.length || 0;
+        
+        if (nextPage * LOAD_SIZE < totalMerchants) {
+            return nextPage;
+        } else {
+            return undefined; // No more pages
+        }
     },
   });
 
@@ -76,7 +79,7 @@ function MerchantList() {
     <div className="flex justify-center items-center mt-4 fa-2x">
       <FontAwesomeIcon icon={faSpinner} spinPulse />
     </div> :
-    <div className="-z-40-50 min-h-screen  flex flex-col items-center  space-y-6 py-5">
+    <div className="-z-40-50 min-h-screen flex flex-col items-center space-y-6 py-5">
       {data?.pages.map((page) =>
         page.map((merchant) => {
           return (
