@@ -3,6 +3,8 @@ import useSidebarStore from '../stores/sidebarStore';
 import Sidebar from '../components/Sidebar';
 import Searchbar from '../components/Searchbar';
 import MerchantList from '../components/MerchantList';
+import MenuHeader from '../components/merchantPage/MenuHeader';
+import Navbar from '../components/merchantPage/MenuNavbar';
 
 
 function Home(){
@@ -11,10 +13,12 @@ function Home(){
 
     return (
         <div>
-            <Header onLeftClick={toggleSidebar}/>
+            {/*<Header onLeftClick={toggleSidebar}/>
             <Sidebar></Sidebar>
             <Searchbar></Searchbar>
-            <MerchantList></MerchantList>
+            <MerchantList></MerchantList>*/}
+            <MenuHeader></MenuHeader>
+            <Navbar></Navbar>
         </div>
     )
 }
