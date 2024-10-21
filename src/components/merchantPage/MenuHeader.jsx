@@ -1,8 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faShareNodes, faStar, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import useLoadingStore from '../../stores/loadingStore';
+import MenuInfo from './MenuInfo';
+
+
+
+
 
 const MenuHeader = ({
     title = '海洋大學店',          // default title
@@ -14,10 +19,9 @@ const MenuHeader = ({
     bannerLink = 'https://i.imgur.com/S1OPVB6.jpeg', // default banner link
 }) => {
     
-    // get state from store
     const { isLoading, setIsLoading } = useLoadingStore();
 
-    // loading screen test, test 500ms loading time
+    const [showMenuInfo, setShowMenuInfo] = useState(false);
     useEffect(() => {
         const timer = setTimeout(() => {
             setIsLoading(false);
@@ -60,13 +64,17 @@ const MenuHeader = ({
                         <span className="text-gray-400 ml-1 mt-0.5">({reviews}+)</span>
                     </div>
                     <div className="absolute top-4 right-4 text-xl text-gray-500">
-                        <FontAwesomeIcon icon={faInfoCircle} />
+                        <FontAwesomeIcon 
+                            icon={faInfoCircle} 
+                            onClick={() => setShowMenuInfo(true)} 
+                            className="cursor-pointer"
+                        />
                     </div>
                 </div>
             </div>
+            {showMenuInfo && <MenuInfo onClose={() => setShowMenuInfo(false)} />}
         </header>
-    
-    )
+    );
 };
 
 MenuHeader.propTypes = {
