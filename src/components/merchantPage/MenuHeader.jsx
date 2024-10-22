@@ -35,8 +35,9 @@ const MenuHeader = ({
             </div>
         );
     }
+
     return (
-        <header className="reletive top-0 left-0 w-full menu-header">
+        <header className="relative top-0 left-0 w-full menu-header">
             <div
                 className="banner bg-cover bg-center h-64 relative before:content-[''] before:absolute before:w-full before:h-full before:backdrop-blur-sm"
                 style={{ backgroundImage: `url(${bannerLink})` }}
@@ -70,11 +71,10 @@ const MenuHeader = ({
                     <div className="absolute top-4 right-4 text-xl text-gray-500">
                         <FontAwesomeIcon icon={faInfoCircle} />
                     </div>
-                    
                 </div>
             </div>
         </header>
-    )
+    );
 };
 
 MenuHeader.propTypes = {
@@ -85,7 +85,7 @@ MenuHeader.propTypes = {
     reviews: PropTypes.number,
     informationLink: PropTypes.string,
     bannerLink: PropTypes.string,
-    merchantId: PropTypes.string.isRequired, // 新增 merchantId prop
+    merchantId: PropTypes.string.isRequired, // 確保 merchantId 是必需的
 };
 
 export default MenuHeader;
