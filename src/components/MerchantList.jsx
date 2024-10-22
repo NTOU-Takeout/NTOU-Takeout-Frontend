@@ -10,7 +10,7 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import getStoreClient from '../api/store/getStoreClient';
 import { Link } from 'react-router-dom';
 function MerchantList() {
-  const merchantIdListRef = useRef([]); 
+    const merchantIdListRef = useRef([]); 
   const LOAD_SIZE = 2;
   const { ref, inView } = useInView({
     rootMargin: '100px',

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
@@ -14,35 +14,59 @@ const DishDetail = ({
     optionsTitle = ['飯糰大小', '飯糰重量', '飯糰體積'],
     optionsDescription = ['請選一項', '請選一項', '請選一項'],
     optionsSize = [['大份', '中份', '小份'], ['大份', '中份', '小份'], ['大份', '中份', '小份']],
-}) => {
+    onClose,
+    ...otherProps
+}) => { 
     const { selectedSize, quantity, setSelectedSize, setQuantity } = useDishStore();
+    const [isVisible, setIsVisible] = useState(false);
+    const [isExiting, setIsExiting] = useState(false);
+
+    useEffect(() => {
+        setIsVisible(true); // 當組件掛載時顯示
+        document.body.style.overflow = 'hidden'; // 禁用背景滾動
+
+        return () => {
+            document.body.style.overflow = ''; // 還原背景滾動
+        };
+    }, []);
+
+    const handleClose = () => {
+        setIsExiting(true);
+        setTimeout(() => {
+            setIsVisible(false); // 隱藏組件
+            onClose();
+        }, 500); // 與動畫持平的時間
+    };
 
     return (
-        <div className="flex items-end justify-center mt-8 font-notoTC">
-            <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
-                {/* Top image */}
-                <div className="relative">
-                    <img className="w-full h-48 object-cover" src={imageUrl} alt="Dish Image" />
-                    <button className="absolute top-4 right-4 bg-white rounded-full w-8 h-8 flex items-center justify-center shadow-md">
-                        <FontAwesomeIcon icon={faX} className="text-sm" />
-                    </button>
-                </div>
+        <div className={`fixed z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-full w-full max-w-4xl font-notoTC transition-transform duration-500 ${isVisible ? '-translate-y-100' : 'translate-y-full'}`}>
+            <div className={`bg-white shadow-md overflow-hidden max-h-[100vh] flex flex-col transition-transform duration-500 ${isExiting ? 'translate-y-full' : 'translate-y-0'}`}>
+                {/* 滾動內容容器 */}
+                <div className="flex-1 overflow-y-auto">
+                    {/* Top image */}
+                    <div className="relative h-48 overflow-hidden">
+                        <img className="w-full h-full object-cover" src={imageUrl} alt="Dish Image" />
+                        <button onClick={handleClose} className="absolute top-4 right-4 bg-white rounded-full w-8 h-8 flex items-center justify-center shadow-md">
+                            <FontAwesomeIcon icon={faX} className="text-sm" />
+                        </button>
+                    </div>
 
-                {/* Dish info */}
-                <div className="p-4">
-                    <h2 className="text-xl font-bold">{name}</h2>
-                    <p className="text-lg text-gray-700">${price}</p>
-                    <p className="text-sm text-gray-500">{description}</p>
+                    {/* Dish info */}
+                    <div className="p-4">
+                        <h2 className="text-xl font-bold">{name}</h2>
+                        <p className="text-lg text-gray-700">${price}</p>
+                        <p className="text-sm text-gray-500">{description}</p>
 
-                    {/* Customize options */}
-                    {optionsTitle.map((title, index) => (
-                        <OptionCard 
-                            key={index}
-                            title={title} 
-                            description={optionsDescription[index]} 
-                            options={optionsSize[index]} 
-                        />
-                    ))}
+                        {/* Customize options */}
+                        {optionsTitle.map((title, index) => (
+                            <OptionCard 
+                                key={index}
+                                title={title} 
+                                description={optionsDescription[index]} 
+                                options={optionsSize[index]} 
+                            />
+                        ))}
+                    </div>
                 </div>
                 {/* Add to cart button */}
                 <CartOption />

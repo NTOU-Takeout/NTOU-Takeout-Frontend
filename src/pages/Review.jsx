@@ -1,30 +1,29 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate, useParams } from 'react-router-dom'; 
 import ReviewCardList from '../components/reviewPage/ReviewCardList';
 import RatingBar from '../components/reviewPage/RatingBar';
 
-
-
-const reviewName="海洋大學店";
-const averageStar=4.2;
-const star1Percentage=90;
-const star2Percentage=40;
-const star3Percentage=10;
-const star4Percentage=20;
-const star5Percentage=5;
-const star1Count=76;
-const star2Count=10;
-const star3Count=2;
-const star4Count=4;
-const star5Count=4;
-
+const reviewName = "海洋大學店";
+const averageStar = 4.2;
+const star1Percentage = 90;
+const star2Percentage = 40;
+const star3Percentage = 10;
+const star4Percentage = 20;
+const star5Percentage = 5;
+const star1Count = 76;
+const star2Count = 10;
+const star3Count = 2;
+const star4Count = 4;
+const star5Count = 4;
 
 const Review = () => {
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
+  const { merchantId } = useParams();  // 獲取 merchantId
+
   const handleClose = () => {
-    navigate('/');
+    navigate(`/menu/${merchantId}`);  // 返回到正確的路徑
   };
 
   return (
@@ -50,7 +49,8 @@ const Review = () => {
         <RatingBar stars={2} percentage={star4Percentage} count={star4Count} />
         <RatingBar stars={1} percentage={star5Percentage} count={star5Count} />
       </div>
-        <ReviewCardList></ReviewCardList>
+      
+      <ReviewCardList />
     </div>
   );
 };

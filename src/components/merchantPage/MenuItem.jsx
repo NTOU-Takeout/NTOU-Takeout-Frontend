@@ -1,18 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 const MenuItemCard = ({
     itemName = '原味飯糰',          // default itemName
     price = 30,               // default price
     description = '綠聽吧之位子宜寧，各話又，正見跳免還「沒古六更是三肖」。', // default description
+    onClick,                 // 接收 onClick 函數
+    item,
+    ...otherProps
 }) => {
   return (
-    <div className="MenuItem block">
+    <div className="menu-item block cursor-pointer" onClick={() => onClick(item)}>
       <div className="flex m-8 max-w-xl bg-white text-white rounded-lg overflow-hidden shadow-lg font-notoTC">
         {/* Image */}
         <div className="w-1/2">
           <img 
             src="https://picsum.photos/200/150" 
-            alt="doge" 
+            alt="Dish Image" 
             className="object-cover h-full"
           />
         </div>
@@ -39,7 +43,6 @@ const MenuItemCard = ({
         </div>
       </div>
     </div>
-    
   );
 };
 
@@ -47,6 +50,8 @@ MenuItemCard.propTypes = {
     itemName: PropTypes.string,
     price: PropTypes.number,
     description: PropTypes.string,
+    onClick: PropTypes.func.isRequired, // 確保 onClick 是必需的
+    item: PropTypes.object.isRequired,    // 確保 item 是必需的
 };
 
 export default MenuItemCard;

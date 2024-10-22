@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faShareNodes, faStar, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import useLoadingStore from '../../stores/loadingStore';
@@ -12,6 +13,7 @@ const MenuHeader = ({
     reviews = 100,               // default reviews
     informationLink = 'https://google.com', // defaults information link
     bannerLink = 'https://i.imgur.com/S1OPVB6.jpeg', // default banner link
+    merchantId,                  // 接收 merchantId
 }) => {
     
     // get state from store
@@ -40,9 +42,11 @@ const MenuHeader = ({
                 style={{ backgroundImage: `url(${bannerLink})` }}
             >
             </div>
-            <div className="pt-1 pb-1 pl-2 pr-2 return-btn absolute top-10 left-4 transform -translate-y-1/2 bg-white/60 rounded-full">
-                <FontAwesomeIcon icon={faArrowLeft} className="text-slate-800" />
-            </div>
+            <Link to={`/`}>
+                <div className="pt-1 pb-1 pl-2 pr-2 return-btn absolute top-10 left-4 transform -translate-y-1/2 bg-white/60 rounded-full">
+                    <FontAwesomeIcon icon={faArrowLeft} className="text-slate-800" />
+                </div>
+            </Link>
             <div className="pt-1 pb-1 pl-2 pr-2 share-btn absolute top-10 right-4 transform -translate-y-1/2 bg-white/60 rounded-full">
                 <FontAwesomeIcon icon={faShareNodes} className="text-slate-800" />
             </div>
@@ -54,18 +58,22 @@ const MenuHeader = ({
                         <p className="text-gray-400 text-sm">距離您約{distance}公里</p>
                         <p className="text-green-600 text-sm mt-1">平均花費約{averageCost}元</p>
                     </div>
-                    <div className="flex items-center mt-10">
-                        <FontAwesomeIcon icon={faStar} className="text-yellow-400 ml-2 mt-1" />
-                        <span className="text-xl font-semibold">&nbsp;{rating}</span>
-                        <span className="text-gray-400 ml-1 mt-0.5">({reviews}+)</span>
-                    </div>
+                    <Link to={`/menu/${merchantId}/review`}>  {/* 使用 merchantId 傳遞到 Review 頁面 */}
+                        <div className="flex items-center mt-10">
+                            <FontAwesomeIcon icon={faStar} className="text-yellow-400 ml-2 mt-1" />
+                            <span className="text-xl font-semibold">&nbsp;{rating}</span>
+                            <span className="text-gray-400 ml-1 mt-0.5">
+                                (<span className='border-b border-gray-400'>{reviews}+</span>)
+                            </span>
+                        </div>
+                    </Link>
                     <div className="absolute top-4 right-4 text-xl text-gray-500">
                         <FontAwesomeIcon icon={faInfoCircle} />
                     </div>
+                    
                 </div>
             </div>
         </header>
-    
     )
 };
 
@@ -77,6 +85,7 @@ MenuHeader.propTypes = {
     reviews: PropTypes.number,
     informationLink: PropTypes.string,
     bannerLink: PropTypes.string,
+    merchantId: PropTypes.string.isRequired, // 新增 merchantId prop
 };
 
 export default MenuHeader;
