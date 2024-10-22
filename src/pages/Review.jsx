@@ -6,7 +6,7 @@ import ReviewCardList from '../components/reviewPage/ReviewCardList'
 
 const RatingBar = ({ stars, percentage, count }) => {
   return (
-    <div className="flex items-center mt-1">
+    <div className="w-screen flex items-center mt-1">
       <div className="flex">
         {[...Array(5)].map((_, i) => (
           <FontAwesomeIcon
@@ -16,7 +16,7 @@ const RatingBar = ({ stars, percentage, count }) => {
           />
         ))}
       </div>
-      <div className="w-full bg-gray-200 rounded-full h-2.5 mx-2">
+      <div className="w-[70%] bg-gray-200 rounded-full h-2.5 mx-2">
         <div
           className="bg-yellow-300 h-2.5 rounded-full"
           style={{ width: `${percentage}%` }}
