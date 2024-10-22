@@ -4,10 +4,10 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 const ReviewCard = (prop) => {
   const {name,starNumber,date,description}=prop;
-
+    
   //console.log(starNumber);
   return (
-    <div className="w-[90%] mx-auto mt-10 p-4 bg-white rounded-lg border border-gray-300">
+    <div className="font-notoTC w-[90%] mx-auto mt-10 p-4 bg-white rounded-lg border border-gray-300">
       
       <div className="flex justify-between items-center">
         <span className="text-gray-800 font-semibold">{name}</span>

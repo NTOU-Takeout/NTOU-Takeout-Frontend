@@ -14,7 +14,7 @@ const MenuItemCard = ({
   } = item; // 從 item 中解構
 
   return (
-    <div className="menu-item block cursor-pointer" onClick={() => onClick(item)}>
+    <div className="font-notoTC menu-item block cursor-pointer" onClick={() => onClick(item)}>
       <div className="flex m-8 max-w-xl bg-white text-white rounded-lg overflow-hidden shadow-lg font-notoTC">
         {/* Image */}
         <div className="w-64 overflow-hidden aspect-[5/3]"> {/* 使用 aspect-ratio */}

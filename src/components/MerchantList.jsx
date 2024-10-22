@@ -13,7 +13,7 @@ import useMerchantStore from '../stores/merchantStore';
 function MerchantList() {
   const { addMerchants } = useMerchantStore();  
   const merchantIdListRef = useRef([]); 
-  const LOAD_SIZE = 2;
+  const LOAD_SIZE = 8;
   const { ref, inView } = useInView({
     rootMargin: '100px',
   });
@@ -54,6 +54,7 @@ function MerchantList() {
         const start = pageParam * LOAD_SIZE;
         const end = start + LOAD_SIZE;
         const idList = merchantIdListRef.current.slice(start, end);
+        console.log(merchantIdListRef);
         
         if (idList.length === 0) {
             return [];

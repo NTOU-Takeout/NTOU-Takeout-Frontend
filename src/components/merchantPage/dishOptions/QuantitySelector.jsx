@@ -5,7 +5,7 @@ const QuantitySelector = () => {
   const { quantity, setQuantity } = useDishStore();
 
   return (
-    <div className="flex items-center bg-orange-500 rounded-full px-2 py-1 shadow-md border border-orange-700 mr-4">
+    <div className="font-notoTC flex items-center bg-orange-500 rounded-full px-2 py-1 shadow-md border border-orange-700 mr-4">
       <button
         className="pb-1 bg-white text-black font-bold rounded-full w-6 h-6 flex items-center justify-center"
         onClick={() => setQuantity(quantity - 1)}
