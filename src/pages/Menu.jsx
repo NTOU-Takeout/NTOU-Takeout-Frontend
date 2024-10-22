@@ -13,42 +13,71 @@ function Menu() {
   const { merchantId } = useParams();
   const getMerchantById = useMerchantStore((state) => state.getMerchantById);
   const [menuId, setMenuId] = useState(null);
-  const menuCategoryListRef = useRef([]);
   const [merchant, setMerchant] = useState(null);
+  const [categoryData, setCategoryData] = useState([]); //for all menu data
   useEffect(() => {
     const merchantData = getMerchantById(merchantId);
-    if(!merchantData) {
-      async function getMerchantData() {
-        console.log("error, refetching data");
-        const data = await getStoreClient.getStoreById(merchantId);
-        setMerchant(data);
-      }
-      getMerchantData();
-      console.log("refetched data:", merchant);
+    if (merchantData) {
+      setMerchant(merchantData);
+      setMenuId(merchantData.menuId);
+    } else { // Fetch merchant data if not in store
+      const fetchMerchantData = async () => {
+        try {
+          const [data] = await getStoreClient.getMerchantsByIdList([merchantId]);
+          setMerchant(data);
+          setMenuId(data?.menuId || null);
+        } catch (error) {
+          console.error("Failed to fetch merchant data:", error);
+        }
+      };
+      fetchMerchantData();
     }
-    setMerchant(merchantData);
-    setMenuId(merchantData.menuId);
-  }, [merchantId, getMerchantById,merchant]);
+  }, [merchantId, getMerchantById]);
 
   useEffect(() => {
     console.log("menuId:", menuId);
   }, [menuId]);
-  const {
+
+  //Fetch menu category list and dish details
+  const { 
     data: menuCategoryList,
-    isLoading: isMenuCategoryListLoading,
-    isError: isMenuCategoryListError,
-    error: menuCategoryListError,
+    isSuccess: isMenuCategoryListSuccess,
   } = useQuery({
-    queryKey: ['menuCategoryList', menuId],
+    queryKey: ['menuCategoryList'],
     queryFn: async () => {
+      if (!menuId) return [];
       const data = await getMenuClient.getMenuByMenuId(menuId);
-      return data;
+      return data.categories;
     },
+    enabled: !!menuId,
+  });
+
+  const { data  } = useQuery({
+    queryKey: ['menuCategoryData'],
+    queryFn: async () => {
+      const dishIds = menuCategoryList.flatMap((category) => category.second);
+        try {
+          const dishDetails = await getMenuClient.getDishsByDishIds(dishIds); 
+          console.log("dishDetails:", dishDetails);
+          const categorizedData = menuCategoryList.map((category) => ({
+            categoryName: category.first,
+            dishes: category.second.map((id) =>
+              dishDetails.find((dish) => dish.id === id)
+            ),
+          }));
+
+          setCategoryData(categorizedData); 
+          return dishIds;
+        } catch (error) {
+          console.error("Failed to fetch dish details:", error);
+        }
+    },
+    enabled: !isMenuCategoryListSuccess,
   });
 
   useEffect(() => {
-    console.log("menuCategoryList:", menuCategoryList);
-  }, [menuCategoryList]);
+    console.log("categoryData:", categoryData);
+  }, [categoryData]);
 
   if (!merchant) {
     return <div className="flex justify-center items-center mt-4 fa-2x">
