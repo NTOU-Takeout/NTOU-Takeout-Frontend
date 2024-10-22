@@ -127,9 +127,9 @@ function Menu() {
             <MenuHeader 
                 title={merchant.name} // 使用商家名稱
                 distance={merchant.distance || 0} // 使用商家距離
-                averageCost={merchant.averageCost || 0} // 使用商家平均花費
+                averageCost={merchant.averageSpend || 0} // 使用商家平均花費
                 rating={merchant.rating || 0} // 使用商家評級
-                reviews={merchant.reviews || 0} // 使用商家評論數
+                reviews={merchant.reviewIdList || 0} // 使用商家評論數
                 bannerLink={merchant.picture} // 使用商家橫幅圖片鏈接
                 merchantId={merchantId} // 傳遞 merchantId
             />

@@ -18,6 +18,7 @@ const MenuHeader = ({
     
     // get state from store
     const { isLoading, setIsLoading } = useLoadingStore();
+    const id = merchantId;
 
     // loading screen test, test 500ms loading time
     useEffect(() => {
@@ -34,6 +35,17 @@ const MenuHeader = ({
                 <p>Loading...</p>
             </div>
         );
+    }
+
+    const distanceList = [12, 32, 21, 27, 9, 47];
+    function sumStringDigits(str) {
+        return str
+            .split('') // 將字符串分割成字符數組
+            .map(char => {
+                // 檢查是否為數字，若是則轉為數字，否則轉為 ASCII 值
+                return isNaN(char) ? char.charCodeAt(0) : Number(char);
+            })
+            .reduce((acc, curr) => acc + curr, 0); // 將數字和 ASCII 值相加
     }
 
     return (
@@ -56,7 +68,7 @@ const MenuHeader = ({
                 <div className="flex items-center justify-between">
                     <div className="flex flex-col">
                         <h2 className="text-xl font-bold">{title}</h2>
-                        <p className="text-gray-400 text-sm">距離您約{distance}公里</p>
+                        <p className="text-gray-400 text-sm">距離您約{distanceList[Math.floor(sumStringDigits(id) % 6)]}公里</p>
                         <p className="text-green-600 text-sm mt-1">平均花費約{averageCost}元</p>
                     </div>
                     <Link to={`/menu/${merchantId}/review`}>  {/* 使用 merchantId 傳遞到 Review 頁面 */}
@@ -64,7 +76,7 @@ const MenuHeader = ({
                             <FontAwesomeIcon icon={faStar} className="text-yellow-400 ml-2 mt-1" />
                             <span className="text-xl font-semibold">&nbsp;{rating}</span>
                             <span className="text-gray-400 ml-1 mt-0.5">
-                                (<span className='border-b border-gray-400'>{reviews}+</span>)
+                                (<span className='border-b border-gray-400'>{reviews.length}+</span>)
                             </span>
                         </div>
                     </Link>
@@ -82,7 +94,7 @@ MenuHeader.propTypes = {
     distance: PropTypes.number,
     averageCost: PropTypes.number,
     rating: PropTypes.number,
-    reviews: PropTypes.number,
+    reviews: PropTypes.array,
     informationLink: PropTypes.string,
     bannerLink: PropTypes.string,
     merchantId: PropTypes.string.isRequired, // 確保 merchantId 是必需的

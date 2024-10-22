@@ -86,12 +86,13 @@ function MerchantList() {
         page.map((merchant) => {
           return (
             <Merchant
-              key={merchant.id}
-              id={merchant.id}
-              name={merchant.name}
-              averageSpend={merchant.averageSpend}
-              rating={merchant.rating}
-              picture={merchant.picture}
+                key={merchant.id}
+                id={merchant.id}
+                name={merchant.name}
+                averageSpend={merchant.averageSpend}
+                rating={merchant.rating}
+                reviews={merchant.reviewIdList}
+                picture={merchant.picture}
               className="w-[300px] h-[200px] bg-white border border-gray-300 rounded-xl shadow-lg"
             />
           );

@@ -7,12 +7,26 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 const Merchant = (props) => {
     const { markedMerchants, toggleBookmark } = useBookmarkStore();
-    const {id, name, averageSpend, rating, picture} = props;
+    const { id, name, averageSpend, rating, picture, reviews } = props;
     const isMarked = markedMerchants[id] || false;
 
     const handleBookmarkClick = () => {
         toggleBookmark(id);
     };
+
+    const distanceList = [12, 32, 21, 27, 9, 47];
+    function sumStringDigits(str) {
+        return str
+            .split('') // 將字符串分割成字符數組
+            .map(char => {
+                // 檢查是否為數字，若是則轉為數字，否則轉為 ASCII 值
+                return isNaN(char) ? char.charCodeAt(0) : Number(char);
+            })
+            .reduce((acc, curr) => acc + curr, 0); // 將數字和 ASCII 值相加
+    }
+    
+    
+    
 
     return (
         
@@ -32,7 +46,7 @@ const Merchant = (props) => {
                 className="relative w-full h-[65%] object-cover" />
             <div className="box-border absolute w-[361px] h-[87px] left-0 top-[154px] border-t-2 border-gray-300">
                 <div className="absolute h-[22px] left-5 top-4 text-black font-bold text-lg leading-5">{name}</div>
-                <div className="absolute h-[12px] left-5 top-[39px] text-gray-500 font-semibold text-xs leading-[12px]">距離您約 {100} 公里</div>
+                <div className="absolute h-[12px] left-5 top-[39px] text-gray-500 font-semibold text-xs leading-[12px]">距離您約 {distanceList[Math.floor(sumStringDigits(id) % 6)]} 公里</div>
                 <div className="absolute h-[12px] left-5 top-[61px] text-green-700 font-bold text-xs leading-[12px]">平均花費約 {averageSpend} 元</div>
                 <div className="absolute w-[75px] h-[20px] left-[271px] top-[57px] flex items-center">
                 <div className="flex items-center">
@@ -41,7 +55,7 @@ const Merchant = (props) => {
                     style={{color: "#FFD43B"}}
                     className="h-[0.80em] w-[0.80em] mr-[1px]"
                     />
-                    <span className="font-medium text-[13px] leading-[15px] text-gray-600 mb-[-1px]">{rating} ({"100"})</span>
+                    <span className="font-medium text-[13px] leading-[15px] text-gray-600 mb-[-1px]">{rating} ({reviews.length})</span>
                 </div>
                 </div>
             </div>
@@ -56,6 +70,7 @@ Merchant.propTypes = {
     // distance: PropTypes.string.isRequired,
     averageSpend: PropTypes.number.isRequired,
     rating: PropTypes.number.isRequired,
-    picture: PropTypes.string.isRequired
+    picture: PropTypes.string.isRequired,
+    reviews: PropTypes.number.isRequired
 };
 export default Merchant;
