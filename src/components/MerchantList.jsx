@@ -8,8 +8,10 @@ import Merchant from './Merchant';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import getStoreClient from '../api/store/getStoreClient';
+import useMerchantStore from '../stores/merchantStore';
 
 function MerchantList() {
+  const { addMerchants } = useMerchantStore(); // 取得儲存資料的 action
   const merchantIdListRef = useRef([]); 
   const LOAD_SIZE = 2;
   const { ref, inView } = useInView({
@@ -59,7 +61,7 @@ function MerchantList() {
 
         const merchants = await getStoreClient.getMerchantsByIdList(idList);
         console.log("merchants:", merchants);
-
+        addMerchants(merchants);
         return merchants;
     },
     initialPageParam: 0,
