@@ -2,9 +2,10 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 
-const RatingBar = ({ stars, percentage, count }) => {
+const RatingBar = (prop) => {
+    const {stars,percentage,count}=prop;
     return (
-      <div className="w-screen flex items-center mt-1">
+      <div className=" flex items-center mt-1">
         <div className="flex">
           {[...Array(5)].map((_, i) => (
             <FontAwesomeIcon
@@ -14,13 +15,13 @@ const RatingBar = ({ stars, percentage, count }) => {
             />
           ))}
         </div>
-        <div className="w-[70%] bg-gray-200 rounded-full h-2.5 mx-2">
+        <div className="w-full mr-31 bg-gray-200 rounded-full h-2.5 mx-2">
           <div
             className="bg-yellow-300 h-2.5 rounded-full"
             style={{ width: `${percentage}%` }}
           />
         </div>
-        <span className="text-gray-700">({count})</span>
+        <span className="w-20 text-gray-700">({count})</span>
       </div>
     );
 };
