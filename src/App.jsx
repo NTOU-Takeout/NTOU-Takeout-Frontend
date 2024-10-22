@@ -24,7 +24,7 @@ const router = createBrowserRouter([
         element: <Menu />,
     },
     {
-        path: "/review/",
+        path: "/review/:merchantId",
         element: <Review />
     }
 ]);
