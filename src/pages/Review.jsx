@@ -9,10 +9,9 @@ import RatingBar from '../components/reviewPage/RatingBar';
 import getReviewClient from '../api/review/getReviewClient';
 import getStoreClient from '../api/store/getStoreClient';
 import useMerchantStore from '../stores/merchantStore';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 
-const reviewName="海洋大學店";
-const averageStar=4.2;
 const star1Percentage=90;
 const star2Percentage=40;
 const star3Percentage=10;
@@ -24,10 +23,8 @@ const star3Count=2;
 const star4Count=4;
 const star5Count=4;
 
-
 const Review = () => {
   const {merchantId} = useParams();
-  console.log("merchantId:", merchantId);
   const getMerchantById = useMerchantStore((state) => state.getMerchantById);
   const [merchant, setMerchant] = useState(null);
   const [reviewIdList, setReviewIdList] = useState([]);
@@ -44,9 +41,9 @@ const Review = () => {
     } else { // Fetch merchant data if not in store
       const fetchMerchantData = async () => {
         try {
-          console.log("merchantId:", merchantId);
           const [data] = await getStoreClient.getMerchantsByIdList([merchantId]);
           setMerchant(data);
+          console.log("data:", data);
           setReviewIdList(data?.reviewIdList || null);
         } catch (error) {
           console.error("Failed to fetch merchant data:", error);
@@ -56,24 +53,27 @@ const Review = () => {
     }
   }, [merchantId, getMerchantById]);
 
-  useEffect(() => {
-    console.log("reviewIdList:", reviewIdList);
-  }, [reviewIdList]);
 
   const { 
     data: reviewDataList,
+    isSuccess: isReviewDataListSuccess,
   } = useQuery({
-    queryKey: ['reviewData'+merchantId],
+    queryKey: ['reviewData'+ merchantId],
     queryFn: async () => {
       if (!reviewIdList) return [];
       const data = await getReviewClient.getReivewByIds(reviewIdList);
       console.log("reviewDataList:", data);
+      setReviewIdList(data);
       return data;
     },
     enabled: !!reviewIdList,
   });
-
+  console.log("merchant:", merchant);
   return (
+    !merchant || !reviewIdList ? 
+    <div className="flex justify-center items-center mt-4 fa-2x">
+      <FontAwesomeIcon icon={faSpinner} spinPulse />
+    </div> :
     <div className="fixed top-0 left-0 w-full h-full p-4 bg-white flex flex-col justify-start items-start">
       
       <div className="absolute top-2 right-2">
@@ -82,10 +82,10 @@ const Review = () => {
         </button>
       </div>
 
-      <h2 className="text-3xl font-bold text-black text-left">{reviewName}的評論</h2>
+      <h2 className="text-3xl font-bold text-black text-left">{merchant.name}的評論</h2>
 
       <div className="flex items-center mt-4 text-left">
-        <span className="text-5xl font-bold">{averageStar}</span>
+        <span className="text-5xl font-bold">{merchant.rating}</span>
         <FontAwesomeIcon icon={faStar} className="text-yellow-300 ml-2 w-10 h-10" />
       </div>
 
@@ -96,7 +96,7 @@ const Review = () => {
         <RatingBar stars={2} percentage={star4Percentage} count={star4Count} />
         <RatingBar stars={1} percentage={star5Percentage} count={star5Count} />
       </div>
-        <ReviewCardList></ReviewCardList>
+        <ReviewCardList reviewIdList={reviewIdList} merchantId={merchantId} ></ReviewCardList>
     </div>
   );
 };

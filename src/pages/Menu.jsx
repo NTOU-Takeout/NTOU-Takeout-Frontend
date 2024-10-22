@@ -35,7 +35,7 @@ function Menu() {
   }, [merchantId, getMerchantById]);
 
   useEffect(() => {
-    console.log("menuId:", menuId);
+    console.log("menuId:"+ menuId);
   }, [menuId]);
 
   //Fetch menu category list and dish details

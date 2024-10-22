@@ -13,7 +13,7 @@ import useMerchantStore from '../stores/merchantStore';
 function MerchantList() {
   const { addMerchants } = useMerchantStore(); // 取得儲存資料的 action
   const merchantIdListRef = useRef([]); 
-  const LOAD_SIZE = 2;
+  const LOAD_SIZE = 8;
   const { ref, inView } = useInView({
     rootMargin: '100px',
   });
