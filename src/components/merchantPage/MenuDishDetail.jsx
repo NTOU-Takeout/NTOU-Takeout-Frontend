@@ -12,7 +12,7 @@ const DishDetail = ({
     imageUrl = "https://picsum.photos/400/300", 
     description = "【L】總糖量61 總熱量375 ｜ 咖啡因含量：綠(100mg以下) ｜ 醇雅「錫蘭紅茶」結合優質「崙背鮮乳」／「瑞穗鮮乳」，茶味、乳香完美交融，口感香醇滑潤。",
     options = [],
-    onClose, // 確保有接收 onClose 屬性
+    onClose, 
     ...otherProps
 }) => { 
     const { selectedSize, quantity, setSelectedSize, setQuantity } = useDishStore();
@@ -20,21 +20,21 @@ const DishDetail = ({
     const [isExiting, setIsExiting] = useState(false);
 
     useEffect(() => {
-        setIsVisible(true); // 當組件掛載時顯示
-        document.body.style.overflow = 'hidden'; // 禁用背景滾動
+        setIsVisible(true); 
+        document.body.style.overflow = 'hidden'; // forbid background scroll
 
         return () => {
-            document.body.style.overflow = ''; // 還原背景滾動
+            document.body.style.overflow = ''; // restore background scroll
         };
     }, []);
 
     const handleClose = () => {
         setIsExiting(true);
         setTimeout(() => {
-            setIsVisible(false); // 隱藏組件
-            document.body.style.overflow = ''; // 還原背景滾動
-            if (onClose) onClose(); // 確保調用 onClose 函數
-        }, 500); // 與動畫持平的時間
+            setIsVisible(false); // hide the modal
+            document.body.style.overflow = ''; // restore background scroll
+            if (onClose) onClose(); 
+        }, 500); 
     };
     
 
@@ -68,6 +68,7 @@ const DishDetail = ({
                             />
                         ))}
                     </div>
+                <div className="py-5"></div>
                 </div>
                 {/* Add to cart button */}
                 <CartOption />

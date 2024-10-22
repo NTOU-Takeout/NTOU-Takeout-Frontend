@@ -11,7 +11,7 @@ import getStoreClient from '../api/store/getStoreClient';
 import useMerchantStore from '../stores/merchantStore';
 
 function MerchantList() {
-  const { addMerchants } = useMerchantStore(); // 取得儲存資料的 action
+  const { addMerchants } = useMerchantStore();  
   const merchantIdListRef = useRef([]); 
   const LOAD_SIZE = 2;
   const { ref, inView } = useInView({

@@ -9,7 +9,8 @@ function Home(){
     const toggleSidebar= useSidebarStore((state) => state.toggleSidebar);
     return (
         <div>
-            <Header onLeftClick={toggleSidebar}/>
+            <Header onLeftClick={toggleSidebar} className="fixed top-0"/>
+            <div className="py-5"></div>
             <Sidebar></Sidebar>
             <Searchbar></Searchbar>
             <MerchantList></MerchantList>

@@ -1,26 +1,26 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons';
+import PropTypes from 'prop-types';
 
 const OptionCard = ({
     title = "飯糰大小",
     description = "請選項目",
-    options = [], // 傳入選項物件數組
-    type = 'single' // 默認為單選
+    options = [], // pass in an array of options
+    type = 'single' // default to single selection
 }) => {
-    const [selectedOptions, setSelectedOptions] = useState([]); // 存儲當前選擇的選項，默認為空數組
+    const [selectedOptions, setSelectedOptions] = useState([]);
 
     const handleCheckboxChange = (option) => {
         if (type === 'single') {
-            // 單選模式，確保僅選擇一個選項
-            setSelectedOptions([option.name]); // 僅選擇一個選項
+            setSelectedOptions([option.name]); 
         } else {
-            // 多選模式
+            // multiple selection
             setSelectedOptions((prev) => {
                 if (prev.includes(option.name)) {
-                    return prev.filter(opt => opt !== option.name); // 取消選擇
+                    return prev.filter(opt => opt !== option.name); //cancel selection
                 } else {
-                    return [...prev, option.name]; // 新增選擇
+                    return [...prev, option.name]; // new selection
                 }
             });
         }
@@ -37,8 +37,8 @@ const OptionCard = ({
                         <input
                             type="checkbox"
                             className="hidden"
-                            checked={selectedOptions.includes(option.name)} // 根據選項名稱判斷是否選中
-                            onChange={() => handleCheckboxChange(option)} // 傳遞選項物件
+                            checked={selectedOptions.includes(option.name)} // render checkbox based on selection
+                            onChange={() => handleCheckboxChange(option)} // handle checkbox change
                         />
                         <span className="flex items-center justify-between">
                             <span className="flex items-center">
@@ -46,7 +46,7 @@ const OptionCard = ({
                                     icon={selectedOptions.includes(option.name) ? faCheckSquare : faSquare}
                                     className="text-gray-500 mr-2"
                                 />
-                                {option.name} {/* 顯示選項名稱 */}
+                                {option.name} 
                             </span>
                             <span className="text-gray-600">{option.extraCost > 0 ? `+${option.extraCost}元` : '免費'}</span>
                         </span>
@@ -56,5 +56,15 @@ const OptionCard = ({
         </div>
     );
 };
-
+OptionCard.propTypes = {
+  title: PropTypes.string,
+  description: PropTypes.string,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      extraCost: PropTypes.number
+    })
+  ),
+  type: PropTypes.oneOf(['single', 'multiple'])
+};
 export default OptionCard;

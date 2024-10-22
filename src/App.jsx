@@ -6,21 +6,23 @@ import Home from './pages/Home';
 import Menu from './pages/Menu';
 import Review from './pages/Review';
 import NotFound from './pages/NotFound';
-import ScrollToTop from './pages/utils/ScrollToTop';
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
     {
         path: "/",
         element: <Home />,
+        errorElement: <NotFound />,
     },
     {
         path: "/menu/:merchantId",
         element: <Menu />,
+        errorElement: <NotFound />,
     },
     {
         path: "/menu/:merchantId/review",
         element: <Review />,
+        errorElement: <NotFound />,
     },
 ]);
 
@@ -29,7 +31,6 @@ function App() {
         <StrictMode>
             <QueryClientProvider client={queryClient}>
                 <RouterProvider router={router}>
-                    <ScrollToTop />
                 </RouterProvider>
             </QueryClientProvider>
         </StrictMode>
