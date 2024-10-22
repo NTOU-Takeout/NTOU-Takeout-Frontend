@@ -30,7 +30,7 @@ const Review = () => {
   const [reviewIdList, setReviewIdList] = useState([]);
   const navigate = useNavigate();
   const handleClose = () => {
-    navigate(`/menu/${merchantId}`);  // 返回到正確的路徑
+    navigate(-1);  // 返回到正確的路徑
   };
 
   useEffect(() => {
@@ -41,10 +41,9 @@ const Review = () => {
     } else { // Fetch merchant data if not in store
       const fetchMerchantData = async () => {
         try {
-          const [data] = await getStoreClient.getMerchantsByIdList([merchantId]);
-          setMerchant(data);
-          console.log("data:", data);
-          setReviewIdList(data?.reviewIdList || null);
+          const data = await getStoreClient.getMerchantsByIdList([merchantId]);
+          setMerchant(data[0]);
+          setReviewIdList(data[0]?.reviewIdList || null);
         } catch (error) {
           console.error("Failed to fetch merchant data:", error);
         }
@@ -53,26 +52,6 @@ const Review = () => {
     }
   }, [merchantId, getMerchantById]);
 
-  
-    const { 
-        data: reviewDataList,
-        isSuccess: isReviewDataListSuccess,
-    } = useQuery({
-        queryKey: ['reviewData'+ merchantId],
-        queryFn: async () => {
-        // if (!reviewIdList) return [];
-        const data = await getReviewClient.getReivewByIds(reviewIdList);
-        console.log("reviewDataList:", data);
-        // setReviewIdList(data);
-        return data;
-        },
-        enabled: !reviewIdList,
-    });
-    
-    console.log("merchant:", merchant);
-    if (merchant != null) {
-        console.log(merchant.reviewIdList);
-    }
     
     return (
         !merchant || !reviewIdList ? 

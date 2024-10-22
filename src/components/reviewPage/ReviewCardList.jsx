@@ -37,7 +37,6 @@ const ReviewCardList = ({reviewIdList, merchantId}) => {
         queryFn: async  ({ pageParam }) => {
             const start = pageParam * LOAD_SIZE;
             const end = start + LOAD_SIZE;
-            console.log("asadfewerfwef", reviewIdList);
             const idList = reviewIdList.slice(start, end);
             
             if (idList.length === 0) {
@@ -68,7 +67,7 @@ const ReviewCardList = ({reviewIdList, merchantId}) => {
       <FontAwesomeIcon icon={faSpinner} spinPulse className="flex justify-center items-center"/>
     </div> :
     <div className="flex flex-col items-center">
-      {data.pages.map((page, index) => (
+      {data?.pages.map((page, index) => (
         <div key={index}>
           {page.map((reviewCard) => (
             <ReviewCard
