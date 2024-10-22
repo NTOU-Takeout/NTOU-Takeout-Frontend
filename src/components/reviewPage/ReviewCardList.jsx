@@ -12,55 +12,56 @@ import getReviewClient from '../../api/review/getReviewClient';
 
 
 const ReviewCardList = ({reviewIdList, merchantId}) => {
-  const reviewCardIDListRef=useRef([]);
-  const LOAD_SIZE=10;
+    const LOAD_SIZE=10;
+    const { ref, inView } = useInView({
+        rootMargin: '100px',
+    });
 
-  const { ref, inView } = useInView({
-    rootMargin: '100px',
-  });
-
-  useEffect(() => {
-    if (inView && hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
-    }
-  }, [inView]);
-
-  // Use useInfiniteQuery to fetch ReviewCards in pages
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading: isReviewCardsLoading,
-    isError: isReviewCardsError,
-    error: reviewCardsError,
-  } = useInfiniteQuery({
-    queryKey: ['reviewCards'+merchantId],
-    queryFn: async  ({ pageParam }) => {
-        const start = pageParam * LOAD_SIZE;
-        const end = start + LOAD_SIZE;
-        const idList = reviewCardIDListRef.current.slice(start, end);
-        if (idList.length === 0) {
-            return [];
+    useEffect(() => {
+        if (inView && hasNextPage && !isFetchingNextPage) {
+        fetchNextPage();
         }
-        const reviewCards = await getReviewClient.getReivewByIds(idList);
-        console.log("reviewCards:", reviewCards);
+    }, [inView]);
+    
+    
+    const {
+        data,
+        fetchNextPage,
+        hasNextPage,
+        isFetchingNextPage,
+        isLoading: isReviewCardsLoading,
+        isError: isReviewCardsError,
+        error: reviewCardsError,
+    } = useInfiniteQuery({
+        queryKey: ['reviewCards'+merchantId],
+        queryFn: async  ({ pageParam }) => {
+            const start = pageParam * LOAD_SIZE;
+            const end = start + LOAD_SIZE;
+            console.log("asadfewerfwef", reviewIdList);
+            const idList = reviewIdList.slice(start, end);
+            
+            if (idList.length === 0) {
+                return [];
+            }
+            const reviewCards = await getReviewClient.getReivewByIds(idList);
+            console.log("reviewCards:", reviewCards);
 
-        return reviewCards;
-    },
+            return reviewCards;
+        },
 
-    initialPageParam: 0,
-    getNextPageParam: (lastPage,allPages) => {
-        const nextPage = allPages.length;
-        const totalReviewCards = reviewIdList?.length || 0;
-        
-        if (nextPage * LOAD_SIZE < totalReviewCards) {
-            return nextPage;
-        } else {
-            return undefined; // No more pages
-        }
-    },
-  });
+        initialPageParam: 0,
+        getNextPageParam: (lastPage,allPages) => {
+            const nextPage = allPages.length;
+            const totalReviewCards = reviewIdList?.length || 0;
+            
+            if (nextPage * LOAD_SIZE < totalReviewCards) {
+                return nextPage;
+            } else {
+                return undefined; // No more pages
+            }
+        },
+    });
+    
 
   return (isReviewCardsLoading?
     <div className="w-screen flex justify-center items-center mt-4 fa-2x">
@@ -72,10 +73,10 @@ const ReviewCardList = ({reviewIdList, merchantId}) => {
           {page.map((reviewCard) => (
             <ReviewCard
               key={reviewCard.id}
-              name={reviewCard.name}
-              starNumber={reviewCard.starNumber}
+              name={reviewCard.userName}
+              starNumber={reviewCard.rating}
               date={reviewCard.date}
-              description={reviewCard.description}
+              description={reviewCard.comment}
             />
           ))}
         </div>
@@ -86,7 +87,7 @@ const ReviewCardList = ({reviewIdList, merchantId}) => {
   );
 };
 ReviewCardList.propTypes = {
-  reviewIdList: PropTypes.arrayOf(PropTypes.object).isRequired,
+  reviewIdList: PropTypes.arrayOf(PropTypes.string).isRequired,
   merchantId: PropTypes.string.isRequired,
 };
 

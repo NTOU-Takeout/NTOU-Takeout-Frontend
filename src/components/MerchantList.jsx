@@ -54,6 +54,7 @@ function MerchantList() {
         const start = pageParam * LOAD_SIZE;
         const end = start + LOAD_SIZE;
         const idList = merchantIdListRef.current.slice(start, end);
+        console.log(merchantIdListRef);
         
         if (idList.length === 0) {
             return [];
