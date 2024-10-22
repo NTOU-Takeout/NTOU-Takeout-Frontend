@@ -3,21 +3,27 @@ import React, { useRef, useState, useEffect } from 'react';
 import MenuHeader from '../components/merchantPage/MenuHeader';
 import MenuNavbar from '../components/merchantPage/MenuNavbar';
 import MenuSectionPage from '../components/merchantPage/MenuSectionPage';
+import MenuDishDetail from '../components/merchantPage/MenuDishDetail';
 
 function Menu() {
     const { merchantId } = useParams();
     const sectionRefs = useRef([]);
-    const [isNavbarFixed, setIsNavbarFixed] = useState(false);
-    const [isAnimating, setIsAnimating] = useState(true);
+    const [isNavbarFixed, setIsNavbarFixed] = useState(false);  // 狀態控制 navbar 是否固定
 
+    // 處理滾動到對應的部分
     const handleScrollToSection = (index) => {
         sectionRefs.current[index]?.scrollIntoView({ behavior: 'smooth' });
     };
 
+    // 監控滾動事件，更新 isNavbarFixed 狀態
     useEffect(() => {
         const handleScroll = () => {
             const scrollPosition = window.scrollY;
-            setIsNavbarFixed(scrollPosition > 200);
+            if (scrollPosition > 200) {  // 設定一個閾值，例如200px
+                setIsNavbarFixed(true);
+            } else {
+                setIsNavbarFixed(false);
+            }
         };
         window.addEventListener('scroll', handleScroll);
 
@@ -25,7 +31,6 @@ function Menu() {
             window.removeEventListener('scroll', handleScroll);
         };
     }, []);
-
     useEffect(() => {
         const timer = setTimeout(() => {
             setIsAnimating(false); // 取消動畫
@@ -108,8 +113,8 @@ function Menu() {
     }
 
     return (
-        <div className={`transition-transform duration-100 ${isAnimating ? 'translate-x-full' : 'translate-x-0'}`}>
-            <MenuHeader merchantId={merchantId} />  {/* 傳遞 merchantId */}
+        <div>
+            <MenuHeader />
             <MenuNavbar onNavClick={handleScrollToSection} isNavbarFixed={isNavbarFixed} />
             <MenuSectionPage sectionRefs={sectionRefs} />
         </div>
