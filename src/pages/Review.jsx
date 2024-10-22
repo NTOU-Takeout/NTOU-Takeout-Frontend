@@ -28,9 +28,9 @@ const Review = () => {
   const getMerchantById = useMerchantStore((state) => state.getMerchantById);
   const [merchant, setMerchant] = useState(null);
   const [reviewIdList, setReviewIdList] = useState([]);
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
   const handleClose = () => {
-    navigate('/');
+    navigate(`/menu/${merchantId}`);  // 返回到正確的路徑
   };
 
   useEffect(() => {
@@ -93,7 +93,6 @@ const Review = () => {
                         <span className="text-5xl font-bold">{merchant.rating}</span>
                         <FontAwesomeIcon icon={faStar} className="text-yellow-300 ml-2 w-10 h-10" />
                     </div>
-
                     <div className="mt-4 text-left w-full max-w-md">
                         <RatingBar stars={5} percentage={star1Percentage} count={star1Count} />
                         <RatingBar stars={4} percentage={star2Percentage} count={star2Count} />

@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
 const useMerchantStore = create((set,get) => ({
-    merchants: {}, // 儲存商家的資料
+    merchants: {}, 
     addMerchants: (newMerchants) => set((state) => ({
         merchants: {
             ...state.merchants,
@@ -11,7 +11,6 @@ const useMerchantStore = create((set,get) => ({
             }, {}),
         }
     })),
-    // 查找商家
     getMerchantById: (id) => get().merchants[id] || null,
 }));
 
