@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import MenuDishDetail from '../components/merchantPage/MenuDishDetail';
 import { useParams } from 'react-router-dom';
 import useMerchantStore from '../stores/merchantStore';
@@ -13,6 +13,7 @@ function Menu() {
   const { merchantId } = useParams();
   const getMerchantById = useMerchantStore((state) => state.getMerchantById);
   const [menuId, setMenuId] = useState(null);
+  const menuCategoryListRef = useRef([]);
   const [merchant, setMerchant] = useState(null);
   useEffect(() => {
     const merchantData = getMerchantById(merchantId);
@@ -23,12 +24,15 @@ function Menu() {
         setMerchant(data);
       }
       getMerchantData();
+      console.log("refetched data:", merchant);
     }
     setMerchant(merchantData);
-    console.log("merchantData:", merchantData.menuId);
-    setMenuId(merchantData?.menuId);
-  }, [merchantId, getMerchantById]);
+    setMenuId(merchantData.menuId);
+  }, [merchantId, getMerchantById,merchant]);
 
+  useEffect(() => {
+    console.log("menuId:", menuId);
+  }, [menuId]);
   const {
     data: menuCategoryList,
     isLoading: isMenuCategoryListLoading,
@@ -36,7 +40,10 @@ function Menu() {
     error: menuCategoryListError,
   } = useQuery({
     queryKey: ['menuCategoryList', menuId],
-    queryFn: getMenuClient.getMenuByMenuId(menuId),
+    queryFn: async () => {
+      const data = await getMenuClient.getMenuByMenuId(menuId);
+      return data;
+    },
   });
 
   useEffect(() => {
