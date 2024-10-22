@@ -7,7 +7,6 @@ const useMerchantStore = create((set,get) => ({
             ...state.merchants,
             ...newMerchants.reduce((acc, merchant) => {
                 acc[merchant.id] = merchant;
-                console.log("acc:", acc);
                 return acc;
             }, {}),
         }
