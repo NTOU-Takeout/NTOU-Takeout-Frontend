@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';  // 引入 useNavigate
-import ReviewCard from '../components/reviewPage/ReviewCard'
+import ReviewCardList from '../components/reviewPage/ReviewCardList'
 
 const RatingBar = ({ stars, percentage, count }) => {
   return (
@@ -70,10 +70,7 @@ const Review = () => {
         <RatingBar stars={2} percentage={star4Percentage} count={star4Count} />
         <RatingBar stars={1} percentage={star5Percentage} count={star5Count} />
       </div>
-      <ReviewCard></ReviewCard>
-      <ReviewCard></ReviewCard>
-      <ReviewCard></ReviewCard>
-      <ReviewCard></ReviewCard>
+        <ReviewCardList></ReviewCardList>
     </div>
   );
 };
