@@ -4,7 +4,6 @@ const getStoreClient = {
     Object.keys(params).forEach((key) => url.searchParams.append(key, params[key]));
     console.log("fetching store id list");
     const response = await fetch(url);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
     if (!response.ok) {
       throw new Error('Failed to fetch store ID list');
     }
@@ -19,7 +18,6 @@ const getStoreClient = {
       },
       body: JSON.stringify(idList)
     });
-    await new Promise((resolve) => setTimeout(resolve, 1000));
     console.log("fetching store details for merchant ID:", idList);
     if (!response.ok) {
       throw new Error(`Failed to fetch details for merchant ID: ${idList}`);
