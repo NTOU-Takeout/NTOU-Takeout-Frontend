@@ -70,7 +70,10 @@ const Review = () => {
         <RatingBar stars={2} percentage={star4Percentage} count={star4Count} />
         <RatingBar stars={1} percentage={star5Percentage} count={star5Count} />
       </div>
-      
+      <ReviewCard></ReviewCard>
+      <ReviewCard></ReviewCard>
+      <ReviewCard></ReviewCard>
+      <ReviewCard></ReviewCard>
     </div>
   );
 };
