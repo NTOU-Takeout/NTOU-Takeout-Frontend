@@ -2,6 +2,7 @@ import { StrictMode } from 'react';
 import Home from './pages/Home';
 import Menu from './pages/Menu';
 import React from 'react';
+import Review from './pages/Review';
 import {
     createBrowserRouter,
     RouterProvider,
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
     {
         path: "/menu/:merchantId",
         element: <Menu />,
+    },
+    {
+        path: "/review/",
+        element: <Review />
     }
 ]);
 
