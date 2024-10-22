@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const MenuItemCard = ({
     item,                      // 接收整個 item 物件
     onClick,
-    imageUrl,// 接收 onClick 函數
+    imageUrl,                 // 接收 onClick 函數
     ...otherProps
 }) => {
   const {
@@ -15,9 +15,9 @@ const MenuItemCard = ({
 
   return (
     <div className="menu-item block cursor-pointer" onClick={() => onClick(item)}>
-      <div className="flex m-8 max-w-xl max-h-[230px] bg-white text-white rounded-lg overflow-hidden shadow-lg font-notoTC">
+      <div className="flex m-8 max-w-xl bg-white text-white rounded-lg overflow-hidden shadow-lg font-notoTC">
         {/* Image */}
-        <div className="w-64 overflow-hidden">
+        <div className="w-64 overflow-hidden aspect-[5/3]"> {/* 使用 aspect-ratio */}
             <img 
                 src={imageUrl} 
                 alt="Dish Image" 
