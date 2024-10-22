@@ -66,10 +66,10 @@ const ReviewCardList = ({reviewIdList, merchantId}) => {
     <div className="w-screen flex justify-center items-center mt-4 fa-2x">
       <FontAwesomeIcon icon={faSpinner} spinPulse className="flex justify-center items-center"/>
     </div> :
-    <div className="flex flex-col items-center">
-      {data?.pages.map((page, index) => (
-        <div key={index}>
-          {page.map((reviewCard) => (
+    <div className="flex flex-col items-center overflow-y-scroll ">
+      {data?.pages.map((page) => 
+          page.map((reviewCard) => {
+            return (
             <ReviewCard
               key={reviewCard.id}
               name={reviewCard.userName}
@@ -77,10 +77,14 @@ const ReviewCardList = ({reviewIdList, merchantId}) => {
               date={reviewCard.date}
               description={reviewCard.comment}
             />
-          ))}
-        </div>
-      ))}
-      <div ref={ref}></div>
+            );
+        })
+      )}
+    <div ref={ref} className="my-5"></div>
+    {hasNextPage ?
+        <div className="flex justify-center items-center mt-4 fa-2x">
+          <FontAwesomeIcon icon={faSpinner} spinPulse />
+        </div> : "No more reviews to show"}
     </div>
 
   );
