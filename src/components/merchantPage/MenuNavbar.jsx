@@ -14,11 +14,11 @@ const Navbar = ({ onNavClick, isNavbarFixed }) => {
 
     return (
         <nav
-            className={`bg-white p-4 flex transition-all duration-300 overflow-x-auto whitespace-nowrap ${
+            className={`bg-white p-4 flex transition-all w-full duration-300  ${
                 isNavbarFixed ? 'fixed top-0 left-0 w-full z-10 shadow-lg' : 'relative'
             }`}
         >
-            <ul className={`mt-2 flex space-x-4 text-gray-400 text-lg font-notoTC ${ isNavbarFixed ? '' : 'relative -top-12'}`}>
+            <ul className={`mt-2 flex w-full space-x-4 text-gray-400 text-lg font-notoTC overflow-x-auto whitespace-nowrap scrollbar-transparent ${ isNavbarFixed ? '' : 'relative -top-12'}`}>
                 {navbarItems.map((item, index) => (
                     <li
                         key={index}

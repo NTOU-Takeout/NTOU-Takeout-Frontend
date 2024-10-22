@@ -15,9 +15,9 @@ const MenuItemCard = ({
 
   return (
     <div className="menu-item block cursor-pointer" onClick={() => onClick(item)}>
-      <div className="flex m-8 max-w-xl bg-white text-white rounded-lg overflow-hidden shadow-lg font-notoTC">
+      <div className="flex m-8 max-w-xl max-h-[230px] bg-white text-white rounded-lg overflow-hidden shadow-lg font-notoTC">
         {/* Image */}
-        <div className="w-64 h-[14rem] overflow-hidden">
+        <div className="w-64 overflow-hidden">
             <img 
                 src={imageUrl} 
                 alt="Dish Image" 

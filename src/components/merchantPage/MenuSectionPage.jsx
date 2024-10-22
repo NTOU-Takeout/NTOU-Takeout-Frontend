@@ -26,7 +26,7 @@ function MenuSectionPage({ sectionRefs, categoryData }) { // 接受 categoryData
         <div className="-top-12 relative min-h-screen flex flex-col items-center justify-center container mx-auto p-4">
             {items.map((item, index) => (
                 <div key={index} ref={(el) => sectionRefs.current[index] = el} className="mb-8">
-                    <p className="text-2xl font-medium my-2">{item.text}</p>
+                    <p className="text-2xl font-notoTC my-2 font-bold">{item.text}</p>
                     {item.foods.map((food) => (
                         <MenuItemCard 
                             key={food.id} 
