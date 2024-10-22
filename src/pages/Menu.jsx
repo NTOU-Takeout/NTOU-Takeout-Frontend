@@ -43,7 +43,7 @@ function Menu() {
     data: menuCategoryList,
     isSuccess: isMenuCategoryListSuccess,
   } = useQuery({
-    queryKey: ['menuCategoryList'],
+    queryKey: ['menuCategoryList', menuId],
     queryFn: async () => {
       if (!menuId) return [];
       const data = await getMenuClient.getMenuByMenuId(menuId);

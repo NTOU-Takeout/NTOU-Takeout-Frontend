@@ -1,10 +1,14 @@
 import React from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate, useParams } from 'react-router-dom'; 
+import { useQuery } from '@tanstack/react-query';
 import ReviewCardList from '../components/reviewPage/ReviewCardList';
 import RatingBar from '../components/reviewPage/RatingBar';
-
+import getReviewClient from '../api/review/getReviewClient';
+import getStoreClient from '../api/store/getStoreClient';
+import useMerchantStore from '../stores/merchantStore';
 
 
 const reviewName="海洋大學店";
@@ -22,10 +26,52 @@ const star5Count=4;
 
 
 const Review = () => {
+  const {merchantId} = useParams();
+  console.log("merchantId:", merchantId);
+  const getMerchantById = useMerchantStore((state) => state.getMerchantById);
+  const [merchant, setMerchant] = useState(null);
+  const [reviewIdList, setReviewIdList] = useState([]);
   const navigate = useNavigate();  
   const handleClose = () => {
     navigate('/');
   };
+
+  useEffect(() => {
+    const merchantData = getMerchantById(merchantId);
+    if (merchantData) {
+      setMerchant(merchantData);
+      setReviewIdList(merchantData.reviewIdList);
+    } else { // Fetch merchant data if not in store
+      const fetchMerchantData = async () => {
+        try {
+          console.log("merchantId:", merchantId);
+          const [data] = await getStoreClient.getMerchantsByIdList([merchantId]);
+          setMerchant(data);
+          setReviewIdList(data?.reviewIdList || null);
+        } catch (error) {
+          console.error("Failed to fetch merchant data:", error);
+        }
+      };
+      fetchMerchantData();
+    }
+  }, [merchantId, getMerchantById]);
+
+  useEffect(() => {
+    console.log("reviewIdList:", reviewIdList);
+  }, [reviewIdList]);
+
+  const { 
+    data: reviewDataList,
+  } = useQuery({
+    queryKey: ['reviewData'+merchantId],
+    queryFn: async () => {
+      if (!reviewIdList) return [];
+      const data = await getReviewClient.getReivewByIds(reviewIdList);
+      console.log("reviewDataList:", data);
+      return data;
+    },
+    enabled: !!reviewIdList,
+  });
 
   return (
     <div className="fixed top-0 left-0 w-full h-full p-4 bg-white flex flex-col justify-start items-start">
