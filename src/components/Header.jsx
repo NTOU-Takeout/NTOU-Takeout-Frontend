@@ -35,7 +35,7 @@ const Header = ({
   // }
 
     return (
-        <header className="relative top-0 left-0 w-full flex justify-between items-center bg-white shadow-md transition-shadow duration-300 ease-in-out p-2 font-notoTC">
+        <header className="fixed z-30  top-0 left-0 w-full flex justify-between items-center bg-white shadow-md transition-shadow duration-300 ease-in-out p-2 font-notoTC">
             <div className="text-xl cursor-pointer" onClick={onLeftClick}>
                 <FontAwesomeIcon icon={leftIcon} />
             </div>

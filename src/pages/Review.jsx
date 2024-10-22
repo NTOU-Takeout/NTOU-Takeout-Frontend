@@ -26,14 +26,15 @@ const star5Count=4;
 
 
 const Review = () => {
-  const {merchantId} = useParams();
-  console.log("merchantId:", merchantId);
-  const getMerchantById = useMerchantStore((state) => state.getMerchantById);
-  const [merchant, setMerchant] = useState(null);
-  const [reviewIdList, setReviewIdList] = useState([]);
-  const navigate = useNavigate();  
+    const {merchantId} = useParams();
+    console.log("merchantId:", merchantId);
+    const getMerchantById = useMerchantStore((state) => state.getMerchantById);
+    const [merchant, setMerchant] = useState(null);
+    const [reviewIdList, setReviewIdList] = useState([]);
+    const navigate = useNavigate();  
+    
   const handleClose = () => {
-    navigate('/');
+    navigate(`/menu/${merchantId}`);  // 返回到正確的路徑
   };
 
   useEffect(() => {
@@ -96,7 +97,8 @@ const Review = () => {
         <RatingBar stars={2} percentage={star4Percentage} count={star4Count} />
         <RatingBar stars={1} percentage={star5Percentage} count={star5Count} />
       </div>
-        <ReviewCardList></ReviewCardList>
+      
+      <ReviewCardList />
     </div>
   );
 };

@@ -11,7 +11,7 @@ import getStoreClient from '../api/store/getStoreClient';
 import useMerchantStore from '../stores/merchantStore';
 
 function MerchantList() {
-  const { addMerchants } = useMerchantStore(); // 取得儲存資料的 action
+  const { addMerchants } = useMerchantStore();  
   const merchantIdListRef = useRef([]); 
   const LOAD_SIZE = 2;
   const { ref, inView } = useInView({
@@ -86,12 +86,13 @@ function MerchantList() {
         page.map((merchant) => {
           return (
             <Merchant
-              key={merchant.id}
-              id={merchant.id}
-              name={merchant.name}
-              averageSpend={merchant.averageSpend}
-              rating={merchant.rating}
-              picture={merchant.picture}
+                key={merchant.id}
+                id={merchant.id}
+                name={merchant.name}
+                averageSpend={merchant.averageSpend}
+                rating={merchant.rating}
+                reviews={merchant.reviewIdList}
+                picture={merchant.picture}
               className="w-[300px] h-[200px] bg-white border border-gray-300 rounded-xl shadow-lg"
             />
           );
