@@ -31,7 +31,7 @@ const Merchant = (props) => {
     return (
         
         <Link key={id} to={`/menu/${id}`}>
-        <div className="relative w-[361px] h-[241px] m-2 bg-white border-2
+        <div className="font-notoTC relative w-[361px] h-[241px] m-2 bg-white border-2
                         border-gray-300 rounded-2xl overflow-hidden">
         <div className="absolute right-[5%] top-[13px] z-20 p-3 fa-lg"  
             onClick={(e) => {

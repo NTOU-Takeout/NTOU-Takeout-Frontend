@@ -5,7 +5,7 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 const RatingBar = (prop) => {
     const {stars,percentage,count}=prop;
     return (
-      <div className=" flex items-center mt-1">
+      <div className="font-notoTC flex items-center mt-1">
         <div className="flex">
           {[...Array(5)].map((_, i) => (
             <FontAwesomeIcon

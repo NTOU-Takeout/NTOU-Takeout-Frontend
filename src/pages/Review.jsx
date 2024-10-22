@@ -55,10 +55,10 @@ const Review = () => {
     
     return (
         !merchant || !reviewIdList ? 
-        <div className="flex justify-center items-center mt-4 fa-2x">
+        <div className="font-notoTC flex justify-center items-center mt-4 fa-2x">
             <FontAwesomeIcon icon={faSpinner} spinPulse />
             </div> :
-            <div className="fixed top-0 left-0 w-full h-full  bg-white flex flex-col justify-start items-start">
+            <div className="font-notoTC fixed top-0 left-0 w-full h-full  bg-white flex flex-col justify-start items-start">
                 <div className='ml-12 mt-8'>
                     <div className="absolute top-4 right-4">
                         <button className="text-gray-500 hover:text-gray-700" onClick={handleClose}>

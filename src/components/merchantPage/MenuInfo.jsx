@@ -5,7 +5,7 @@ import { faTimes, faStar, faMapMarkerAlt, faPhone, faClock, faCoins } from '@for
 
 const MenuInfo = ({ onClose, storeName="好想水餃", starRate="4.9", solidStar=4, locationURL="https://maps.google.com", locationName="基隆市中正區北寧路2號 (Google map)", telNumber="0987-114-514", costDownLimit="100", costUpLimit="200" }) => {
     return (
-        <div className="fixed z-50 left-1/2 w-[80%] transform -translate-x-1/2 -translate-y-1/2 max-w-sm p-4 bg-white shadow-md rounded-xl mx-auto">
+        <div className="font-notoTC fixed z-50 left-1/2 w-[80%] transform -translate-x-1/2 -translate-y-1/2 max-w-sm p-4 bg-white shadow-md rounded-xl mx-auto">
             {/* Close button */}
             <div className="absolute top-2 right-2 rounded-lg flex justify-center items-center">
                 <button className="text-gray-500 hover:text-gray-700 p-2">

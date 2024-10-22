@@ -39,7 +39,7 @@ const DishDetail = ({
     
 
     return (
-        <div className={`fixed z-10 top-0 left-0 right-0 transition-all duration-500 ${isVisible ? 'top-0' : '-top-full'}`}>
+        <div className={`font-notoTC fixed z-10 top-0 left-0 right-0 transition-all duration-500 ${isVisible ? 'top-0' : '-top-full'}`}>
             <div className={`bg-white shadow-md overflow-hidden max-h-[100vh] flex flex-col transition-transform duration-500 ${isExiting ? 'translate-y-full none' : 'translate-y-0'}`}>
                 {/* 滾動內容容器 */}
                 <div className="flex-1 overflow-y-auto">

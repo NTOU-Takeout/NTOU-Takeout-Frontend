@@ -63,10 +63,10 @@ const ReviewCardList = ({reviewIdList, merchantId}) => {
     
 
   return (isReviewCardsLoading?
-    <div className="w-screen flex justify-center items-center mt-4 fa-2x">
+    <div className="font-notoTC w-screen flex justify-center items-center mt-4 fa-2x">
       <FontAwesomeIcon icon={faSpinner} spinPulse className="flex justify-center items-center"/>
     </div> :
-    <div className="flex flex-col items-center overflow-y-scroll ">
+    <div className="font-notoTC flex flex-col items-center overflow-y-scroll ">
       {data?.pages.map((page) => 
           page.map((reviewCard) => {
             return (

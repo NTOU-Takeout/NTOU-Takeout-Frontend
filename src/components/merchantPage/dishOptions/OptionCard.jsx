@@ -27,7 +27,7 @@ const OptionCard = ({
     };
 
     return (
-        <div className="border rounded-lg p-4 max-w-sm mx-auto mb-8 mt-8">
+        <div className="border rounded-lg p-4 max-w-sm mx-auto mb-8 mt-8 font-notoTC">
             <h3 className="text-lg font-semibold">{title}</h3>
             <p className="text-sm text-gray-500">{description}</p>
 

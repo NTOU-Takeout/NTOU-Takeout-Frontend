@@ -14,7 +14,7 @@ const Navbar = ({ onNavClick, isNavbarFixed }) => {
 
     return (
         <nav
-            className={`bg-white p-3 flex transition-all w-full duration-300  ${
+            className={`font-notoTC bg-white p-3 flex transition-all w-full duration-300  ${
                 isNavbarFixed ? 'fixed top-0 left-0 w-full z-10 shadow-lg' : 'relative'
             }`}
         >
