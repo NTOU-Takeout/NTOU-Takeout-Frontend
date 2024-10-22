@@ -74,7 +74,7 @@ function Menu() {
 
     // Fetch menu category list and dish details
     const { data: menuCategoryList, isSuccess: isMenuCategoryListSuccess } = useQuery({
-        queryKey: ['menuCategoryList', menuId], // 與 menuId 關聯
+        queryKey: ['menuCategoryList'+menuId], // 與 menuId 關聯
         queryFn: async () => {
             if (!menuId) return [];
             const data = await getMenuClient.getMenuByMenuId(menuId);
