@@ -26,16 +26,16 @@ const Header = ({
     return () => clearTimeout(timer);
   }, [setIsLoading]);
 
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-screen bg-gray-200">
-        <p className="text-[1.5rem] text-gray-800">Loading...</p>
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="flex justify-center items-center h-screen bg-gray-200">
+  //       <p className="text-[1.5rem] text-gray-800">Loading...</p>
+  //     </div>
+  //   );
+  // }
 
     return (
-        <header className="relative top-0 left-0 w-full flex justify-between items-center bg-white shadow-md transition-shadow duration-300 ease-in-out p-2 font-notoTC">
+        <header className="fixed z-30  top-0 left-0 w-full flex justify-between items-center bg-white shadow-md transition-shadow duration-300 ease-in-out p-2 font-notoTC">
             <div className="text-xl cursor-pointer" onClick={onLeftClick}>
                 <FontAwesomeIcon icon={leftIcon} />
             </div>
