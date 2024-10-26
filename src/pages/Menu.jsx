@@ -1,28 +1,28 @@
-import { useParams } from 'react-router-dom';
-import React, { useRef, useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { useQuery } from '@tanstack/react-query';
-import MenuHeader from '../components/merchantPage/MenuHeader';
-import MenuNavbar from '../components/merchantPage/MenuNavbar';
-import MenuSectionPage from '../components/merchantPage/MenuSectionPage';
-import useMerchantStore from '../stores/merchantStore';
-import useNavStore from '../stores/merchantMenuNav';  // 引入 nav store
-import getStoreClient from '../api/store/getStoreClient';
-import getMenuClient from '../api/menu/getMenuClient';
+import { useParams } from "react-router-dom";
+import React, { useRef, useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { useQuery } from "@tanstack/react-query";
+import MenuHeader from "../components/merchantPage/MenuHeader";
+import MenuNavbar from "../components/merchantPage/MenuNavbar";
+import MenuSectionPage from "../components/merchantPage/MenuSectionPage";
+import useMerchantStore from "../stores/merchantStore";
+import useNavStore from "../stores/merchantMenuNav"; // 引入 nav store
+import getStoreClient from "../api/store/getStoreClient";
+import getMenuClient from "../api/menu/getMenuClient";
 
 function Menu() {
     const { merchantId } = useParams();
     const sectionRefs = useRef([]);
     const [isNavbarFixed, setIsNavbarFixed] = useState(false);
     const [isAnimating, setIsAnimating] = useState(true);
-    
+
     // 使用 nav store
-    const setNavbarItems = useNavStore((state) => state.setNavbarItems); 
+    const setNavbarItems = useNavStore((state) => state.setNavbarItems);
 
     // 處理滾動到對應的部分
     const handleScrollToSection = (index) => {
-        sectionRefs.current[index]?.scrollIntoView({ behavior: 'smooth' });
+        sectionRefs.current[index]?.scrollIntoView({ behavior: "smooth" });
     };
 
     // 監控滾動事件，更新 isNavbarFixed 狀態
@@ -31,10 +31,10 @@ function Menu() {
             const scrollPosition = window.scrollY;
             setIsNavbarFixed(scrollPosition > 200);
         };
-        window.addEventListener('scroll', handleScroll);
+        window.addEventListener("scroll", handleScroll);
 
         return () => {
-            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener("scroll", handleScroll);
         };
     }, []);
 
@@ -61,7 +61,9 @@ function Menu() {
         } else {
             const fetchMerchantData = async () => {
                 try {
-                    const [data] = await getStoreClient.getMerchantsByIdList([merchantId]);
+                    const [data] = await getStoreClient.getMerchantsByIdList([
+                        merchantId,
+                    ]);
                     setMerchant(data);
                     setMenuId(data?.menuId || null);
                 } catch (error) {
@@ -73,33 +75,41 @@ function Menu() {
     }, [merchantId, getMerchantById]);
 
     // Fetch menu category list and dish details
-    const { data: menuCategoryList, isSuccess: isMenuCategoryListSuccess } = useQuery({
-        queryKey: ['menuCategoryList'+menuId], // 與 menuId 關聯
-        queryFn: async () => {
-            if (!menuId) return [];
-            const data = await getMenuClient.getMenuByMenuId(menuId);
-            return data.categories;
-        },
-        enabled: !!menuId, // 當 menuId 存在時才啟動查詢
-    });
+    const { data: menuCategoryList, isSuccess: isMenuCategoryListSuccess } =
+        useQuery({
+            queryKey: ["menuCategoryList", menuId], // 與 menuId 關聯
+            queryFn: async () => {
+                if (!menuId) return [];
+                const data = await getMenuClient.getMenuByMenuId(menuId);
+                return data.categories;
+            },
+            enabled: !!menuId, // 當 menuId 存在時才啟動查詢
+        });
 
     // 獲取菜品詳細資料
     const { data } = useQuery({
-        queryKey: ['menuCategoryData', menuId, menuCategoryList], // 關聯 menuId 和 menuCategoryList
+        queryKey: ["menuCategoryData", menuId, menuCategoryList], // 關聯 menuId 和 menuCategoryList
         queryFn: async () => {
             if (!menuCategoryList || menuCategoryList.length === 0) return [];
-            const dishIds = menuCategoryList.flatMap((category) => category.second);
+            const dishIds = menuCategoryList.flatMap(
+                (category) => category.second,
+            );
             try {
-                const dishDetails = await getMenuClient.getDishsByDishIds(dishIds);
+                const dishDetails =
+                    await getMenuClient.getDishsByDishIds(dishIds);
                 const categorizedData = menuCategoryList.map((category) => ({
                     categoryName: category.first,
-                    dishes: category.second.map((id) => dishDetails.find((dish) => dish.id === id)),
+                    dishes: category.second.map((id) =>
+                        dishDetails.find((dish) => dish.id === id),
+                    ),
                 }));
 
-                setCategoryData(categorizedData); 
+                setCategoryData(categorizedData);
 
                 // 更新 navbarItems 到 navstore
-                setNavbarItems(menuCategoryList.map(category => category.first)); 
+                setNavbarItems(
+                    menuCategoryList.map((category) => category.first),
+                );
 
                 return dishIds;
             } catch (error) {
@@ -123,7 +133,7 @@ function Menu() {
     }
     return (
         <div>
-            <MenuHeader 
+            <MenuHeader
                 title={merchant.name} // 使用商家名稱
                 distance={merchant.distance || 0} // 使用商家距離
                 averageCost={merchant.averageSpend || 0} // 使用商家平均花費
@@ -132,8 +142,15 @@ function Menu() {
                 bannerLink={merchant.picture} // 使用商家橫幅圖片鏈接
                 merchantId={merchantId} // 傳遞 merchantId
             />
-            <MenuNavbar onNavClick={handleScrollToSection} isNavbarFixed={isNavbarFixed} />
-            <MenuSectionPage sectionRefs={sectionRefs} categoryData={categoryData} /> {/* 傳遞 categoryData */}
+            <MenuNavbar
+                onNavClick={handleScrollToSection}
+                isNavbarFixed={isNavbarFixed}
+            />
+            <MenuSectionPage
+                sectionRefs={sectionRefs}
+                categoryData={categoryData}
+            />{" "}
+            {/* 傳遞 categoryData */}
         </div>
     );
 }
