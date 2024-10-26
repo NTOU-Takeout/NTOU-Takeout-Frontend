@@ -10,7 +10,7 @@ import useMerchantStore from "../stores/merchantStore";
 function MerchantList() {
     const { addMerchants } = useMerchantStore();
     const merchantIdListRef = useRef([]);
-    const LOAD_SIZE = 8;
+    const LOAD_SIZE = 4;
     const { ref, inView } = useInView({
         rootMargin: "100px",
     });
