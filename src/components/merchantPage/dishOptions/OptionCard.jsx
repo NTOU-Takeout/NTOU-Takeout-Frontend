@@ -1,24 +1,24 @@
-import  { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons';
-import PropTypes from 'prop-types';
+import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
+import PropTypes from "prop-types";
 
 const OptionCard = ({
     title = "飯糰大小",
     description = "請選項目",
     options = [], // pass in an array of options
-    type = 'single' // default to single selection
+    type = "single", // default to single selection
 }) => {
     const [selectedOptions, setSelectedOptions] = useState([]);
 
     const handleCheckboxChange = (option) => {
-        if (type === 'single') {
-            setSelectedOptions([option.name]); 
+        if (type === "single") {
+            setSelectedOptions([option.name]);
         } else {
             // multiple selection
             setSelectedOptions((prev) => {
                 if (prev.includes(option.name)) {
-                    return prev.filter(opt => opt !== option.name); //cancel selection
+                    return prev.filter((opt) => opt !== option.name); //cancel selection
                 } else {
                     return [...prev, option.name]; // new selection
                 }
@@ -43,12 +43,20 @@ const OptionCard = ({
                         <span className="flex items-center justify-between">
                             <span className="flex items-center">
                                 <FontAwesomeIcon
-                                    icon={selectedOptions.includes(option.name) ? faCheckSquare : faSquare}
+                                    icon={
+                                        selectedOptions.includes(option.name)
+                                            ? faCheckSquare
+                                            : faSquare
+                                    }
                                     className="text-gray-500 mr-2"
                                 />
-                                {option.name} 
+                                {option.name}
                             </span>
-                            <span className="text-gray-600">{option.extraCost > 0 ? `+${option.extraCost}元` : '免費'}</span>
+                            <span className="text-gray-600">
+                                {option.extraCost > 0
+                                    ? `+${option.extraCost}元`
+                                    : "免費"}
+                            </span>
                         </span>
                     </label>
                 ))}
@@ -57,14 +65,14 @@ const OptionCard = ({
     );
 };
 OptionCard.propTypes = {
-  title: PropTypes.string,
-  description: PropTypes.string,
-  options: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      extraCost: PropTypes.number
-    })
-  ),
-  type: PropTypes.oneOf(['single', 'multiple'])
+    title: PropTypes.string,
+    description: PropTypes.string,
+    options: PropTypes.arrayOf(
+        PropTypes.shape({
+            name: PropTypes.string.isRequired,
+            extraCost: PropTypes.number,
+        }),
+    ),
+    type: PropTypes.oneOf(["single", "multiple"]),
 };
 export default OptionCard;

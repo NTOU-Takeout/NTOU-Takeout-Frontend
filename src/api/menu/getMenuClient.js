@@ -1,6 +1,8 @@
 const getMenuClient = {
     getMenuByMenuId: async (menuId) => {
-        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/menu/${menuId}`);
+        const response = await fetch(
+            `${import.meta.env.VITE_BASE_URL}/api/menu/${menuId}`,
+        );
         if (!response.ok) {
             throw new Error(`Failed to fetch menu by ID: ${menuId}`);
         }
@@ -9,13 +11,16 @@ const getMenuClient = {
     },
     getDishsByDishIds: async (dishIds) => {
         console.log("dishIds:", dishIds);
-        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/menu/getDishesByIds`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
+        const response = await fetch(
+            `${import.meta.env.VITE_BASE_URL}/api/menu/getDishesByIds`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(dishIds),
             },
-            body: JSON.stringify(dishIds)
-        });
+        );
         console.log("response:", response);
         if (!response.ok) {
             throw new Error(`Failed to fetch details for dish ID: ${dishIds}`);
@@ -24,6 +29,6 @@ const getMenuClient = {
         console.log("fetching dish details for dish ID:", dishIds);
         return data;
     },
-}
+};
 
 export default getMenuClient;
