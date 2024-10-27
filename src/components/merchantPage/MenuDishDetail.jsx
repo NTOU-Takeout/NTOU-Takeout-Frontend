@@ -7,10 +7,10 @@ import CartOption from "./dishOptions/CartOption";
 import useDishStore from "../../stores/dishDetailStore.js";
 
 const DishDetail = ({
-    name = "原味飯糰",
+    name,
     price = 0,
     imageUrl = "https://picsum.photos/400/300",
-    description = "【L】總糖量61 總熱量375 ｜ 咖啡因含量：綠(100mg以下) ｜ 醇雅「錫蘭紅茶」結合優質「崙背鮮乳」／「瑞穗鮮乳」，茶味、乳香完美交融，口感香醇滑潤。",
+    description,
     options = [],
     onClose,
     ...otherProps

@@ -11,7 +11,7 @@ import {
 import useLoadingStore from "../../stores/loadingStore";
 
 const MenuHeader = ({
-    title = "海洋大學店", // default title
+    title,
     distance = 100, // default distance
     averageCost = 800, // default average cost
     rating = 4.2, // default rating

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
@@ -7,11 +7,11 @@ import CartIcon from "./headerItem/CartIcon";
 
 // Header Component
 const Header = ({
-    title = "NTOU Takeout",
+    title,
     leftIcon = faUser,
     rightIcon = faShoppingCart,
-    onLeftClick = () => {},
-    onRightClick = () => {},
+    onLeftClick = () => { },
+    onRightClick = () => { },
 }) => {
     // get state from store
     const { isLoading, setIsLoading } = useLoadingStore();

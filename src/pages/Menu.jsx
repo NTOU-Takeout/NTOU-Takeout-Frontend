@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import React, { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { useQuery } from "@tanstack/react-query";
@@ -77,7 +77,7 @@ function Menu() {
     // Fetch menu category list and dish details
     const { data: menuCategoryList, isSuccess: isMenuCategoryListSuccess } =
         useQuery({
-            queryKey: ["menuCategoryList", menuId], // 與 menuId 關聯
+            queryKey: ["menuCategoryList" + menuId], // 與 menuId 關聯
             queryFn: async () => {
                 if (!menuId) return [];
                 const data = await getMenuClient.getMenuByMenuId(menuId);
