@@ -1,11 +1,9 @@
-import React from "react";
-import { useState, useEffect, useRef } from "react";
-import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer"; // 用於觀察元素是否進入視窗
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import ReviewCard from "./ReviewCard";
-import getStoreClient from "../../api/store/getStoreClient";
 import PropTypes from "prop-types";
 import getReviewClient from "../../api/review/getReviewClient";
 
@@ -27,8 +25,6 @@ const ReviewCardList = ({ reviewIdList, merchantId }) => {
         hasNextPage,
         isFetchingNextPage,
         isLoading: isReviewCardsLoading,
-        isError: isReviewCardsError,
-        error: reviewCardsError,
     } = useInfiniteQuery({
         queryKey: ["reviewCards" + merchantId],
         queryFn: async ({ pageParam }) => {

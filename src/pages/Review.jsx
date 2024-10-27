@@ -1,12 +1,9 @@
-import React from "react";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
 import ReviewCardList from "../components/reviewPage/ReviewCardList";
 import RatingBar from "../components/reviewPage/RatingBar";
-import getReviewClient from "../api/review/getReviewClient";
 import getStoreClient from "../api/store/getStoreClient";
 import useMerchantStore from "../stores/merchantStore";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
@@ -29,7 +26,7 @@ const Review = () => {
     const [reviewIdList, setReviewIdList] = useState([]);
     const navigate = useNavigate();
     const handleClose = () => {
-        navigate(-1); // 返回到正確的路徑
+        navigate(-1);
     };
 
     useEffect(() => {
@@ -41,9 +38,7 @@ const Review = () => {
             // Fetch merchant data if not in store
             const fetchMerchantData = async () => {
                 try {
-                    const data = await getStoreClient.getMerchantsByIdList([
-                        merchantId,
-                    ]);
+                    const data = await getStoreClient.getMerchantsByIdList([merchantId]);
                     setMerchant(data[0]);
                     setReviewIdList(data[0]?.reviewIdList || null);
                 } catch (error) {
