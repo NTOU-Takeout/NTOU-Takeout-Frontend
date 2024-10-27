@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
 import Merchant from "./Merchant";
@@ -74,6 +74,16 @@ function MerchantList() {
             }
         },
     });
+
+    //detect error and show error message
+    if (isMerchantIdListError || isMerchantsError) {
+        return (
+            <div className="text-center">
+                {isMerchantIdListError && merchantIdListError.message}
+                {isMerchantsError && merchantsError.message}
+            </div>
+        );
+    }
 
     return isMerchantIdListLoading || isMerchantsLoading ? (
         <div className="flex justify-center items-center mt-4 fa-2x">
