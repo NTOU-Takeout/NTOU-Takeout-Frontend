@@ -1,26 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-    faTimes,
-    faStar,
-    faMapMarkerAlt,
-    faPhone,
-    faClock,
-    faCoins,
-} from "@fortawesome/free-solid-svg-icons";
+import {faTimes, faStar, faMapMarkerAlt, faPhone, faClock, faCoins,} from "@fortawesome/free-solid-svg-icons";
 
-const MenuInfo = ({
-    onClose,
-    storeName = "好想水餃",
-    starRate = "4.9",
-    solidStar = 4,
-    locationURL = "https://maps.google.com",
-    locationName = "基隆市中正區北寧路2號 (Google map)",
-    telNumber = "0987-114-514",
-    costDownLimit = "100",
-    costUpLimit = "200",
-}) => {
+const MenuInfo = (merchantData) => {
+    const [onClose, storeName, starRate, solidStar, locationURL, locationName, telNumber, costDownLimit, costUpLimit] = merchantData;
     return (
         <div className="font-notoTC fixed z-50 left-1/2 w-[80%] transform -translate-x-1/2 -translate-y-1/2 max-w-sm p-4 bg-white shadow-md rounded-xl mx-auto">
             {/* Close button */}

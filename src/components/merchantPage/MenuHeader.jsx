@@ -5,11 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faShareNodes, faStar, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import useLoadingStore from '../../stores/loadingStore';
 import MenuInfo from './MenuInfo';
-
-
-
-
-
 const MenuHeader = ({
     title = '海洋大學店',          // default title
     distance = 100,               // default distance
