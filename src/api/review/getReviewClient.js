@@ -1,5 +1,6 @@
 const getReviewClient = {
     getReivewByIds: async (reviewIds) => {
+        console.log("getReviewByIds", reviewIds);
         const response = await fetch(
             `${import.meta.env.VITE_BASE_URL}/api/review/getReviewsByIds`,
             {
@@ -10,7 +11,6 @@ const getReviewClient = {
                 body: JSON.stringify(reviewIds),
             },
         );
-        console.log("fetching review details for review ID:", reviewIds);
         if (!response.ok) {
             throw new Error(
                 `Failed to fetch details for review ID: ${reviewIds}`,

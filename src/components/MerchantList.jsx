@@ -32,7 +32,6 @@ function MerchantList() {
 
     useEffect(() => {
         merchantIdListRef.current = merchantIdList;
-        console.log("merchantIdListRef:", merchantIdListRef.current);
     }, [merchantIdList]);
 
     // Use useInfiniteQuery to fetch merchants in pages
@@ -51,14 +50,12 @@ function MerchantList() {
             const start = pageParam * LOAD_SIZE;
             const end = start + LOAD_SIZE;
             const idList = merchantIdListRef.current.slice(start, end);
-            console.log(merchantIdListRef);
 
             if (idList.length === 0) {
                 return [];
             }
 
             const merchants = await getStoreClient.getMerchantsByIdList(idList);
-            console.log("merchants:", merchants);
             addMerchants(merchants);
             return merchants;
         },
