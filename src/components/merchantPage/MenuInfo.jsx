@@ -11,6 +11,7 @@ import {
 
 const MenuInfo = ({ merchantData, onClose }) => {
     const { name, rating, address, phoneNumber, averageSpend } = merchantData;
+    // console.log("merchantData", merchantData);
     const solidStar = 3;
     const locationURL =
         "https://www.google.com/maps/search/?api=1&query=" + address;
@@ -28,7 +29,6 @@ const MenuInfo = ({ merchantData, onClose }) => {
                 </button>
             </div>
             <h2 className="text-2xl font-bold text-black">{name}</h2>
-
             <div className="flex items-center mt-1">
                 <div className="font-medium text-[13px] leading-[15px] text-gray-600 mb-[-1px]">
                     {rating}
@@ -91,6 +91,7 @@ const MenuInfo = ({ merchantData, onClose }) => {
 };
 
 MenuInfo.propTypes = {
+    merchantData: PropTypes.object.isRequired,
     onClose: PropTypes.func.isRequired,
 };
 
