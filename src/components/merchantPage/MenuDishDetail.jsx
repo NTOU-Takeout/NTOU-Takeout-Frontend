@@ -1,22 +1,14 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import OptionCard from "./dishOptions/OptionCard";
 import CartOption from "./dishOptions/CartOption";
-import useDishStore from "../../stores/dishDetailStore.js";
-
 const DishDetail = ({
-    name,
-    price = 0,
-    imageUrl = "https://picsum.photos/400/300",
-    description,
-    options = [],
-    onClose,
-    ...otherProps
+    dishData,
+    onClose
 }) => {
-    const { selectedSize, quantity, setSelectedSize, setQuantity } =
-        useDishStore();
+    const { name, price, picture: imageUrl, description, dishAttributes: options } = dishData;
     const [isVisible, setIsVisible] = useState(false);
     const [isExiting, setIsExiting] = useState(false);
 
@@ -45,7 +37,7 @@ const DishDetail = ({
             <div
                 className={`bg-white shadow-md overflow-hidden max-h-[100vh] flex flex-col transition-transform duration-500 ${isExiting ? "translate-y-full none" : "translate-y-0"}`}
             >
-                {/* 滾動內容容器 */}
+
                 <div className="flex-1 overflow-y-auto">
                     {/* Top image */}
                     <div className="relative h-48 overflow-hidden">
@@ -89,12 +81,8 @@ const DishDetail = ({
 };
 
 DishDetail.propTypes = {
-    name: PropTypes.string,
-    price: PropTypes.number,
-    imageUrl: PropTypes.string,
-    description: PropTypes.string,
-    options: PropTypes.array, // 修改為正確的 props
-    onClose: PropTypes.func, // 確保 onClose 是一個函數
+    dishData: PropTypes.object.isRequired,
+    onClose: PropTypes.func,
 };
 
 export default DishDetail;
