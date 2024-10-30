@@ -10,9 +10,19 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const MenuInfo = ({ merchantData, onClose }) => {
-    const { name, rating, address, phoneNumber, averageSpend } = merchantData;
-    // console.log("merchantData", merchantData);
-    const solidStar = 3;
+    const { name, rating, address, phoneNumber, averageSpend, businessHours } =
+        merchantData;
+    const solidStar = Math.round(rating);
+    const daysOfWeek = [
+        "星期一",
+        "星期二",
+        "星期三",
+        "星期四",
+        "星期五",
+        "星期六",
+        "星期日",
+    ];
+
     const locationURL =
         "https://www.google.com/maps/search/?api=1&query=" + address;
     const costDownLimit = averageSpend - 100 < 0 ? 0 : averageSpend - 100;
@@ -30,7 +40,7 @@ const MenuInfo = ({ merchantData, onClose }) => {
             </div>
             <h2 className="text-2xl font-bold text-black">{name}</h2>
             <div className="flex items-center mt-1">
-                <div className="font-medium text-[13px] leading-[15px] text-gray-600 mb-[-1px]">
+                <div className="text-[13px] leading-[15px] text-gray-600 mb-[-1px]">
                     {rating}
                 </div>
                 <div className="text-yellow-500">
@@ -69,18 +79,33 @@ const MenuInfo = ({ merchantData, onClose }) => {
                 {phoneNumber}
             </div>
 
-            <div className="mt-2">
-                <div className="flex items-center">
-                    <FontAwesomeIcon icon={faClock} className="w-4 h-4 mr-2" />
-                    <span>星期二：10:00 ~ 23:00</span>
+            <div className="flex flex-col items-start mt-2 -mb-2">
+                <div className="mb-4 flex items-center">
+                    <FontAwesomeIcon
+                        icon={faClock}
+                        className="w-4 h-4 mr-2 top-0"
+                    />
+                    <ul>
+                        {businessHours.map((day, dayIndex) => (
+                            <li key={dayIndex} className="text-lg">
+                                <span className=" mr-2">
+                                    {daysOfWeek[dayIndex]}
+                                </span>
+                                {day.map((slot, slotIndex) => (
+                                    <span key={slotIndex}>
+                                        {slot.first.substring(0, 5)} ~{" "}
+                                        {slot.second.substring(0, 5)}
+                                        {slotIndex < day.length - 1 && (
+                                            <span className="mx-1">,</span>
+                                        )}
+                                    </span>
+                                ))}
+                            </li>
+                        ))}
+                    </ul>
                 </div>
-                <div className="ml-6">星期三：12:00 ~ 23:00</div>
-                <div className="ml-6">星期四：13:00 ~ 23:00</div>
-                <div className="ml-6">星期五：08:00 ~ 24:00</div>
-                <div className="ml-6">星期六：10:00 ~ 23:00</div>
-                <div className="ml-6">星期日：10:00 ~ 23:00</div>
             </div>
-            <div className="mt-4 flex items-center">
+            <div className="flex items-center">
                 <FontAwesomeIcon icon={faCoins} className="w-4 h-4 mr-2" />
                 <span>
                     每人 {costDownLimit} ~ {costUpLimit} 元
