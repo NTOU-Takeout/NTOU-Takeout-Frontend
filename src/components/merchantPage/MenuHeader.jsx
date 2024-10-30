@@ -1,3 +1,4 @@
+import { useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,10 +8,20 @@ import {
     faStar,
     faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
+import MenuInfo from "./MenuInfo";
 
 const MenuHeader = ({ merchantData }) => {
-    const { name, distance = 10, avarageSpend, rating, reviewIdList, picture, id } = merchantData;
+    const {
+        name,
+        distance = 10,
+        avarageSpend,
+        rating,
+        reviewIdList,
+        picture,
+        id,
+    } = merchantData;
     const merchantId = id;
+    const [showMenuInfo, setShowMenuInfo] = useState(false);
 
     return (
         <header className="relative top-0 left-0 w-full menu-header">
@@ -65,11 +76,22 @@ const MenuHeader = ({ merchantData }) => {
                             </span>
                         </div>
                     </Link>
+
                     <div className="absolute top-4 right-4 text-xl text-gray-500">
-                        <FontAwesomeIcon icon={faInfoCircle} />
+                        <FontAwesomeIcon
+                            icon={faInfoCircle}
+                            onClick={() => setShowMenuInfo(true)}
+                            className="cursor-pointer"
+                        />
                     </div>
                 </div>
             </div>
+            {showMenuInfo && (
+                <MenuInfo
+                    merchantData={merchantData}
+                    onClose={() => setShowMenuInfo(false)}
+                />
+            )}
         </header>
     );
 };

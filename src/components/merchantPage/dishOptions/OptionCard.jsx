@@ -7,7 +7,7 @@ const OptionCard = ({
     title,
     description,
     options = [], // pass in an array of options
-    type   // default to single selection
+    type, // default to single selection
 }) => {
     const [selectedOptions, setSelectedOptions] = useState([]);
 

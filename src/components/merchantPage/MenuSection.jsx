@@ -44,7 +44,9 @@ function MenuSection({ sectionRefs, categoryData }) {
                                 spinPulse
                                 className="text-gray-400 text-2xl mb-2"
                             />
-                            <p className="text-gray-500">Loading menu items...</p>
+                            <p className="text-gray-500">
+                                Loading menu items...
+                            </p>
                         </div>
                     )}
                 </div>

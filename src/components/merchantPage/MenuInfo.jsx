@@ -1,12 +1,23 @@
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faTimes, faStar, faMapMarkerAlt, faPhone, faClock, faCoins,} from "@fortawesome/free-solid-svg-icons";
+import {
+    faTimes,
+    faStar,
+    faMapMarkerAlt,
+    faPhone,
+    faClock,
+    faCoins,
+} from "@fortawesome/free-solid-svg-icons";
 
-const MenuInfo = (merchantData) => {
-    const [onClose, storeName, starRate, solidStar, locationURL, locationName, telNumber, costDownLimit, costUpLimit] = merchantData;
+const MenuInfo = ({ merchantData, onClose }) => {
+    const { name, rating, address, phoneNumber, averageSpend } = merchantData;
+    const solidStar = 3;
+    const locationURL =
+        "https://www.google.com/maps/search/?api=1&query=" + address;
+    const costDownLimit = averageSpend - 100 < 0 ? 0 : averageSpend - 100;
+    const costUpLimit = averageSpend + 100;
     return (
         <div className="font-notoTC fixed z-50 left-1/2 w-[80%] transform -translate-x-1/2 -translate-y-1/2 max-w-sm p-4 bg-white shadow-md rounded-xl mx-auto">
-            {/* Close button */}
             <div className="absolute top-2 right-2 rounded-lg flex justify-center items-center">
                 <button className="text-gray-500 hover:text-gray-700 p-2">
                     <FontAwesomeIcon
@@ -16,11 +27,11 @@ const MenuInfo = (merchantData) => {
                     />
                 </button>
             </div>
-            <h2 className="text-2xl font-bold text-black">{storeName}</h2>
+            <h2 className="text-2xl font-bold text-black">{name}</h2>
 
             <div className="flex items-center mt-1">
                 <div className="font-medium text-[13px] leading-[15px] text-gray-600 mb-[-1px]">
-                    {starRate}
+                    {rating}
                 </div>
                 <div className="text-yellow-500">
                     {[...Array(solidStar)].map((_, i) => (
@@ -50,12 +61,12 @@ const MenuInfo = (merchantData) => {
                         icon={faMapMarkerAlt}
                         className="w-4 h-4 mr-2"
                     />
-                    {locationName}
+                    {address}
                 </a>
             </div>
             <div className="mt-2 flex items-center">
                 <FontAwesomeIcon icon={faPhone} className="w-4 h-4 mr-2" />
-                {telNumber}
+                {phoneNumber}
             </div>
 
             <div className="mt-2">
