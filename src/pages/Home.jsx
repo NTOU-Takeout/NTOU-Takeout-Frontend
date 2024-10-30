@@ -14,7 +14,6 @@ function Home() {
             <Searchbar></Searchbar>
             <MerchantList></MerchantList>
             
-            <Navbar></Navbar>
         </div>
     );
 }
