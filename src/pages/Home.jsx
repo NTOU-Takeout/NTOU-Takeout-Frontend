@@ -13,7 +13,7 @@ function Home() {
             <Sidebar></Sidebar>
             <Searchbar></Searchbar>
             <MerchantList></MerchantList>
-            <MenuHeader></MenuHeader>
+            
             <Navbar></Navbar>
         </div>
     );
