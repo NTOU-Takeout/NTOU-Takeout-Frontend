@@ -1,12 +1,12 @@
 const getStoreClient = {
     getStoreIdList: async (params = {}) => {
+        console.log("getStoreIdList", params);
         const url = new URL(
             `${import.meta.env.VITE_BASE_URL}/api/store/getIdList`,
         );
         Object.keys(params).forEach((key) =>
             url.searchParams.append(key, params[key]),
         );
-        console.log("fetching store id list");
         const response = await fetch(url);
         if (!response.ok) {
             throw new Error("Failed to fetch store ID list");
@@ -15,6 +15,7 @@ const getStoreClient = {
         return data;
     },
     getMerchantsByIdList: async (idList) => {
+        console.log("getMerchantsByIdList", idList);
         const response = await fetch(
             `${import.meta.env.VITE_BASE_URL}/api/store/getStoresByIds`,
             {
@@ -25,7 +26,6 @@ const getStoreClient = {
                 body: JSON.stringify(idList),
             },
         );
-        console.log("fetching store details for merchant ID:", idList);
         if (!response.ok) {
             throw new Error(
                 `Failed to fetch details for merchant ID: ${idList}`,

@@ -1,30 +1,22 @@
-import React from "react";
 import PropTypes from "prop-types";
 
 const MenuItemCard = ({
-    item, // 接收整個 item 物件
-    onClick,
-    imageUrl, // 接收 onClick 函數
-    ...otherProps
+    food,
+    onClick
 }) => {
-    const {
-        name = "原味飯糰", // 預設 itemName
-        price = 30, // 預設 price
-        description = "綠聽吧之位子宜寧，各話又，正見跳免還「沒古六更是三肖」。", // 預設圖片
-    } = item; // 從 item 中解構
+    const { name, picture, price, description } = food; // 從 item 中解構
 
     return (
         <div
             className="font-notoTC menu-item block cursor-pointer"
-            onClick={() => onClick(item)}
+            onClick={() => onClick(food)}
         >
             <div className="flex m-8 max-w-xl bg-white text-white rounded-lg overflow-hidden shadow-lg font-notoTC">
                 {/* Image */}
                 <div className="w-64 overflow-hidden aspect-[5/3]">
                     {" "}
-                    {/* 使用 aspect-ratio */}
                     <img
-                        src={imageUrl}
+                        src={picture}
                         alt="Dish Image"
                         className="object-cover w-full h-full"
                     />
@@ -56,14 +48,8 @@ const MenuItemCard = ({
 };
 
 MenuItemCard.propTypes = {
-    onClick: PropTypes.func.isRequired, // 確保 onClick 是必需的
-    item: PropTypes.shape({
-        // 確保 item 是物件並包含必要屬性
-        name: PropTypes.string,
-        price: PropTypes.number,
-        description: PropTypes.string,
-        imageUrl: PropTypes.string, // 可選的圖片 URL
-    }).isRequired,
+    onClick: PropTypes.func.isRequired,
+    food: PropTypes.object.isRequired,
 };
 
 export default MenuItemCard;

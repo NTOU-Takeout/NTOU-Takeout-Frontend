@@ -4,10 +4,10 @@ import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
 import PropTypes from "prop-types";
 
 const OptionCard = ({
-    title = "飯糰大小",
-    description = "請選項目",
+    title,
+    description,
     options = [], // pass in an array of options
-    type = "single", // default to single selection
+    type   // default to single selection
 }) => {
     const [selectedOptions, setSelectedOptions] = useState([]);
 
