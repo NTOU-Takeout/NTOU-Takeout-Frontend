@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import MenuItemCard from "./MenuItem";
 import MenuDishDetail from "./MenuDishDetail";
 import PropTypes from "prop-types";
@@ -22,7 +20,7 @@ function MenuSection({ sectionRefs, categoryData }) {
                     ref={(el) => (sectionRefs.current[index] = el)}
                     className="w-full mb-8"
                 >
-                    {category ? (
+                    {
                         <>
                             <p className="text-2xl font-notoTC my-2 font-bold">
                                 {category.categoryName}
@@ -37,18 +35,7 @@ function MenuSection({ sectionRefs, categoryData }) {
                                 ))}
                             </div>
                         </>
-                    ) : (
-                        <div className="flex flex-col items-center justify-center p-8 bg-gray-50 rounded-lg">
-                            <FontAwesomeIcon
-                                icon={faSpinner}
-                                spinPulse
-                                className="text-gray-400 text-2xl mb-2"
-                            />
-                            <p className="text-gray-500">
-                                Loading menu items...
-                            </p>
-                        </div>
-                    )}
+                    }
                 </div>
             ))}
 
