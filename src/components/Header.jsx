@@ -8,8 +8,8 @@ const Header = ({
     title,
     leftIcon = faUser,
     rightIcon = faShoppingCart,
-    onLeftClick = () => { },
-    onRightClick = () => { },
+    onLeftClick = () => {},
+    onRightClick = () => {},
 }) => {
     return (
         <header className="fixed z-30  top-0 left-0 w-full flex justify-between items-center bg-white shadow-md transition-shadow duration-300 ease-in-out p-2 font-notoTC">

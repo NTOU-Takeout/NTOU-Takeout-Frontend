@@ -4,11 +4,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import OptionCard from "./dishOptions/OptionCard";
 import CartOption from "./dishOptions/CartOption";
-const DishDetail = ({
-    dishData,
-    onClose
-}) => {
-    const { name, price, picture: imageUrl, description, dishAttributes: options } = dishData;
+const DishDetail = ({ dishData, onClose }) => {
+    const {
+        name,
+        price,
+        picture: imageUrl,
+        description,
+        dishAttributes: options,
+    } = dishData;
     const [isVisible, setIsVisible] = useState(false);
     const [isExiting, setIsExiting] = useState(false);
 
@@ -37,7 +40,6 @@ const DishDetail = ({
             <div
                 className={`bg-white shadow-md overflow-hidden max-h-[100vh] flex flex-col transition-transform duration-500 ${isExiting ? "translate-y-full none" : "translate-y-0"}`}
             >
-
                 <div className="flex-1 overflow-y-auto">
                     {/* Top image */}
                     <div className="relative h-48 overflow-hidden">

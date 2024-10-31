@@ -19,7 +19,10 @@ function Menu() {
 
     // handle scroll to section
     const handleScrollToSection = (index) => {
-        sectionRefs.current[index]?.scrollIntoView({ behavior: "smooth", inline: "start" });
+        sectionRefs.current[index]?.scrollIntoView({
+            behavior: "smooth",
+            inline: "start",
+        });
     };
 
     // listen for dertermine if navbar is fixed
@@ -34,7 +37,6 @@ function Menu() {
         };
     }, []);
 
-
     const getMerchantById = useMerchantStore((state) => state.getMerchantById);
     const [menuId, setMenuId] = useState(null);
     const [merchant, setMerchant] = useState(null);
@@ -48,7 +50,9 @@ function Menu() {
         } else {
             const fetchMerchantData = async () => {
                 try {
-                    const data = await getStoreClient.getMerchantsByIdList([merchantId]);
+                    const data = await getStoreClient.getMerchantsByIdList([
+                        merchantId,
+                    ]);
                     setMerchant(data[0]);
                     setMenuId(data[0]?.menuId || null);
                 } catch (error) {
@@ -60,15 +64,13 @@ function Menu() {
     }, [merchantId, getMerchantById]);
 
     // Fetch menu category list and dish details
-    const {
-        data: menuCategoryList = [],
-    } = useQuery({
+    const { data: menuCategoryList = [] } = useQuery({
         queryKey: ["menuCategoryList" + menuId],
         queryFn: async () => {
             if (!menuId) return [];
             const data = await getMenuClient.getMenuByMenuId(menuId);
             // Update navbar items
-            setNavbarItems(data.categories.map(category => category.first));
+            setNavbarItems(data.categories.map((category) => category.first));
             console.log("menuCategoryList:", data.categories);
             return data.categories;
         },
@@ -81,7 +83,8 @@ function Menu() {
             queryKey: ["categoryDishes" + menuId + category.first],
             queryFn: async () => {
                 const dishIds = category.second;
-                const dishDetails = await getMenuClient.getDishsByDishIds(dishIds);
+                const dishDetails =
+                    await getMenuClient.getDishsByDishIds(dishIds);
                 return {
                     categoryName: category.first,
                     dishes: dishDetails,
@@ -93,33 +96,31 @@ function Menu() {
 
     // Transform the queries results into categoryData
     const categoryData = categoryQueries
-        .map(query => query.data)
+        .map((query) => query.data)
         .filter(Boolean); // Filter out undefined results
 
-    return (
-        (merchant && merchantId) ? (
-            <div>
-                <MenuHeader
-                    merchantData={merchant}
+    return merchant && merchantId ? (
+        <div>
+            <MenuHeader merchantData={merchant} />
+            <MenuNavbar
+                onNavClick={handleScrollToSection}
+                isNavbarFixed={isNavbarFixed}
+            />
+            {categoryData.length ? (
+                <MenuSection
+                    sectionRefs={sectionRefs}
+                    categoryData={categoryData}
                 />
-                <MenuNavbar
-                    onNavClick={handleScrollToSection}
-                    isNavbarFixed={isNavbarFixed}
-                />{
-                    categoryData.length ?
-                        <MenuSection
-                            sectionRefs={sectionRefs}
-                            categoryData={categoryData}
-                        /> : <div className="flex justify-center items-center mt-4 fa-2x">
-                            <FontAwesomeIcon icon={faSpinner} spinPulse />
-                        </div>
-                }
-            </div>
-        ) : (
-            <div className="flex justify-center items-center mt-4 fa-2x">
-                <FontAwesomeIcon icon={faSpinner} spinPulse />
-            </div>
-        )
+            ) : (
+                <div className="flex justify-center items-center mt-4 fa-2x">
+                    <FontAwesomeIcon icon={faSpinner} spinPulse />
+                </div>
+            )}
+        </div>
+    ) : (
+        <div className="flex justify-center items-center mt-4 fa-2x">
+            <FontAwesomeIcon icon={faSpinner} spinPulse />
+        </div>
     );
 }
 
