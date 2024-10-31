@@ -7,7 +7,7 @@ const Searchbar = () => {
     return (
         <div className="font-notoTC flex items-center justify-between w-full max-w-[800px] my-5 mx-auto pl-2 pr-2 box-border">
             <div className="text-2xl flex items-center justify-center">
-                <FontAwesomeIcon icon={searchIcon}></FontAwesomeIcon>
+                <FontAwesomeIcon icon={fliterIcon}></FontAwesomeIcon>
             </div>
             <input
                 type="text"
@@ -15,7 +15,7 @@ const Searchbar = () => {
                 placeholder="Type something here..."
             />
             <div className="text-2xl flex items-center justify-center">
-                <FontAwesomeIcon icon={fliterIcon}></FontAwesomeIcon>
+                <FontAwesomeIcon icon={searchIcon}></FontAwesomeIcon>
             </div>
         </div>
     );
