@@ -80,17 +80,15 @@ const MenuInfo = ({ merchantData, onClose }) => {
             </div>
 
             <div className="flex flex-col items-start mt-2 -mb-2">
-                <div className="mb-4 flex items-center">
+                <div className="mb-4 flex">
                     <FontAwesomeIcon
                         icon={faClock}
-                        className="w-4 h-4 mr-2 top-0"
+                        className="w-4 h-4 mr-2 mt-2"
                     />
                     <ul>
                         {businessHours.map((day, dayIndex) => (
                             <li key={dayIndex} className="text-lg">
-                                <span className=" mr-2">
-                                    {daysOfWeek[dayIndex]}
-                                </span>
+                                <p className=" mr-2">{daysOfWeek[dayIndex]}</p>
                                 {day.map((slot, slotIndex) => (
                                     <span key={slotIndex}>
                                         {slot.first.substring(0, 5)} ~{" "}
