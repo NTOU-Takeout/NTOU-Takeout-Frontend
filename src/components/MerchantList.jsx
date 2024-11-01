@@ -6,11 +6,24 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import getStoreClient from "../api/store/getStoreClient";
 import useMerchantStore from "../stores/merchantStore";
+import useSelectionStore from "../stores/selectionStore";
 
 function MerchantList() {
     const { addMerchants } = useMerchantStore();
     const merchantIdListRef = useRef([]);
     const LOAD_SIZE = 4;
+    const filter = useSelectionStore((state) => state.selectedFilter);
+    const sorter = useSelectionStore((state) => state.selectedSorter);
+    const keyword = useSelectionStore((state) => state.selectedKeyword);
+    const isSubmitted = useSelectionStore((state) => state.isSubmitted);
+    const setIsSubmitted = useSelectionStore((state) => state.setIsSubmitted);
+
+    useEffect(() => {
+        console.log(filter, sorter, keyword, isSubmitted);
+        console.log("asdasda");
+        setIsSubmitted(false); //todo 如果isSubmitted === true的時候刷新merchantList
+    }, [isSubmitted]);
+
     const { ref, inView } = useInView({
         rootMargin: "100px",
     });
@@ -54,7 +67,7 @@ function MerchantList() {
             if (idList.length === 0) {
                 return [];
             }
-
+            console.log(idList, "HIIIII");
             const merchants = await getStoreClient.getMerchantsByIdList(idList);
             addMerchants(merchants);
             return merchants;
