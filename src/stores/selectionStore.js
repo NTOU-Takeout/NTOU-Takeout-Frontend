@@ -4,7 +4,7 @@ const useSelectionStore = create((set) => ({
     selectedFilter: "",
     selectedSorter: "",
     selectedKeyword: "",
-    isSubmitted: false,
+    isSubmitted: true,
     setSelectedKeyword: (state) =>
         set({
             selectedKeyword: state,

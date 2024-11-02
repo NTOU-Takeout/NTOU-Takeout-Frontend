@@ -36,7 +36,6 @@ const Searchbar = () => {
 
     const handleSubmit = () => {
         const keyword = document.getElementById("inputKeyword").value;
-        console.log(keyword);
         setSelectedKeyword(keyword);
         setIsSubmitted(true);
         setShowSelectionBar(false);
@@ -44,12 +43,10 @@ const Searchbar = () => {
 
     const handleFilterClick = (value) => {
         setSelectedFilter(selectedFilter === value ? "" : value);
-        console.log(selectedFilter, value);
     };
 
     const handleSorterClick = (value) => {
         setSelectedSorter(selectedSorter === value ? "" : value);
-        console.log(selectedSorter, value);
     };
 
     const handleEnter = (event) => {
@@ -61,7 +58,6 @@ const Searchbar = () => {
     return (
         <div className="font-notoTC flex flex-col items-center w-full max-w-[800px] my-5 mx-auto box-border">
             <div className="flex items-center justify-between w-full px-2">
-                {/* searchbar */}
                 <div
                     className="relative text-2xl flex items-center justify-center cursor-pointer"
                     onClick={toggleSelectionBar}
