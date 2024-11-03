@@ -8,7 +8,7 @@ const MenuItemCard = ({ food, onClick }) => {
             className="font-notoTC menu-item block cursor-pointer"
             onClick={() => onClick(food)}
         >
-            <div className="flex m-8 max-w-xl bg-white text-white rounded-lg overflow-hidden shadow-lg font-notoTC">
+            <div className=" h-[17rem] flex m-8 max-w-xl bg-white text-white rounded-lg overflow-hidden shadow-lg font-notoTC">
                 {/* Image */}
                 <div className="w-64 overflow-hidden aspect-[5/3]">
                     {" "}
@@ -20,7 +20,7 @@ const MenuItemCard = ({ food, onClick }) => {
                 </div>
 
                 {/* Content */}
-                <div className="w-2/3 p-4">
+                <div className="relative w-2/3 p-4">
                     {/* Title */}
                     <h2 className="text-2xl font-bold mb-2 text-black">
                         {name}
@@ -30,10 +30,10 @@ const MenuItemCard = ({ food, onClick }) => {
                     <p className="text-xl text-gray-800">${price}</p>
 
                     {/* Description */}
-                    <p className="text-sm text-gray-600 mt-2">{description}</p>
+                    <p className="text-sm text-gray-600 mt-2 line-clamp-3 text-ellipsis">{description}</p>
 
                     {/* Add button */}
-                    <div className="flex justify-end mt-4">
+                    <div className="flex justify-end mt-4 absolute bottom-[15px] right-[15px]">
                         <button className="bg-orange-500 text-white rounded-full w-10 h-10 flex items-center justify-center">
                             <span className="text-2xl font-bold mb-1">+</span>
                         </button>

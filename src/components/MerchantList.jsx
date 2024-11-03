@@ -99,7 +99,7 @@ function MerchantList() {
                             rating={merchant.rating}
                             reviews={merchant.reviewIdList}
                             picture={merchant.picture}
-                            className="w-[300px] h-[200px] bg-white border border-gray-300 rounded-xl shadow-lg"
+                            className="w-[70vw] h-[200px] bg-white border border-gray-300 rounded-xl shadow-lg"
                         />
                     );
                 }),

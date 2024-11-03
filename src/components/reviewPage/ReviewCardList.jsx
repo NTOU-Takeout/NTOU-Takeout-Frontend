@@ -63,7 +63,7 @@ const ReviewCardList = ({ reviewIdList, merchantId }) => {
             />
         </div>
     ) : (
-        <div className="font-notoTC flex flex-col items-center overflow-y-scroll ">
+        <div className="font-notoTC flex flex-col items-center ">
             {data?.pages.map((page) =>
                 page.map((reviewCard) => {
                     return (
