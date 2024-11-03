@@ -31,11 +31,23 @@ const Searchbar = () => {
     const setIsSubmitted = useSelectionStore((state) => state.setIsSubmitted);
 
     useEffect(() => {
-        setSelectedSortBy("");
-        setSelectedSortDir("");
-        setSelectedKeyword("");
+        const storedSortBy = localStorage.getItem("selectedSortBy");
+        const storedSortDir = localStorage.getItem("selectedSortDir");
+        const storedKeyword = localStorage.getItem("selectedKeyword");
+
+        if (storedSortBy) setSelectedSortBy(storedSortBy);
+        if (storedSortDir) setSelectedSortDir(storedSortDir);
+        if (storedKeyword) setSelectedKeyword(storedKeyword);
+
         setIsSubmitted(false);
     }, []);
+
+    useEffect(() => {
+        localStorage.setItem("selectedSortBy", selectedSortBy);
+        localStorage.setItem("selectedSortDir", selectedSortDir);
+        localStorage.setItem("selectedKeyword", selectedKeyword);
+    }, [selectedSortBy, selectedSortDir, selectedKeyword]);
+
     const toggleSelectionBar = () => {
         setShowSelectionBar(!showSelectionBar);
     };
