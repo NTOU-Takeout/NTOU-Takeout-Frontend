@@ -5,6 +5,7 @@ const useSelectionStore = create((set) => ({
     selectedSortDir: "",
     selectedKeyword: "",
     isSubmitted: true,
+    showSelectionBar: false,
     setSelectedKeyword: (state) =>
         set({
             selectedKeyword: state,
@@ -20,6 +21,10 @@ const useSelectionStore = create((set) => ({
     setIsSubmitted: (state) =>
         set({
             isSubmitted: state,
+        }),
+    setShowSelectionBar: (state) =>
+        set({
+            showSelectionBar: state,
         }),
 }));
 
