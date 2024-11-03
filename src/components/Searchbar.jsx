@@ -9,15 +9,15 @@ import useSelectionStore from "../stores/selectionStore";
 
 const Searchbar = () => {
     const [showSelectionBar, setShowSelectionBar] = useState(false);
-    const selectedFilter = useSelectionStore((state) => state.selectedFilter);
-    const selectedSorter = useSelectionStore((state) => state.selectedSorter);
+    const selectedSortBy = useSelectionStore((state) => state.selectedSortBy);
+    const selectedSortDir = useSelectionStore((state) => state.selectedSortDir);
     const selectedKeyword = useSelectionStore((state) => state.selectedKeyword);
     const isSubmitted = useSelectionStore((state) => state.isSubmitted);
-    const setSelectedFilter = useSelectionStore(
-        (state) => state.setSelectedFilter,
+    const setSelectedSortBy = useSelectionStore(
+        (state) => state.setSelectedSortBy,
     );
-    const setSelectedSorter = useSelectionStore(
-        (state) => state.setSelectedSorter,
+    const setSelectedSortDir = useSelectionStore(
+        (state) => state.setSelectedSortDir,
     );
     const setSelectedKeyword = useSelectionStore(
         (state) => state.setSelectedKeyword,
@@ -25,8 +25,8 @@ const Searchbar = () => {
     const setIsSubmitted = useSelectionStore((state) => state.setIsSubmitted);
 
     useEffect(() => {
-        setSelectedFilter("");
-        setSelectedSorter("");
+        setSelectedSortBy("");
+        setSelectedSortDir("");
         setSelectedKeyword("");
         setIsSubmitted(false);
     }, []);
@@ -41,12 +41,13 @@ const Searchbar = () => {
         setShowSelectionBar(false);
     };
 
-    const handleFilterClick = (value) => {
-        setSelectedFilter(selectedFilter === value ? "" : value);
+    const handleSortByClick = (value) => {
+        setSelectedSortBy(selectedSortBy === value ? "" : value);
     };
 
-    const handleSorterClick = (value) => {
-        setSelectedSorter(selectedSorter === value ? "" : value);
+    const handleSortDirClick = (value) => {
+        setSelectedSortDir(selectedSortDir === value ? "" : value);
+        console.log(selectedSortDir, value);
     };
 
     const handleEnter = (event) => {
@@ -63,7 +64,7 @@ const Searchbar = () => {
                     onClick={toggleSelectionBar}
                 >
                     <FontAwesomeIcon icon={faFilter} />
-                    {!(selectedFilter == "" && selectedSorter == "") && (
+                    {!(selectedSortBy == "" && selectedSortDir == "") && (
                         <div className="absolute -top-[17px] right-[-4px] z-50">
                             <FontAwesomeIcon
                                 icon={faCircle}
@@ -98,26 +99,26 @@ const Searchbar = () => {
                                 評價 (預設)
                                 <input
                                     type="radio"
-                                    checked={selectedFilter === "rating"}
-                                    onChange={() => handleFilterClick("rating")}
-                                    onClick={() => handleFilterClick("rating")}
+                                    checked={selectedSortBy === "rating"}
+                                    onChange={() => handleSortByClick("rating")}
+                                    onClick={() => handleSortByClick("rating")}
                                     className="appearance-none w-4 h-4 border-2 border-black rounded-full checked:bg-blue-500 checked:border-blue-500"
-                                    name="filter"
+                                    name="sortBy"
                                 />
                             </label>
                             <label className="mt-2 flex justify-between items-center cursor-pointer">
                                 平均花費
                                 <input
                                     type="radio"
-                                    checked={selectedFilter === "averageSpend"}
+                                    checked={selectedSortBy === "averageSpend"}
                                     onChange={() =>
-                                        handleFilterClick("averageSpend")
+                                        handleSortByClick("averageSpend")
                                     }
                                     onClick={() =>
-                                        handleFilterClick("averageSpend")
+                                        handleSortByClick("averageSpend")
                                     }
                                     className="appearance-none w-4 h-4 border-2 border-black rounded-full checked:bg-blue-500 checked:border-blue-500"
-                                    name="filter"
+                                    name="sortBy"
                                 />
                             </label>
                         </div>
@@ -127,22 +128,22 @@ const Searchbar = () => {
                                 由高到低
                                 <input
                                     type="radio"
-                                    checked={selectedSorter === "desc"}
-                                    onChange={() => handleSorterClick("desc")}
-                                    onClick={() => handleSorterClick("desc")}
+                                    checked={selectedSortDir === "desc"}
+                                    onChange={() => handleSortDirClick("desc")}
+                                    onClick={() => handleSortDirClick("desc")}
                                     className="appearance-none w-4 h-4 border-2 border-black rounded-full checked:bg-blue-500 checked:border-blue-500"
-                                    name="sorter"
+                                    name="sortDir"
                                 />
                             </label>
                             <label className="mt-2 flex justify-between items-center cursor-pointer">
                                 由低到高
                                 <input
                                     type="radio"
-                                    checked={selectedSorter === "asc"}
-                                    onChange={() => handleSorterClick("asc")}
-                                    onClick={() => handleSorterClick("asc")}
+                                    checked={selectedSortDir === "asc"}
+                                    onChange={() => handleSortDirClick("asc")}
+                                    onClick={() => handleSortDirClick("asc")}
                                     className="appearance-none w-4 h-4 border-2 border-black rounded-full checked:bg-blue-500 checked:border-blue-500"
-                                    name="sorter"
+                                    name="sortDir"
                                 />
                             </label>
                             <div

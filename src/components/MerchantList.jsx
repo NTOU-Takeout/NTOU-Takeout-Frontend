@@ -13,8 +13,8 @@ function MerchantList() {
     const merchantIdListRef = useRef([]);
     const LOAD_SIZE = 4;
 
-    const filter = useSelectionStore((state) => state.selectedFilter);
-    const sorter = useSelectionStore((state) => state.selectedSorter);
+    const sortBy = useSelectionStore((state) => state.selectedSortBy);
+    const sortDir = useSelectionStore((state) => state.selectedSortDir);
     const keyword = useSelectionStore((state) => state.selectedKeyword);
     const isSubmitted = useSelectionStore((state) => state.isSubmitted);
     const setIsSubmitted = useSelectionStore((state) => state.setIsSubmitted);
@@ -37,11 +37,11 @@ function MerchantList() {
         queryKey: ["defaultMerchantIdList"], // 添加依賴項
         queryFn: async () => {
             const merchants = await getStoreClient.getStoreIdList({
-                filter,
-                sorter,
+                sortBy,
+                sortDir,
                 keyword,
             });
-            console.log(filter, sorter, keyword, isSubmitted);
+            console.log(sortBy, sortDir, keyword, isSubmitted);
             setIsSubmitted(false);
             console.log(merchants);
             console.log(isMerchantIdListLoading, isMerchantsLoading);

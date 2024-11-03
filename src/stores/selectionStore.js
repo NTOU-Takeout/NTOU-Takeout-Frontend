@@ -1,21 +1,21 @@
 import { create } from "zustand";
 
 const useSelectionStore = create((set) => ({
-    selectedFilter: "",
-    selectedSorter: "",
+    selectedSortBy: "",
+    selectedSortDir: "",
     selectedKeyword: "",
     isSubmitted: true,
     setSelectedKeyword: (state) =>
         set({
             selectedKeyword: state,
         }),
-    setSelectedFilter: (state) =>
+    setSelectedSortBy: (state) =>
         set({
-            selectedFilter: state,
+            selectedSortBy: state,
         }),
-    setSelectedSorter: (state) =>
+    setSelectedSortDir: (state) =>
         set({
-            selectedSorter: state,
+            selectedSortDir: state,
         }),
     setIsSubmitted: (state) =>
         set({
