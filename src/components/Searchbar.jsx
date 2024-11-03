@@ -18,7 +18,6 @@ const Searchbar = () => {
     const selectedSortBy = useSelectionStore((state) => state.selectedSortBy);
     const selectedSortDir = useSelectionStore((state) => state.selectedSortDir);
     const selectedKeyword = useSelectionStore((state) => state.selectedKeyword);
-    const isSubmitted = useSelectionStore((state) => state.isSubmitted);
     const setSelectedSortBy = useSelectionStore(
         (state) => state.setSelectedSortBy,
     );
@@ -40,7 +39,7 @@ const Searchbar = () => {
         if (storedKeyword) setSelectedKeyword(storedKeyword);
 
         setIsSubmitted(false);
-    }, []);
+    }, [setSelectedKeyword, setSelectedSortBy, setSelectedSortDir, setIsSubmitted]);
 
     useEffect(() => {
         localStorage.setItem("selectedSortBy", selectedSortBy);
@@ -61,9 +60,10 @@ const Searchbar = () => {
     const handleEnter = (event) => {
         if (event.key === "Enter") {
             handleSubmit();
+            event.preventDefault();
         }
     };
-    console.log(selectedSortBy, selectedSortDir);
+    // console.log(selectedSortBy, selectedSortDir);
 
     return (
         <div className="font-notoTC flex flex-col items-center w-full max-w-[800px] my-5 mx-auto box-border">

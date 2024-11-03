@@ -34,17 +34,14 @@ function MerchantList() {
         isError: isMerchantIdListError,
         error: merchantIdListError,
     } = useQuery({
-        queryKey: ["defaultMerchantIdList"], // 添加依賴項
+        queryKey: ["defaultMerchantIdList"],
         queryFn: async () => {
             const merchants = await getStoreClient.getStoreIdList({
                 sortBy,
                 sortDir,
                 keyword,
             });
-            console.log(sortBy, sortDir, keyword, isSubmitted);
             setIsSubmitted(false);
-            console.log(merchants);
-            console.log(isMerchantIdListLoading, isMerchantsLoading);
             return merchants;
         },
         enabled: isSubmitted,
