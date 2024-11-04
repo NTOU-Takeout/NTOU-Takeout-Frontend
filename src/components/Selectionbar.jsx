@@ -16,6 +16,7 @@ const Selectionbar = () => {
     );
     const selectedSortBy = useSelectionStore((state) => state.selectedSortBy);
     const selectedSortDir = useSelectionStore((state) => state.selectedSortDir);
+    const selectedKeyword = useSelectionStore((state) => state.selectedKeyword);
     const setSelectedSortBy = useSelectionStore(
         (state) => state.setSelectedSortBy,
     );
@@ -26,10 +27,15 @@ const Selectionbar = () => {
         (state) => state.setSelectedKeyword,
     );
     const setIsSubmitted = useSelectionStore((state) => state.setIsSubmitted);
-
+    useEffect(() => {
+        localStorage.setItem("selectedSortBy", selectedSortBy);
+        localStorage.setItem("selectedSortDir", selectedSortDir);
+        localStorage.setItem("selectedKeyword", selectedKeyword);
+    }, [selectedSortBy, selectedSortDir, selectedKeyword]);
     const handleSubmit = () => {
         const keyword = document.getElementById("inputKeyword").value;
         setSelectedKeyword(keyword);
+
         setIsSubmitted(true);
         setShowSelectionBar(false);
     };
@@ -42,6 +48,7 @@ const Selectionbar = () => {
         setSelectedSortDir(selectedSortDir === value ? "" : value);
         console.log(selectedSortDir, value);
     };
+
     return (
         <div className="font-notoTC w-[361px] max-w-[800px] rounded-xl bg-white border-gray-700 mt-2 p-4 animate-slide-down">
             <div className="flex justify-around w-full">

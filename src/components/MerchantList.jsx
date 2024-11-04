@@ -18,7 +18,18 @@ function MerchantList() {
     const keyword = useSelectionStore((state) => state.selectedKeyword);
     const isSubmitted = useSelectionStore((state) => state.isSubmitted);
     const setIsSubmitted = useSelectionStore((state) => state.setIsSubmitted);
-
+    const selectedSortBy = useSelectionStore((state) => state.selectedSortBy);
+    const selectedSortDir = useSelectionStore((state) => state.selectedSortDir);
+    const selectedKeyword = useSelectionStore((state) => state.selectedKeyword);
+    const setSelectedSortBy = useSelectionStore(
+        (state) => state.setSelectedSortBy,
+    );
+    const setSelectedSortDir = useSelectionStore(
+        (state) => state.setSelectedSortDir,
+    );
+    const setSelectedKeyword = useSelectionStore(
+        (state) => state.setSelectedKeyword,
+    );
     const { ref, inView } = useInView({
         rootMargin: "100px",
     });

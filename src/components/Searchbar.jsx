@@ -7,6 +7,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import useSelectionStore from "../stores/selectionStore";
 import Selectionbar from "./Selectionbar";
+import { Input } from "postcss";
 
 const Searchbar = () => {
     const showSelectionBar = useSelectionStore(
@@ -37,14 +38,7 @@ const Searchbar = () => {
         if (storedSortBy) setSelectedSortBy(storedSortBy);
         if (storedSortDir) setSelectedSortDir(storedSortDir);
         if (storedKeyword) setSelectedKeyword(storedKeyword);
-
-        setIsSubmitted(false);
-    }, [
-        setSelectedKeyword,
-        setSelectedSortBy,
-        setSelectedSortDir,
-        setIsSubmitted,
-    ]);
+    }, [setSelectedKeyword, setSelectedSortBy, setSelectedSortDir]);
 
     useEffect(() => {
         localStorage.setItem("selectedSortBy", selectedSortBy);
@@ -52,12 +46,16 @@ const Searchbar = () => {
         localStorage.setItem("selectedKeyword", selectedKeyword);
     }, [selectedSortBy, selectedSortDir, selectedKeyword]);
 
+    const [inputValue, setInputValue] = useState(
+        localStorage.getItem("selectedKeyword"),
+    );
     const toggleSelectionBar = () => {
         setShowSelectionBar(!showSelectionBar);
     };
 
     const handleSubmit = () => {
         const keyword = document.getElementById("inputKeyword").value;
+        setInputValue(keyword);
         setSelectedKeyword(keyword);
         setIsSubmitted(true);
         setShowSelectionBar(false);
@@ -68,7 +66,6 @@ const Searchbar = () => {
             event.preventDefault();
         }
     };
-    // console.log(selectedSortBy, selectedSortDir);
 
     return (
         <div className="font-notoTC flex flex-col items-center w-full max-w-[800px] my-5 mx-auto box-border">
@@ -94,6 +91,8 @@ const Searchbar = () => {
                     placeholder="想吃什麼..."
                     id="inputKeyword"
                     onKeyDown={handleEnter}
+                    value={inputValue} // 綁定值
+                    onChange={(e) => setInputValue(e.target.value)} // 更新值
                 />
                 <div
                     className="text-2xl flex items-center justify-center cursor-pointer"

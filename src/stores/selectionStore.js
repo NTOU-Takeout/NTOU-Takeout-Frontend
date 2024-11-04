@@ -1,9 +1,9 @@
 import { create } from "zustand";
 
 const useSelectionStore = create((set) => ({
-    selectedSortBy: "",
-    selectedSortDir: "",
-    selectedKeyword: "",
+    selectedSortBy: localStorage.getItem("selectedSortBy"),
+    selectedSortDir: localStorage.getItem("selectedSortDir"),
+    selectedKeyword: localStorage.getItem("selectedKeyword"),
     isSubmitted: true,
     showSelectionBar: false,
     setSelectedKeyword: (state) =>

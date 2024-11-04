@@ -8,6 +8,7 @@ const getStoreClient = {
             url.searchParams.append(key, params[key]),
         );
         const response = await fetch(url);
+
         if (!response.ok) {
             throw new Error("Failed to fetch store ID list");
         }
