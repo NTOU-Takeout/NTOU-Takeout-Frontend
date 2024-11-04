@@ -39,7 +39,12 @@ const Searchbar = () => {
         if (storedKeyword) setSelectedKeyword(storedKeyword);
 
         setIsSubmitted(false);
-    }, [setSelectedKeyword, setSelectedSortBy, setSelectedSortDir, setIsSubmitted]);
+    }, [
+        setSelectedKeyword,
+        setSelectedSortBy,
+        setSelectedSortDir,
+        setIsSubmitted,
+    ]);
 
     useEffect(() => {
         localStorage.setItem("selectedSortBy", selectedSortBy);
@@ -74,7 +79,7 @@ const Searchbar = () => {
                 >
                     <FontAwesomeIcon icon={faFilter} />
                     {!(selectedSortBy === "" && selectedSortDir === "") && (
-                        <div className="absolute -top-[17px] right-[-4px] z-50">
+                        <div className="absolute -top-[17px] right-[-4px] z-45">
                             <FontAwesomeIcon
                                 icon={faCircle}
                                 className="w-3"
