@@ -15,10 +15,11 @@ function MerchantList() {
         rootMargin: "100px",
     });
     useEffect(() => {
-        if (inView && hasNextPage && !isFetchingNextPage) {
+        if (inView && hasNextPage && !isFetchingNextPage)
             fetchNextPage();
-        }
-    }, [inView]);
+    }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
+
+    // conflict here again:(
 
     const {
         data: merchantIdList,
