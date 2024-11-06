@@ -14,11 +14,9 @@ function MerchantList() {
     const { ref, inView } = useInView({
         rootMargin: "100px",
     });
-    useEffect(() => {
-        if (inView && hasNextPage && !isFetchingNextPage) {
-            fetchNextPage();
-        }
-    }, [inView]);
+
+    //conflict here
+
 
     const {
         data: merchantIdList,
