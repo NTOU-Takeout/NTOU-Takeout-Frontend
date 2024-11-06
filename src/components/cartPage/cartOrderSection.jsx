@@ -23,7 +23,7 @@ const CartOrderSection = ({orderDetail}) => {
 };
 
 CartOrderSection.propTypes = {
-    order: PropTypes.shape({
+    orderDetail: PropTypes.shape({
         totalSpend: PropTypes.number.isRequired,
         estimateTime: PropTypes.number.isRequired,
     }).isRequired
