@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import useSelectionStore from "../stores/selectionStore";
 
 const SearchSelectionBar = () => {
-
     const setShowSelectionBar = useSelectionStore(
         (state) => state.setShowSelectionBar,
     );
@@ -46,7 +45,7 @@ const SearchSelectionBar = () => {
     return (
         <div className="font-notoTC w-[361px] max-w-[800px] rounded-xl bg-white border-gray-700 mt-2 p-4 animate-slide-down">
             <div className="flex justify-around w-full">
-                <div className="flex flex-col w-[33%]">
+                <div className="flex flex-col w-[40%]">
                     <p className="text-xl">篩選</p>
                     <label className="mt-2 flex justify-between items-center cursor-pointer">
                         評價 (預設)
@@ -71,10 +70,10 @@ const SearchSelectionBar = () => {
                         />
                     </label>
                 </div>
-                <div className="flex flex-col w-[33%]">
+                <div className="flex flex-col w-[40%]">
                     <p className="text-xl">排序</p>
                     <label className="mt-2 flex justify-between items-center cursor-pointer">
-                        由高到低
+                        由高到低 (預設)
                         <input
                             type="radio"
                             checked={selectedSortDir === "desc"}
