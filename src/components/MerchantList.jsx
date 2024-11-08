@@ -35,10 +35,13 @@ function MerchantList() {
     } = useQuery({
         queryKey: ["defaultMerchantIdList"],
         queryFn: async () => {
+            const searchSortBy = sortBy ? sortBy : "rating";
+            const searchSortDir = sortDir ? sortDir : "desc";
+            const searchKeyword = keyword ? keyword : "";
             const merchants = await getStoreClient.getStoreIdList({
-                sortBy,
-                sortDir,
-                keyword,
+                searchSortBy,
+                searchSortDir,
+                searchKeyword,
             });
             setIsSubmitted(false);
             return merchants;

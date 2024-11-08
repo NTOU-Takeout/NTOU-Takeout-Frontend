@@ -35,9 +35,9 @@ const Searchbar = () => {
         const storedKeyword = localStorage.getItem("selectedKeyword");
 
         if (storedSortBy) setSelectedSortBy(storedSortBy);
-        else setSelectedSortBy("rating");
+        else setSelectedSortBy("");
         if (storedSortDir) setSelectedSortDir(storedSortDir);
-        else setSelectedSortDir("desc");
+        else setSelectedSortDir("");
         if (storedKeyword) setSelectedKeyword(storedKeyword);
         else setSelectedKeyword("");
     }, [setSelectedKeyword, setSelectedSortBy, setSelectedSortDir]);
