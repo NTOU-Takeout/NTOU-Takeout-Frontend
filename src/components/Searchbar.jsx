@@ -6,7 +6,7 @@ import {
     faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import useSelectionStore from "../stores/selectionStore";
-import Selectionbar from "./Selectionbar";
+import Selectionbar from "./SearchSelectionBar";
 
 const Searchbar = () => {
     const showSelectionBar = useSelectionStore(

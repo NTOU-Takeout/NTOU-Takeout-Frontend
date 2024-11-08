@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 import useSelectionStore from "../stores/selectionStore";
 
-const Selectionbar = () => {
+const SearchSelectionBar = () => {
 
     const setShowSelectionBar = useSelectionStore(
         (state) => state.setShowSelectionBar,
@@ -109,4 +109,4 @@ const Selectionbar = () => {
     );
 };
 
-export default Selectionbar;
+export default SearchSelectionBar;
