@@ -7,7 +7,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import useSelectionStore from "../stores/selectionStore";
 import Selectionbar from "./Selectionbar";
-import { Input } from "postcss";
 
 const Searchbar = () => {
     const showSelectionBar = useSelectionStore(
@@ -91,8 +90,8 @@ const Searchbar = () => {
                     placeholder="想吃什麼..."
                     id="inputKeyword"
                     onKeyDown={handleEnter}
-                    value={inputValue} // 綁定值
-                    onChange={(e) => setInputValue(e.target.value)} // 更新值
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
                 />
                 <div
                     className="text-2xl flex items-center justify-center cursor-pointer"
@@ -102,7 +101,6 @@ const Searchbar = () => {
                 </div>
             </div>
 
-            {/* selectionBar */}
             {showSelectionBar && <Selectionbar></Selectionbar>}
         </div>
     );

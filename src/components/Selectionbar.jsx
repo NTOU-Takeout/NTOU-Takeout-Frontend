@@ -1,16 +1,9 @@
-import { useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-    faCircle,
-    faFilter,
-    faSearch,
-} from "@fortawesome/free-solid-svg-icons";
+import { useEffect } from "react";
+
 import useSelectionStore from "../stores/selectionStore";
 
 const Selectionbar = () => {
-    const showSelectionBar = useSelectionStore(
-        (state) => state.showSelectionBar,
-    );
+
     const setShowSelectionBar = useSelectionStore(
         (state) => state.setShowSelectionBar,
     );
@@ -27,6 +20,7 @@ const Selectionbar = () => {
         (state) => state.setSelectedKeyword,
     );
     const setIsSubmitted = useSelectionStore((state) => state.setIsSubmitted);
+
     useEffect(() => {
         localStorage.setItem("selectedSortBy", selectedSortBy);
         localStorage.setItem("selectedSortDir", selectedSortDir);
