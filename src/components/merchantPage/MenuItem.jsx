@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 
 const MenuItemCard = ({ food, onClick }) => {
-    const { name, picture, price, description } = food; // 從 item 中解構
+    const { name, picture, price, description } = food;
 
     return (
         <div

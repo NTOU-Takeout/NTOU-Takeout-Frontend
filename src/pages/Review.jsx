@@ -106,14 +106,14 @@ const Review = () => {
                             percentage={star5Percentage}
                             count={star5Count}
                         />
-                    </div>        
+                    </div>
                 </div>
-                
+
+                <ReviewCardList
+                    reviewIdList={reviewIdList}
+                    merchantId={merchantId}
+                ></ReviewCardList>
             </div>
-            <ReviewCardList
-                reviewIdList={reviewIdList}
-                merchantId={merchantId}
-            ></ReviewCardList>
         </div>
     );
 };

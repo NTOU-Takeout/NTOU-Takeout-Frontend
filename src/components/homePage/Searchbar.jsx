@@ -1,4 +1,3 @@
-import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter as fliterIcon } from "@fortawesome/free-solid-svg-icons/faFilter";
 import { faSearch as searchIcon } from "@fortawesome/free-solid-svg-icons/faSearch";

@@ -1,13 +1,16 @@
 const getStoreClient = {
     getStoreIdList: async (params = {}) => {
-        console.log("getStoreIdList", params);
         const url = new URL(
             `${import.meta.env.VITE_BASE_URL}/api/store/getIdList`,
         );
+        // Fake params for testing
+        let fakeParams = { "sortBy": "rating", "sortDir": "desc", "keyword": "" };
+        params = fakeParams;
         Object.keys(params).forEach((key) =>
             url.searchParams.append(key, params[key]),
         );
         const response = await fetch(url);
+        console.log("getStoreIdList", response);
         if (!response.ok) {
             throw new Error("Failed to fetch store ID list");
         }

@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark as hollowFaBookmark } from "@fortawesome/free-regular-svg-icons/faBookmark";
 import { faBookmark as solidFaBookmark } from "@fortawesome/free-solid-svg-icons/faBookmark";
 import { faStar as solidStar } from "@fortawesome/free-solid-svg-icons/faStar";
-import useBookmarkStore from "../stores/bookmarkStore";
+import useBookmarkStore from "../../stores/bookmarkStore";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 const Merchant = (props) => {
@@ -14,16 +14,8 @@ const Merchant = (props) => {
         toggleBookmark(id);
     };
 
-    const distanceList = [12, 32, 21, 27, 9, 47];
-    function sumStringDigits(str) {
-        return str
-            .split("") // 將字符串分割成字符數組
-            .map((char) => {
-                // 檢查是否為數字，若是則轉為數字，否則轉為 ASCII 值
-                return isNaN(char) ? char.charCodeAt(0) : Number(char);
-            })
-            .reduce((acc, curr) => acc + curr, 0); // 將數字和 ASCII 值相加
-    }
+
+    const randomDistance = Math.floor(Math.random() * 30) + 1;
 
     return (
         <Link key={id} to={`/menu/${id}`}>
@@ -48,14 +40,13 @@ const Merchant = (props) => {
                         className="relative w-full h-[65%] object-cover"
                     />
                 </div>
-                
+
                 <div className="box-border absolute w-[90vw] h-[87px] left-0 top-[154px] border-t-2 border-gray-300">
                     <div className="absolute h-[22px] left-[12px] top-[9px] text-black font-bold text-lg leading-5">
                         {name}
                     </div>
                     <div className="absolute h-[12px] left-[12px] top-[32px] text-gray-500 font-semibold text-xs leading-[12px]">
-                        距離您約{" "}
-                        {distanceList[Math.floor(sumStringDigits(id) % 6)]} 公里
+                        距離您約 {randomDistance} 公里
                     </div>
                     <div className="absolute h-[12px] left-[12px] top-[57px] text-green-700 font-bold text-xs leading-[12px]">
                         平均花費約 {averageSpend} 元
