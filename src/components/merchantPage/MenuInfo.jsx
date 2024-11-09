@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -46,20 +46,18 @@ const MenuInfo = ({ merchantData, onClose }) => {
     return (
         <div>
             <div
-                className={`fixed top-0 z-40 min-h-screen min-w-full transition-opacity duration-500 bg-slate-950 bg-opacity-20 ${
-                    isExiting ? "opacity-0" : "opacity-100"
-                }`}
+                className={`fixed top-0 z-40 min-h-screen min-w-full transition-opacity duration-500 bg-slate-950 bg-opacity-20 ${isExiting ? "opacity-0" : "opacity-100"
+                    }`}
                 onClick={handleClose}
             ></div>
             <div
                 className={`font-notoTC fixed z-50 top-0 left-0 right-0 transition-all duration-500 ${isVisible ? "top-[10%]" : "top-full"}`}
             >
                 <div
-                    className={`font-notoTC fixed z-50 left-1/2 w-[80%] max-w-sm p-4 bg-white shadow-md rounded-xl mx-auto transition-transform duration-500 ease-out  ${
-                        isExiting
+                    className={`font-notoTC fixed z-50 left-1/2 w-[80%] max-w-sm p-4 bg-white shadow-md rounded-xl mx-auto transition-transform duration-500 ease-out  ${isExiting
                             ? "translate-y-[100dvh] none -translate-x-1/2"
                             : "translate-y-0 -translate-x-1/2 "
-                    }`}
+                        }`}
                 >
                     <div className="absolute top-2 right-2 rounded-lg flex justify-center items-center">
                         <button
