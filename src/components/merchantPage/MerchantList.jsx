@@ -1,16 +1,16 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
 import Merchant from "./Merchant";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import getStoreClient from "../api/store/getStoreClient";
-import useMerchantStore from "../stores/merchantStore";
-import useSelectionStore from "../stores/selectionStore";
+import getStoreClient from "../../api/store/getStoreClient";
+import useMerchantStore from "../../stores/merchantStore";
+import useSelectionStore from "../../stores/selectionStore";
 
 function MerchantList() {
     const { addMerchants } = useMerchantStore();
-    const merchantIdListRef = useRef([]);
+    const [merchantIds, setMerchantIds] = useState([]);
     const LOAD_SIZE = 4;
 
     const sortBy = useSelectionStore((state) => state.selectedSortBy);
@@ -21,17 +21,13 @@ function MerchantList() {
     const { ref, inView } = useInView({
         rootMargin: "100px",
     });
-    useEffect(() => {
-        if (inView && hasNextPage && !isFetchingNextPage) {
-            fetchNextPage();
-        }
-    }, [inView]);
 
     const {
         data: merchantIdList,
         isLoading: isMerchantIdListLoading,
         isError: isMerchantIdListError,
         error: merchantIdListError,
+        isSuccess: isMerchantIdListSuccess,
     } = useQuery({
         queryKey: ["defaultMerchantIdList"],
         queryFn: async () => {
@@ -49,9 +45,10 @@ function MerchantList() {
         enabled: isSubmitted,
     });
 
+    //set merchantIds when merchantIdList is fetched
     useEffect(() => {
-        merchantIdListRef.current = merchantIdList;
-    }, [merchantIdList]);
+        setMerchantIds(merchantIdList);
+    }, [isMerchantIdListSuccess, merchantIdList]);
 
     // Use useInfiniteQuery to fetch merchants in pages
     const {
@@ -67,7 +64,7 @@ function MerchantList() {
         queryFn: async ({ pageParam }) => {
             const start = pageParam * LOAD_SIZE;
             const end = start + LOAD_SIZE;
-            const idList = merchantIdListRef.current.slice(start, end);
+            const idList = merchantIds.slice(start, end);
 
             if (idList.length === 0) {
                 return [];
@@ -87,7 +84,17 @@ function MerchantList() {
                 return undefined; // No more pages
             }
         },
+        enabled: isMerchantIdListSuccess,
     });
+
+    //for infinite scroll
+    useEffect(() => {
+        if (inView && !isFetchingNextPage && hasNextPage) {
+            fetchNextPage();
+        }
+    }, [inView, isFetchingNextPage, hasNextPage, fetchNextPage]);
+
+    //detect error and show error message
     if (isMerchantIdListError || isMerchantsError) {
         return (
             <div className="text-center">
@@ -114,7 +121,7 @@ function MerchantList() {
                             rating={merchant.rating}
                             reviews={merchant.reviewIdList}
                             picture={merchant.picture}
-                            className="w-[300px] h-[200px] bg-white border border-gray-300 rounded-xl shadow-lg"
+                            className="w-[70vw] h-[200px] bg-white border border-gray-300 rounded-xl shadow-lg"
                         />
                     );
                 }),

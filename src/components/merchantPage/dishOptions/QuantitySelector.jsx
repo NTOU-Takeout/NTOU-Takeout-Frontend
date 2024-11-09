@@ -1,4 +1,3 @@
-import React from "react";
 import useDishStore from "../../../stores/dishDetailStore.js";
 
 const QuantitySelector = () => {

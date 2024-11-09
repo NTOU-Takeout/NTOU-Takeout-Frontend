@@ -1,6 +1,6 @@
-import useSidebarStore from "../stores/sidebarStore";
+import useSidebarStore from "../../stores/sidebarStore";
 import SidebarButton from "./SidebarButton";
-import useThemeStore from "../stores/themeStore";
+import useThemeStore from "../../stores/themeStore";
 import {
     faHistory,
     faHeart,
@@ -24,14 +24,16 @@ const Sidebar = () => {
         <>
             {isOpen && (
                 <div
-                    className={`fixed top-0 z-40 min-h-screen min-w-full transition-all duration-300  ${isOpen ? "bg-slate-950 bg-opacity-20" : ""
-                        }`}
+                    className={`fixed top-0 z-40 min-h-screen min-w-full transition-all duration-300  ${
+                        isOpen ? "bg-slate-950 bg-opacity-20" : ""
+                    }`}
                     onClick={closeSidebar}
                 ></div>
             )}
             <div
-                className={`font-notoTC z-50 fixed inset-y-0 left-0 bg-white w-3/5 shadow-lg border-zinc-400 border-r-1 max-w-md ${isOpen ? "translate-x-0" : "-translate-x-full"
-                    } transition-transform duration-300 min-w-48`}
+                className={`font-notoTC z-50 fixed inset-y-0 left-0 bg-white w-3/5 shadow-lg border-zinc-400 border-r-1 max-w-md ${
+                    isOpen ? "translate-x-0" : "-translate-x-full"
+                } transition-transform duration-300 min-w-48`}
             >
                 <div className="p-4">
                     <SidebarButton
