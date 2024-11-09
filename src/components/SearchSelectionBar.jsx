@@ -31,6 +31,7 @@ const SearchSelectionBar = () => {
 
         setIsSubmitted(true);
         setShowSelectionBar(false);
+        console.log("asdasd");
     };
 
     const handleSortByClick = (value) => {

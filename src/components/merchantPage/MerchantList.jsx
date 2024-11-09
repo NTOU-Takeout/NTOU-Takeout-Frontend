@@ -13,9 +13,6 @@ function MerchantList() {
     const [merchantIds, setMerchantIds] = useState([]);
     const LOAD_SIZE = 4;
 
-    const sortBy = useSelectionStore((state) => state.selectedSortBy);
-    const sortDir = useSelectionStore((state) => state.selectedSortDir);
-    const keyword = useSelectionStore((state) => state.selectedKeyword);
     const isSubmitted = useSelectionStore((state) => state.isSubmitted);
     const setIsSubmitted = useSelectionStore((state) => state.setIsSubmitted);
     const { ref, inView } = useInView({
@@ -31,15 +28,23 @@ function MerchantList() {
     } = useQuery({
         queryKey: ["defaultMerchantIdList"],
         queryFn: async () => {
-            const searchSortBy = sortBy ? sortBy : "rating";
-            const searchSortDir = sortDir ? sortDir : "desc";
-            const searchKeyword = keyword ? keyword : "";
+            const searchSortBy = localStorage.getItem("sortBy")
+                ? localStorage.getItem("selectedSortBy")
+                : "rating";
+            const searchSortDir = localStorage.getItem("selectedSortDir")
+                ? localStorage.getItem("selectedSortDir")
+                : "desc";
+            const searchKeyword = localStorage.getItem("selectedKeyword")
+                ? localStorage.getItem("selectedKeyword")
+                : "";
+            console.log(searchSortBy, searchSortDir, searchKeyword);
             const merchants = await getStoreClient.getStoreIdList({
                 searchSortBy,
                 searchSortDir,
                 searchKeyword,
             });
             setIsSubmitted(false);
+            console.log(merchants);
             return merchants;
         },
         enabled: isSubmitted,
@@ -60,7 +65,7 @@ function MerchantList() {
         isError: isMerchantsError,
         error: merchantsError,
     } = useInfiniteQuery({
-        queryKey: ["merchants", merchantIdList],
+        queryKey: ["merchants", merchantIds],
         queryFn: async ({ pageParam }) => {
             const start = pageParam * LOAD_SIZE;
             const end = start + LOAD_SIZE;

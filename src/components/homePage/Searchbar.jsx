@@ -5,8 +5,8 @@ import {
     faFilter,
     faSearch,
 } from "@fortawesome/free-solid-svg-icons";
-import useSelectionStore from "../stores/selectionStore";
-import Selectionbar from "./SearchSelectionBar";
+import useSelectionStore from "../../stores/selectionStore";
+import SearchSelectionBar from "../SearchSelectionBar";
 
 const Searchbar = () => {
     const showSelectionBar = useSelectionStore(
@@ -61,6 +61,7 @@ const Searchbar = () => {
         setSelectedKeyword(keyword);
         setIsSubmitted(true);
         setShowSelectionBar(false);
+        console.log("HHI");
     };
     const handleEnter = (event) => {
         if (event.key === "Enter") {
@@ -104,7 +105,7 @@ const Searchbar = () => {
                 </div>
             </div>
 
-            {showSelectionBar && <Selectionbar></Selectionbar>}
+            {showSelectionBar && <SearchSelectionBar></SearchSelectionBar>}
         </div>
     );
 };
