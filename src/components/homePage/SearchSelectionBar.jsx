@@ -24,6 +24,7 @@ const SearchSelectionBar = () => {
         localStorage.setItem("selectedSortBy", selectedSortBy);
         localStorage.setItem("selectedSortDir", selectedSortDir);
         localStorage.setItem("selectedKeyword", selectedKeyword);
+        console.log("ihfbvawkfjjewhfej");
     }, [selectedSortBy, selectedSortDir, selectedKeyword]);
     const handleSubmit = () => {
         const keyword = document.getElementById("inputKeyword").value;
