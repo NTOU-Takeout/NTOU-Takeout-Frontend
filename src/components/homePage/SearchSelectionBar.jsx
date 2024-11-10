@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import useSelectionStore from "../stores/selectionStore";
+import useSelectionStore from "../../stores/selectionStore";
 
 const SearchSelectionBar = () => {
     const setShowSelectionBar = useSelectionStore(
@@ -31,7 +31,6 @@ const SearchSelectionBar = () => {
 
         setIsSubmitted(true);
         setShowSelectionBar(false);
-        console.log("asdasd");
     };
 
     const handleSortByClick = (value) => {

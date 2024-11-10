@@ -4,8 +4,8 @@ const getStoreClient = {
             `${import.meta.env.VITE_BASE_URL}/api/store/getIdList`,
         );
         // Fake params for testing
-        let fakeParams = { sortBy: "rating", sortDir: "desc", keyword: "" };
-        params = fakeParams;
+        // let fakeParams = { sortBy: "rating", sortDir: "desc", keyword: "" };
+        // params = fakeParams;
         Object.keys(params).forEach((key) =>
             url.searchParams.append(key, params[key]),
         );

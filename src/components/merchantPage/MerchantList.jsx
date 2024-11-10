@@ -44,7 +44,7 @@ function MerchantList() {
                 searchKeyword,
             });
             setIsSubmitted(false);
-            console.log(merchants);
+            // console.log(merchants);
             return merchants;
         },
         enabled: isSubmitted,

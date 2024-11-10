@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-import CartIcon from "../headerItem/CartIcon";
+import CartIcon from "./CartIcon";
 
 // Header Component
 const Header = ({
