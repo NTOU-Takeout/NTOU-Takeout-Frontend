@@ -28,15 +28,15 @@ function MerchantList() {
     } = useQuery({
         queryKey: ["defaultMerchantIdList"],
         queryFn: async () => {
-            const sortBy = localStorage.getItem("selectedSortBy")
-                ? localStorage.getItem("selectedSortBy")
-                : "rating";
-            const sortDir = localStorage.getItem("selectedSortDir")
-                ? localStorage.getItem("selectedSortDir")
-                : "desc";
-            const keyword = localStorage.getItem("selectedKeyword")
-                ? localStorage.getItem("selectedKeyword")
-                : "";
+            if (localStorage.getItem("selectedSortBy") == "null")
+                localStorage.setItem("selectedSortBy", "rating");
+            if (localStorage.getItem("selectedSortDir") == "null")
+                localStorage.setItem("selectedSortDir", "desc");
+            if (localStorage.getItem("selectedKeyword") == "null")
+                localStorage.setItem("selectedKeyword", "");
+            const sortBy = localStorage.getItem("selectedSortBy");
+            const sortDir = localStorage.getItem("selectedSortDir");
+            const keyword = localStorage.getItem("selectedKeyword");
             console.log(sortBy, sortDir, keyword, "!!!!!");
             const merchants = await getStoreClient.getStoreIdList({
                 sortBy,
