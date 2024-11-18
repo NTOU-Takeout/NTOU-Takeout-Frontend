@@ -22,7 +22,7 @@ const RegisterForm = () => {
             return;
         }
 
-        // Password verify
+        // Verify password
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
         if (!passwordRegex.test(password)) {
             setError("密碼必須至少包含一個大小寫字母和一個數字，且長度至少為8個字符");
