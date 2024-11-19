@@ -33,11 +33,16 @@ const Searchbar = () => {
         const storedSortBy = localStorage.getItem("selectedSortBy");
         const storedSortDir = localStorage.getItem("selectedSortDir");
         const storedKeyword = localStorage.getItem("selectedKeyword");
-
+        if (storedSortBy == "null")
+            localStorage.setItem("selectedSortBy", "rating");
+        if (storedSortDir == "null")
+            localStorage.setItem("selectedSortDir", "desc");
+        if (storedKeyword == "null")
+            localStorage.setItem("selectedKeyword", "");
         if (storedSortBy) setSelectedSortBy(storedSortBy);
-        else setSelectedSortBy("");
+        else setSelectedSortBy("rating");
         if (storedSortDir) setSelectedSortDir(storedSortDir);
-        else setSelectedSortDir("");
+        else setSelectedSortDir("desc");
         if (storedKeyword) setSelectedKeyword(storedKeyword);
         else setSelectedKeyword("");
     }, [setSelectedKeyword, setSelectedSortBy, setSelectedSortDir]);
@@ -61,7 +66,6 @@ const Searchbar = () => {
         setSelectedKeyword(keyword);
         setIsSubmitted(true);
         setShowSelectionBar(false);
-        console.log("HHI");
     };
     const handleEnter = (event) => {
         if (event.key === "Enter") {
