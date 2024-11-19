@@ -20,10 +20,8 @@ const ForgetPage = () => {
         { type: "text"}
     ];
     
-    const handleInputChange = (index, value) => {
-        const keys = ["email", "code", "newPassword", "confirmPassword"];
-        const key = keys[currentStep === 2 ? index + 2 : currentStep];
-        setFormData({ ...formData, [key]: value });
+    const handleInputChange = (field, value) => {
+        setFormData({ ...formData, [field]: value });
     };
 
     const handleContinue = () => {
@@ -46,12 +44,10 @@ const ForgetPage = () => {
             />
             {currentStep < 1 && (
                 <DataForm
-                    formData={[
-                        dataInput[currentStep],
-                        continueBtn[currentStep],
-                        inputType[currentStep],
-                        handleInputChange
-                    ]}
+                    formData={dataInput[currentStep]}
+                    inputValues={formData}
+                    currentStep={currentStep}
+                    onInputChange={handleInputChange}
                 />
             )}
             {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
