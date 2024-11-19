@@ -1,9 +1,9 @@
 const getStoreClient = {
     getStoreIdList: async (params = {}) => {
-        console.log("getStoreIdList", params);
         const url = new URL(
             `${import.meta.env.VITE_BASE_URL}/api/store/getIdList`,
         );
+
         Object.keys(params).forEach((key) =>
             url.searchParams.append(key, params[key]),
         );

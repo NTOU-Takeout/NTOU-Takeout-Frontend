@@ -1,15 +1,15 @@
+import CartOrderSection from "../components/cartPage/cartOrderSection";
 import CartPageHeader from "../components/cartPage/CartPageHeader";
 
 function Cart() {
-    const dish = {
-        name: "好好吃水餃",
-        price: 114.514,
-        picture: "https://i.imgur.com/UxAj87v.jpeg", // Replace this with the actual image path
-        dishAttributes: ["豬肉", "韭仁"],
+    const order = {
+        totalSpend: 110,
+        estimateTime: 20,
     };
     return (
-        <div>
+        <div className="mt-3">
             <CartPageHeader></CartPageHeader>
+            <CartOrderSection orderDetail={order} />
         </div>
     );
 }

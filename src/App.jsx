@@ -17,7 +17,7 @@ const router = createBrowserRouter([
     {
         path: "/cart",
         element: <Cart />,
-        // errorElement: <NotFound />,
+        errorElement: <NotFound />,
     },
     {
         path: "/menu/:merchantId",

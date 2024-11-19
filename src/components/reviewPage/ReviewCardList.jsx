@@ -13,11 +13,6 @@ const ReviewCardList = ({ reviewIdList, merchantId }) => {
         rootMargin: "100px",
     });
 
-    useEffect(() => {
-        if (inView && hasNextPage && !isFetchingNextPage) {
-            fetchNextPage();
-        }
-    }, [inView]);
 
     const {
         data,
@@ -53,6 +48,12 @@ const ReviewCardList = ({ reviewIdList, merchantId }) => {
             }
         },
     });
+    //for infinite scroll
+    useEffect(() => {
+        if (inView && hasNextPage && !isFetchingNextPage) {
+            fetchNextPage();
+        }
+    }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
     return isReviewCardsLoading ? (
         <div className="font-notoTC w-screen flex justify-center items-center mt-4 fa-2x">
@@ -63,7 +64,7 @@ const ReviewCardList = ({ reviewIdList, merchantId }) => {
             />
         </div>
     ) : (
-        <div className="font-notoTC flex flex-col items-center overflow-y-scroll ">
+        <div className="font-notoTC flex flex-col items-center ">
             {data?.pages.map((page) =>
                 page.map((reviewCard) => {
                     return (

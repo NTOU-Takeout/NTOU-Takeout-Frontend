@@ -1,8 +1,8 @@
-import Header from "../components/Header";
+import Header from "../components/homePage/Header";
 import useSidebarStore from "../stores/sidebarStore";
-import Sidebar from "../components/Sidebar";
-import Searchbar from "../components/Searchbar";
-import MerchantList from "../components/MerchantList";
+import Sidebar from "../components/homePage/Sidebar";
+import Searchbar from "../components/homePage/Searchbar";
+import MerchantList from "../components/merchantPage/MerchantList";
 
 function Home() {
     const toggleSidebar = useSidebarStore((state) => state.toggleSidebar);
