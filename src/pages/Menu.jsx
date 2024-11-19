@@ -84,7 +84,7 @@ function Menu() {
             queryFn: async () => {
                 const dishIds = category.second;
                 const dishDetails =
-                    await getMenuClient.getDishsByDishIds(dishIds);
+                    await getMenuClient.getDishsByDishIds([menuId, category.first]);
                 return {
                     categoryName: category.first,
                     dishes: dishDetails,

@@ -1,6 +1,8 @@
-import CartOrderSection from "../components/cartPage/cartOrderSection";
+import CartOrderSection from "../components/cartPage/CartOrderSection";
 import CartPageHeader from "../components/cartPage/CartPageHeader";
 import CartTotalSpend from "../components/cartPage/CartTotalSpend";
+import CartItemCardList from "../components/cartPage/CartItemCardList";
+
 function Cart() {
     const order = {
         merchantName: "海洋大學店",
@@ -10,8 +12,15 @@ function Cart() {
     return (
         <div className="mt-3">
             <CartPageHeader></CartPageHeader>
-            <CartTotalSpend orderInfo={order}></CartTotalSpend>
-            <CartOrderSection orderDetail={order} />
+            <CartTotalSpend orderDetail={{
+                merchantName: order.merchantName,
+                totalSpend: order.totalSpend
+            }} />
+            <CartItemCardList></CartItemCardList>
+            <CartOrderSection orderDetail={{
+                totalSpend: order.totalSpend,
+                estimateTime: order.estimateTime
+            }} />
         </div>
     );
 }

@@ -1,25 +1,25 @@
 const getMenuClient = {
-    getMenuByMenuId: async (menuId) => {
-        console.log("getMenuByMenuId", menuId);
+    getMenuByMenuId: async (storeId) => {
+        console.log("getMenuByMenuId", storeId);
         const response = await fetch(
-            `${import.meta.env.VITE_BASE_URL}/api/menu/${menuId}`,
+            `${import.meta.env.VITE_BASE_URL}/api/v1/stores/${storeId}/menu`,
         );
         if (!response.ok) {
-            throw new Error(`Failed to fetch menu by ID: ${menuId}`);
+            throw new Error(`Failed to fetch menu by ID: ${storeId}`);
         }
         const data = await response.json();
         return data;
     },
-    getDishsByDishIds: async (dishIds) => {
-        console.log("getDishsByDishIds", dishIds);
+    getDishsByDishIds: async (storeId, categoryName) => {
+        console.log("getDishsByDishIds", storeId);
         const response = await fetch(
-            `${import.meta.env.VITE_BASE_URL}/api/menu/getDishesByIds`,
+            `${import.meta.env.VITE_BASE_URL}/api/v1/stores/${storeId}/menu/dishes?category=${categoryName}`,
             {
-                method: "POST",
+                method: "GET",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(dishIds),
+                // body: JSON.stringify(dishIds),
             },
         );
         if (!response.ok) {

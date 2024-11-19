@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 
 const CartOrderSection = ({ orderDetail }) => {
-    const { merchantName, totalSpend, estimateTime } = orderDetail;
+    const { totalSpend, estimateTime } = orderDetail;
     return (
-        <div className="bg-orange-400 p-6 rounded-t-lg  text-white font-notoTC font-medium">
+        <div className="fixed bottom-0 w-screen bg-orange-400 p-6 rounded-t-lg  text-white font-notoTC font-medium">
             <div className="flex justify-between mb-4">
                 <span>總金額</span>
                 <span>$ {totalSpend}</span>

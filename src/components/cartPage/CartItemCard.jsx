@@ -1,24 +1,26 @@
 import PropTypes from "prop-types";
 import useDishStore from "../../stores/dishDetailStore";
 
-const CartItemCard = ({ dishItem }) => {
-    const {
-        name,
-        price,
-        picture: imageUrl,
-        dishAttributes: options,
-    } = dishItem;
+const CartItemCard = ({ dishId, dishItem }) => {
+    const { name, price, picture: imageUrl, dishAttributes: options } = dishItem;
 
-    const { quantity, setQuantity } = useDishStore();
-    // Format the options to display in the card
+    const { dishes, updateDish } = useDishStore();
+    const dishState = dishes[dishId] || {};
+
+    const quantity = dishState.quantity || 1;
+
+    const handleQuantityChange = (change) => {
+        updateDish(dishId, { quantity: Math.max(1, quantity + change) });
+    };
+
     const formattedOptions = options ? options.join(", ") : "";
 
     return (
-        <div className="relative flex items-center  rounded-lg p-4  w-96">
+        <div className="relative flex items-center  rounded-lg p-4  w-screen">
             <img
                 src={imageUrl}
                 alt="Product"
-                className="w-20 h-20 object-cover rounded-lg"
+                className="max-w-20 h-20 object-cover rounded-lg"
             />
             <div className="ml-4 flex-grow">
                 <h2 className="text-lg font-semibold">{name}</h2>
@@ -27,15 +29,14 @@ const CartItemCard = ({ dishItem }) => {
             </div>
             <div className="absolute bottom-[15px] right-[15px] flex items-end border border-gray-300 rounded-md">
                 <button
-                    onClick={() => setQuantity(quantity - 1)}
-                    disabled={quantity <= 0}
+                    onClick={() => handleQuantityChange(-1)}
                     className="px-2 py-0 text-lg rounded-l-md"
                 >
                     -
                 </button>
                 <span className="px-4 py-0.5">{quantity}</span>
                 <button
-                    onClick={() => setQuantity(quantity + 1)}
+                    onClick={() => handleQuantityChange(1)}
                     className="  px-2 py-0 text-lg rounded-r-md"
                 >
                     +
@@ -46,11 +47,12 @@ const CartItemCard = ({ dishItem }) => {
 };
 
 CartItemCard.propTypes = {
+    dishId: PropTypes.string.isRequired,
     dishItem: PropTypes.shape({
         name: PropTypes.string.isRequired,
         price: PropTypes.number.isRequired,
         picture: PropTypes.string,
-        dishAttributes: PropTypes.string,
+        dishAttributes: PropTypes.arrayOf(PropTypes.string),
     }).isRequired,
 };
 
