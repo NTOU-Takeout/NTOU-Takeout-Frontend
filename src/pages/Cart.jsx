@@ -9,7 +9,7 @@ function Cart() {
     return (
         <div className="mt-3">
             <CartPageHeader></CartPageHeader>
-            <CartOrderSection orderDetail={order} />
+            {/* <CartOrderSection orderDetail={order} /> */}
         </div>
     );
 }
