@@ -11,7 +11,7 @@ const CartItemCard = ({ dishItem }) => {
 
     const { quantity, setQuantity } = useDishStore();
     // Format the options to display in the card
-    const formattedOptions = options ? options.join(', ') : '';
+    const formattedOptions = options ? options.join(", ") : "";
 
     return (
         <div className="relative flex items-center  rounded-lg p-4  w-96">
@@ -50,8 +50,8 @@ CartItemCard.propTypes = {
         name: PropTypes.string.isRequired,
         price: PropTypes.number.isRequired,
         picture: PropTypes.string,
-        dishAttributes: PropTypes.string
-    }).isRequired
+        dishAttributes: PropTypes.string,
+    }).isRequired,
 };
 
 export default CartItemCard;
