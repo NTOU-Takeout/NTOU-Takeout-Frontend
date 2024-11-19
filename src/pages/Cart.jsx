@@ -1,4 +1,5 @@
 import CartOrderSection from "../components/cartPage/cartOrderSection";
+import CartPageHeader from "../components/cartPage/CartPageHeader";
 
 function Cart() {
     const order = {
@@ -7,9 +8,8 @@ function Cart() {
     };
     return (
         <div className="mt-3">
-            <CartOrderSection
-                orderDetail={order}
-            />
+            <CartPageHeader></CartPageHeader>
+            {/* <CartOrderSection orderDetail={order} /> */}
         </div>
     );
 }
