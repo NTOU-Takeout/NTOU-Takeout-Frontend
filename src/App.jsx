@@ -6,6 +6,9 @@ import Menu from "./pages/Menu";
 import Review from "./pages/Review";
 import Cart from "./pages/Cart";
 import NotFound from "./pages/NotFound";
+import LoginRegister from "./pages/LoginRegister";
+import Register from "./pages/Register";
+import ForgetPasswd from "./pages/ForgetPasswd";
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -28,6 +31,21 @@ const router = createBrowserRouter([
         path: "/menu/:merchantId/review",
         element: <Review />,
         errorElement: <NotFound />,
+    },
+    {
+        path: "/loginRegister",
+        element: <LoginRegister />,
+        // errorElement: <NotFound />,
+    },
+    {
+        path: "/register",
+        element: <Register />,
+        // errorElement: <NotFound />,
+    },
+    {
+        path: "/forgetPasswd",
+        element: <ForgetPasswd />,
+        // errorElement: <NotFound />,
     },
 ]);
 
