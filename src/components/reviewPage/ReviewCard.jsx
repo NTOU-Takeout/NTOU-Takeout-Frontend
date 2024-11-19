@@ -1,11 +1,9 @@
-import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 
 const ReviewCard = (prop) => {
     const { name, starNumber, date, description } = prop;
 
-    //console.log(starNumber);
     return (
         <div className="font-notoTC w-[90%] mx-auto mt-10 p-4 bg-white rounded-lg border border-gray-300">
             <div className="flex justify-between items-center">

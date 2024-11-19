@@ -1,15 +1,15 @@
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-import CartIcon from "./headerItem/CartIcon";
+import CartIcon from "./CartIcon";
 
 // Header Component
 const Header = ({
     title,
     leftIcon = faUser,
     rightIcon = faShoppingCart,
-    onLeftClick = () => {},
-    onRightClick = () => {},
+    onLeftClick = () => { },
+    onRightClick = () => { },
 }) => {
     return (
         <header className="fixed z-30  top-0 left-0 w-full flex justify-between items-center bg-white shadow-md transition-shadow duration-300 ease-in-out p-2 font-notoTC">
