@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 
 const CartOrderSection = ({ orderDetail }) => {
-    const { totalSpend, estimateTime } = orderDetail;
+    const { merchantName, totalSpend, estimateTime } = orderDetail;
     return (
         <div className="bg-orange-400 p-6 rounded-t-lg  text-white font-notoTC font-medium">
             <div className="flex justify-between mb-4">

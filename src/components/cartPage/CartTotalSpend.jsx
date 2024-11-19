@@ -1,5 +1,5 @@
 const CartTotalSpend = ({ orderInfo }) => {
-    const { totalSpend, merchantName } = orderInfo;
+    const { merchantName, totalSpend, estimateTime } = orderInfo;
     return (
         <div className="mt-[66px] flex justify-between items-center p-4 bg-white shadow-md rounded-lg">
             {/* Store Info */}
