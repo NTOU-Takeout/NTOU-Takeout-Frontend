@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser} from "@fortawesome/free-solid-svg-icons";
 import CartIcon from "./CartIcon";
+import Cookies from "js-cookie";
 
 // Header Component
 const Header = ({
@@ -11,9 +12,14 @@ const Header = ({
 }) => {
 
     const navigate = useNavigate();
+    const authToken = Cookies.get("authToken");
 
     const handleRightClick = () => {
-        navigate("/cart");
+        if(authToken) {
+            navigate("/cart");
+        } else {
+            navigate("/loginRegister");
+        }
     };
 
     return (

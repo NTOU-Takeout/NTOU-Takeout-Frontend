@@ -1,6 +1,8 @@
+import { useNavigate } from "react-router-dom";
 import useSidebarStore from "../../stores/sidebarStore";
 import SidebarButton from "./SidebarButton";
 import useThemeStore from "../../stores/themeStore";
+import Cookies from "js-cookie";
 import {
     faHistory,
     faHeart,
@@ -19,6 +21,23 @@ const Sidebar = () => {
     const theme = useThemeStore((state) => state.themeMode);
     const toggleTheme = useThemeStore((state) => state.toggleTheme);
     const closeSidebar = useSidebarStore((state) => state.closeSidebar);
+    const navigate = useNavigate();
+    const authToken = Cookies.get("authToken");
+    let username = "登入";
+    
+    if(authToken) {
+        username = "USER01";
+    } else {
+        username = "登入";
+    }
+    const handleLogout = () => {
+        Cookies.remove("authToken");
+
+        navigate("/loginRegister");
+
+        closeSidebar();
+    };
+    
 
     return (
         <>
@@ -37,12 +56,18 @@ const Sidebar = () => {
             >
                 <div className="p-4">
                     <SidebarButton
-                        text="登入"
+                        text={username}
                         textStyle={"text-2xl px-2"}
                         icon={faUser}
                         iconSize="2xl"
                         iconColor={"#053766"}
                         style={"py-8"}
+                        onClick={() => {
+                            if (isOpen&&!authToken) {
+                                navigate("/loginRegister");
+                                closeSidebar();
+                            }
+                        }}
                     />
                     <SidebarButton
                         text="商家瀏覽紀錄"
@@ -88,12 +113,15 @@ const Sidebar = () => {
                     />
                 </div>
                 <div className="px-4 absolute bottom-0 left-0 right-2 flex justify-between">
-                    <SidebarButton
-                        text="登出"
-                        icon={faSignOutAlt}
-                        iconSize="lg"
-                        iconColor={"#606162"}
-                    />
+                    {authToken && (
+                        <SidebarButton
+                            text="登出"
+                            icon={faSignOutAlt}
+                            iconSize="lg"
+                            iconColor={"#606162"}
+                            onClick={handleLogout}
+                        />
+                    )}
                     <SidebarButton
                         icon={theme == "light" ? faMoon : faSun}
                         text="切換主題"

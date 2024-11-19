@@ -4,7 +4,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import OptionCard from "./dishOptions/OptionCard";
 import CartOption from "./dishOptions/CartOption";
-const DishDetail = ({ dishData, onClose }) => {
+import Cookies from "js-cookie";
+
+const DishDetail = ({ dishData, onClose, dishId = "dish001" }) => {
     const {
         name,
         price,
@@ -32,6 +34,8 @@ const DishDetail = ({ dishData, onClose }) => {
             if (onClose) onClose();
         }, 500);
     };
+
+    const authToken = Cookies.get("authToken");
 
     return (
         <div
@@ -77,7 +81,9 @@ const DishDetail = ({ dishData, onClose }) => {
                     <div className="py-5"></div>
                 </div>
                 {/* Add to cart button */}
-                <CartOption />
+                {authToken && (
+                    <CartOption dishId={dishId}/>
+                )}
             </div>
         </div>
     );

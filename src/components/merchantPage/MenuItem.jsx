@@ -1,7 +1,10 @@
 import PropTypes from "prop-types";
+import Cookies from "js-cookie";
 
 const MenuItemCard = ({ food, onClick }) => {
     const { name, picture, price, description } = food;
+
+    const authToken = Cookies.get("authToken");
 
     return (
         <div
@@ -33,11 +36,13 @@ const MenuItemCard = ({ food, onClick }) => {
                     <p className="text-sm text-gray-600 mt-2 line-clamp-3 text-ellipsis">{description}</p>
 
                     {/* Add button */}
-                    <div className="flex justify-end mt-4 absolute bottom-[15px] right-[15px]">
-                        <button className="bg-orange-500 text-white rounded-full w-10 h-10 flex items-center justify-center">
-                            <span className="text-2xl font-bold mb-1">+</span>
-                        </button>
-                    </div>
+                    {authToken && ( // 僅當 authToken 存在時顯示按鈕
+                        <div className="flex justify-end mt-4 absolute bottom-[15px] right-[15px]">
+                            <button className="bg-orange-500 text-white rounded-full w-10 h-10 flex items-center justify-center">
+                                <span className="text-2xl font-bold mb-1">+</span>
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

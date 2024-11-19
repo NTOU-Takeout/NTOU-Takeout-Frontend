@@ -65,32 +65,32 @@ function Menu() {
 
     // Fetch menu category list and dish details
     const { data: menuCategoryList = [] } = useQuery({
-        queryKey: ["menuCategoryList" + menuId],
+        queryKey: ["menuCategoryList" + merchantId],
         queryFn: async () => {
-            if (!menuId) return [];
-            const data = await getMenuClient.getMenuByMenuId(menuId);
+            if (!merchantId) return [];
+            const data = await getMenuClient.getMenuByMenuId(merchantId);
             // Update navbar items
             setNavbarItems(data.categories.map((category) => category.first));
             console.log("menuCategoryList:", data.categories);
             return data.categories;
         },
-        enabled: !!menuId,
+        enabled: !!merchantId,
     });
 
     // Fetch dish details for each category separately
     const categoryQueries = useQueries({
         queries: menuCategoryList.map((category) => ({
-            queryKey: ["categoryDishes" + menuId + category.first],
+            queryKey: ["categoryDishes" + merchantId + category.first],
             queryFn: async () => {
                 const dishIds = category.second;
                 const dishDetails =
-                    await getMenuClient.getDishsByDishIds([menuId, category.first]);
+                    await getMenuClient.getDishsByDishIds(merchantId, category.first);
                 return {
                     categoryName: category.first,
                     dishes: dishDetails,
                 };
             },
-            enabled: !!menuId && !!category.second.length,
+            enabled: !!merchantId && !!category.second.length,
         })),
     });
 

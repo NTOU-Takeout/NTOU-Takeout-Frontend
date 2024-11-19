@@ -21,5 +21,15 @@ const useDishStore = create((set) => ({
             const { [id]: _, ...remainingDishes } = state.dishes;
             return { dishes: remainingDishes };
         }),
+    setQuantity: (id, quantity) =>
+        set((state) => ({
+            dishes: {
+                ...state.dishes,
+                [id]: {
+                    ...state.dishes[id],
+                    quantity: Math.max(0, quantity),
+            },
+        },
+    })),
 }));
 export default useDishStore;
