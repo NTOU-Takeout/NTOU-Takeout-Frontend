@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Home from "./pages/Home";
 import Menu from "./pages/Menu";
 import Review from "./pages/Review";
+import Cart from "./pages/Cart";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -11,6 +12,11 @@ const router = createBrowserRouter([
     {
         path: "/",
         element: <Home />,
+        errorElement: <NotFound />,
+    },
+    {
+        path: "/cart",
+        element: <Cart />,
         errorElement: <NotFound />,
     },
     {
