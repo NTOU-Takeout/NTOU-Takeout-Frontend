@@ -1,8 +1,6 @@
-// src/components/Sidebar.jsx
-import React from "react";
-import useSidebarStore from "../stores/sidebarStore";
+import useSidebarStore from "../../stores/sidebarStore";
 import SidebarButton from "./SidebarButton";
-import useThemeStore from "../stores/themeStore";
+import useThemeStore from "../../stores/themeStore";
 import {
     faHistory,
     faHeart,
