@@ -25,7 +25,7 @@ const router = createBrowserRouter([
     {
         path: "/menu/:merchantId",
         element: <Menu />,
-        errorElement: <NotFound />,
+        // errorElement: <NotFound />,
     },
     {
         path: "/menu/:merchantId/review",
@@ -40,12 +40,12 @@ const router = createBrowserRouter([
     {
         path: "/register",
         element: <Register />,
-        // errorElement: <NotFound />,
+        errorElement: <NotFound />,
     },
     {
         path: "/forgetPasswd",
         element: <ForgetPasswd />,
-        // errorElement: <NotFound />,
+        errorElement: <NotFound />,
     },
 ]);
 

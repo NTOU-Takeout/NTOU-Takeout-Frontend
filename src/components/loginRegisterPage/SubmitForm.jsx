@@ -1,4 +1,4 @@
-import React from "react";
+import PropTypes from "prop-types";
 import LoginForm from "./form/LoginForm";
 import RegisterForm from "./form/RegisterForm";
 
@@ -13,6 +13,10 @@ const SubmitForm = ({status}) => {
             )}
         </div>
   );
+};
+
+SubmitForm.propTypes = {
+    status: PropTypes.bool.isRequired,
 };
 
 export default SubmitForm;

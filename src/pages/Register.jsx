@@ -1,4 +1,3 @@
-import React, {useState} from "react";
 import RegisterPage from "../components/loginRegisterPage/RegisterPage";
 
 function Register() {

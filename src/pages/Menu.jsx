@@ -38,7 +38,7 @@ function Menu() {
     }, []);
 
     const getMerchantById = useMerchantStore((state) => state.getMerchantById);
-    const [menuId, setMenuId] = useState(null);
+    // const [menuId, setMenuId] = useState(null);
     const [merchant, setMerchant] = useState(null);
 
     // get merchant data
@@ -46,7 +46,7 @@ function Menu() {
         const merchantData = getMerchantById(merchantId);
         if (merchantData) {
             setMerchant(merchantData);
-            setMenuId(merchantData.menuId);
+            // setMenuId(merchantData.menuId);
         } else {
             const fetchMerchantData = async () => {
                 try {
@@ -54,7 +54,7 @@ function Menu() {
                         merchantId,
                     ]);
                     setMerchant(data[0]);
-                    setMenuId(data[0]?.menuId || null);
+                    // setMenuId(data[0]?.menuId || null);
                 } catch (error) {
                     console.error("Failed to fetch merchant data:", error);
                 }
@@ -82,7 +82,7 @@ function Menu() {
         queries: menuCategoryList.map((category) => ({
             queryKey: ["categoryDishes" + merchantId + category.first],
             queryFn: async () => {
-                const dishIds = category.second;
+                // const dishIds = category.second;
                 const dishDetails =
                     await getMenuClient.getDishsByDishIds(merchantId, category.first);
                 return {
@@ -98,7 +98,8 @@ function Menu() {
     const categoryData = categoryQueries
         .map((query) => query.data)
         .filter(Boolean); // Filter out undefined results
-
+    console.log(categoryData);
+    
     return merchant && merchantId ? (
         <div>
             <MenuHeader merchantData={merchant} />

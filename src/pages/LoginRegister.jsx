@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import {useState} from "react";
 import StatusBar from "../components/loginRegisterPage/StatusBar";
 import SubmitForm from "../components/loginRegisterPage/SubmitForm";
 

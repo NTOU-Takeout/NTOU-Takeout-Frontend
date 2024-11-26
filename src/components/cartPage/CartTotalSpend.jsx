@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 const CartTotalSpend = ({ orderDetail }) => {
     const { merchantName, totalSpend } = orderDetail;
     return (
@@ -16,6 +18,13 @@ const CartTotalSpend = ({ orderDetail }) => {
             </div>
         </div>
     );
+};
+
+CartTotalSpend.propTypes = {
+    orderDetail: PropTypes.shape({
+        merchantName: PropTypes.string.isRequired,
+        totalSpend: PropTypes.number.isRequired,
+    }).isRequired,
 };
 
 export default CartTotalSpend;

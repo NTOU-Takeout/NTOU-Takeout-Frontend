@@ -1,4 +1,4 @@
-import React from "react";
+import PropTypes from "prop-types";
 
 const TitleText = ({ titleData }) => {
     const [titleText, description] = titleData;
@@ -8,6 +8,10 @@ const TitleText = ({ titleData }) => {
             <p className="text-xs">{description}</p>
         </div>
   );
+};
+
+TitleText.propTypes = {
+    titleData: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default TitleText;

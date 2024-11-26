@@ -1,4 +1,5 @@
-import React from "react";
+import PropTypes from "prop-types";
+
 
 const StatusBar = ({status, setStatus}) => {
 
@@ -33,6 +34,11 @@ const StatusBar = ({status, setStatus}) => {
       </div>
     </div>
   );
+};
+
+StatusBar.propTypes = {
+    status: PropTypes.bool.isRequired,
+    setStatus: PropTypes.func.isRequired,
 };
 
 export default StatusBar;

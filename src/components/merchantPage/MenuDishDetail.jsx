@@ -75,6 +75,7 @@ const DishDetail = ({ dishData, onClose, dishId = "dish001" }) => {
                                 description={detail.description}
                                 options={detail.attributeOptions}
                                 type={detail.type}
+                                dishId={dishId}
                             />
                         ))}
                     </div>
@@ -92,6 +93,7 @@ const DishDetail = ({ dishData, onClose, dishId = "dish001" }) => {
 DishDetail.propTypes = {
     dishData: PropTypes.object.isRequired,
     onClose: PropTypes.func,
+    dishId: PropTypes.string
 };
 
 export default DishDetail;

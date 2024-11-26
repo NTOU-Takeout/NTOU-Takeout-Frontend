@@ -1,4 +1,4 @@
-import React from "react";
+import PropTypes from "prop-types";
 
 const DataForm = ({ formData, inputValues, currentStep, onInputChange }) => {
     const fieldKeys = ["email", "code", "newPassword", "confirmPassword"];
@@ -22,6 +22,13 @@ const DataForm = ({ formData, inputValues, currentStep, onInputChange }) => {
             </form>
         </div>
     );
+};
+
+DataForm.propTypes = {
+    formData: PropTypes.arrayOf(PropTypes.string).isRequired,
+    inputValues: PropTypes.objectOf(PropTypes.string).isRequired,
+    currentStep: PropTypes.number.isRequired,
+    onInputChange: PropTypes.func.isRequired,
 };
 
 export default DataForm;

@@ -1,4 +1,3 @@
-import React, {useState} from "react";
 import ForgetPage from "../components/loginRegisterPage/ForgetPage";
 
 function ForgetPasswd() {

@@ -23,8 +23,9 @@ const getMenuClient = {
             },
         );
         if (!response.ok) {
-            throw new Error(`Failed to fetch details for dish ID: ${dishIds}`);
+            throw new Error(`Failed to fetch details for dish ID: ${storeId}`);
         }
+        
         const data = await response.json();
         return data;
     },

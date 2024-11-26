@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import TitleText from "./specSection/TitleText";
 import DataForm from "./specSection/DataForm";
 import { Link } from "react-router-dom";
@@ -15,10 +15,6 @@ const ForgetPage = () => {
     const [currentStep, setCurrentStep] = useState(0);
     const [formData, setFormData] = useState({ code: ""});
     const [error, setError] = useState("");
-
-    const inputType = [
-        { type: "text"}
-    ];
     
     const handleInputChange = (field, value) => {
         setFormData({ ...formData, [field]: value });

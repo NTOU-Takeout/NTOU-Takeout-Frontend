@@ -2,7 +2,7 @@ import CryptoJS from "crypto-js";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGoogle } from "@fortawesome/free-brands-svg-icons";
+// import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { Link } from "react-router-dom";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import loginClient from "../../../api/auth/loginClient";
