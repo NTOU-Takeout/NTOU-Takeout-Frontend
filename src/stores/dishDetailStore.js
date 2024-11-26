@@ -25,6 +25,7 @@ const useDishStore = create((set) => ({
         })),
     removeDish: (id) =>
         set((state) => {
+            // eslint-disable-next-line no-unused-vars
             const { [id]: _, ...remainingDishes } = state.dishes;
             return { dishes: remainingDishes };
         }),
