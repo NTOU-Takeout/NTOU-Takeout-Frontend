@@ -6,6 +6,7 @@ import Menu from "./pages/Menu";
 import Review from "./pages/Review";
 import Cart from "./pages/Cart";
 import NotFound from "./pages/NotFound";
+import MerchantManagePage from "./pages/MerchantManagePage";
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -27,6 +28,11 @@ const router = createBrowserRouter([
     {
         path: "/menu/:merchantId/review",
         element: <Review />,
+        errorElement: <NotFound />,
+    },
+    {
+        path: "/merchantPage",
+        element: <MerchantManagePage />,
         errorElement: <NotFound />,
     },
 ]);
