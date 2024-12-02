@@ -8,7 +8,7 @@ import Cart from "./pages/Cart";
 import NotFound from "./pages/NotFound";
 import MerchantPage from "./pages/MerchantPage";
 import MerchantMainPage from "./pages/MerchantSubpage/MerchantMainPage";
-//import MerchantMenuPage from "./pages/MerchantSubpage/MerchantMenuPage";
+import MerchantMenuPage from "./pages/MerchantSubpage/MerchantMenuPage";
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -38,8 +38,13 @@ const router = createBrowserRouter([
         errorElement: <NotFound />,
         children: [
             {
-                path: "main", // 子路由
+                path: "", // 子路由
                 element: <MerchantMainPage />,
+                errorElement: <NotFound />,
+            },
+            {
+                path: "menu", // 子路由
+                element: <MerchantMenuPage />,
                 errorElement: <NotFound />,
             },
         ],
