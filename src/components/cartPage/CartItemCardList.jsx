@@ -2,39 +2,17 @@ import useDishStore from "../../stores/dishDetailStore";
 import CartItemCard from "./CartItemCard";
 
 const CartItemCardList = () => {
-    const addDish = useDishStore((state) => state.addDish);
+    const dishes = useDishStore((state) => state.dishes); // 訂閱 dishes 狀態
 
-    const dishes = [
-        {
-            id: "1",
-            name: "好好吃水餃",
-            price: 114.514,
-            picture: "https://i.imgur.com/UxAj87v.jpeg",
-            dishAttributes: ["豬肉", "韭仁"],
-        },
-        {
-            id: "2",
-            name: "好好吃水餃",
-            price: 114.514,
-            picture: "https://i.imgur.com/UxAj87v.jpeg",
-            dishAttributes: ["豬肉", "韭仁"],
-        },
-        {
-            id: "3",
-            name: "好好吃水餃",
-            price: 114.514,
-            picture: "https://i.imgur.com/UxAj87v.jpeg",
-            dishAttributes: ["豬肉", "韭仁"],
-        },
-    ];
-
-    // 初始化每個菜品的狀態
-    dishes.forEach((dish) => addDish(dish.id, { quantity: 1 }));
+    // 檢查 dishes 是否為空物件
+    if (Object.keys(dishes).length === 0) {
+        return <p>目前購物車是空的。</p>;
+    }
 
     return (
         <div>
-            {dishes.map((dish) => (
-                <CartItemCard key={dish.id} dishId={dish.id} dishItem={dish} />
+            {Object.entries(dishes).map(([id, dish]) => (
+                <CartItemCard key={id} dishId={id} dishItem={dish} />
             ))}
         </div>
     );

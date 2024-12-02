@@ -76,6 +76,7 @@ const DishDetail = ({ dishData, onClose, dishId = "dish001" }) => {
                                 options={detail.attributeOptions}
                                 type={detail.type}
                                 dishId={dishId}
+                                dishData={dishData}
                             />
                         ))}
                     </div>

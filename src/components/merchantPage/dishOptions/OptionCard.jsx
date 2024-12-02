@@ -22,36 +22,42 @@ const OptionCard = ({
     }, [dishes, dishId]);
 
     const handleCheckboxChange = (option) => {
+        // 獲取目前的菜品狀態
+        const currentDish = dishes[dishId] || {};
+        const { selectedOptions: currentOptions = [] } = currentDish;
+    
+        // 設置新的選擇
+        let updatedOptions = [...currentOptions];
+    
         if (type === "single") {
-            setSelectedOptions([option.name]);
-
-            // 更新該菜品的 selectedOptions
-            updateDish(dishId, {
-                selectedOptions: [option.name],
-                extraCost: option.extraCost,
-            });
+            // Single; remove selected option in the same category
+            updatedOptions = updatedOptions.filter(
+                (opt) => !options.some((o) => o.name === opt) 
+            );
+            updatedOptions.push(option.name); // Add new selected option
         } else {
-            setSelectedOptions((prev) => {
-                const updatedOptions = prev.includes(option.name)
-                    ? prev.filter((opt) => opt !== option.name) // Cancel selection
-                    : [...prev, option.name]; // Add new selection
-
-                // 計算總額外費用
-                const totalExtraCost = updatedOptions.reduce((acc, optionName) => {
-                    const selectedOption = options.find(opt => opt.name === optionName);
-                    return acc + (selectedOption ? selectedOption.extraCost : 0);
-                }, 0);
-
-                // 更新該菜品的 selectedOptions 和 extraCost
-                updateDish(dishId, {
-                    selectedOptions: updatedOptions,
-                    extraCost: totalExtraCost,
-                });
-
-                return updatedOptions;
-            });
+            // Multi: Add or cancel selection
+            updatedOptions = currentOptions.includes(option.name)
+                ? updatedOptions.filter((opt) => opt !== option.name) // Cancel selection
+                : [...updatedOptions, option.name]; // Add selection
         }
+    
+        // 計算總額外費用
+        const totalExtraCost = updatedOptions.reduce((acc, optionName) => {
+            const selectedOption = options.find((opt) => opt.name === optionName);
+            return acc + (selectedOption ? selectedOption.extraCost : 0);
+        }, 0);
+    
+        // 更新到 Zustand Store
+        updateDish(dishId, {
+            selectedOptions: updatedOptions,
+            extraCost: totalExtraCost,
+        });
+    
+        setSelectedOptions(updatedOptions);
     };
+    
+    
 
     return (
         <div className="border rounded-lg p-4 max-w-sm mx-auto mb-8 mt-8 font-notoTC">
