@@ -17,7 +17,7 @@ const MerchantHeader = ({
                 <FontAwesomeIcon icon={leftIcon} />
             </div>
             <h1 className="font-noto font-bold text-2xl m-0 text-center">
-                <a href="/">{merchantName}</a>
+                <a href="/merchantPage">{merchantName}</a>
             </h1>
         </header>
     );

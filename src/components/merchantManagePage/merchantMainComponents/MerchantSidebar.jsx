@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
-import useSidebarStore from "../../stores/merchantSidebarStore";
+import useSidebarStore from "../../../stores/merchantSidebarStore";
 import MerchantSidebarButton from "./MerchantSidebarButton";
-import useThemeStore from "../../stores/themeStore";
+import useThemeStore from "../../../stores/themeStore";
 import {
     faComment,
     faCog,
@@ -19,7 +19,7 @@ const MerchantSidebar = ({ merchantName }) => {
     const theme = useThemeStore((state) => state.themeMode);
     const toggleTheme = useThemeStore((state) => state.toggleTheme);
     const closeSidebar = useSidebarStore((state) => state.closeSidebar);
-
+    console.log(isOpen, "asdlkawfqf");
     return (
         <>
             {isOpen && (
@@ -64,6 +64,7 @@ const MerchantSidebar = ({ merchantName }) => {
                         iconSize="lg"
                         iconColor={"#053766"}
                         style={"px-4 py-4"}
+                        path="/merchantPage/menu"
                     />
                     <MerchantSidebarButton
                         text="評論"

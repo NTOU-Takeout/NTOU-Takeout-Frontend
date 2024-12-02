@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import useThemeStore from "../../stores/themeStore";
+import useThemeStore from "../../../stores/themeStore";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 const MerchantSidebarButton = ({
     icon,
     text,
@@ -9,7 +10,9 @@ const MerchantSidebarButton = ({
     iconColor,
     onClick,
     style,
+    path,
 }) => {
+    const navigate = useNavigate();
     const handleClick = (e) => {
         console.log({ text }, "!!!!");
         console.log(e);
@@ -17,6 +20,8 @@ const MerchantSidebarButton = ({
         if (onClick) {
             onClick();
         }
+        console.log(path);
+        navigate(path);
         console.log(useThemeStore.getState().themeMode);
     };
     return (
@@ -49,6 +54,7 @@ MerchantSidebarButton.propTypes = {
     iconColor: PropTypes.string,
     onClick: PropTypes.func,
     style: PropTypes.string,
+    path: PropTypes.string,
 };
 
 export default MerchantSidebarButton;

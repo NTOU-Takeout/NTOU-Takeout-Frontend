@@ -6,7 +6,9 @@ import Menu from "./pages/Menu";
 import Review from "./pages/Review";
 import Cart from "./pages/Cart";
 import NotFound from "./pages/NotFound";
-import MerchantManagePage from "./pages/MerchantManagePage";
+import MerchantPage from "./pages/MerchantPage";
+import MerchantMainPage from "./pages/MerchantSubpage/MerchantMainPage";
+//import MerchantMenuPage from "./pages/MerchantSubpage/MerchantMenuPage";
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -32,8 +34,15 @@ const router = createBrowserRouter([
     },
     {
         path: "/merchantPage",
-        element: <MerchantManagePage />,
+        element: <MerchantPage />,
         errorElement: <NotFound />,
+        children: [
+            {
+                path: "main", // 子路由
+                element: <MerchantMainPage />,
+                errorElement: <NotFound />,
+            },
+        ],
     },
 ]);
 
