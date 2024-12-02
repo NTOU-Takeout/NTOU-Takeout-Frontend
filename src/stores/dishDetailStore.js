@@ -12,7 +12,7 @@ const useDishStore = create(
                         [id]: { 
                             ...initialState, 
                             quantity: 1,
-                            selectedOptions: [], // 儲存該菜品的選項資料
+                            selectedOptions: [], // save dishes' options
                         },
                     },
                 })),
@@ -22,7 +22,7 @@ const useDishStore = create(
                         ...state.dishes,
                         [id]: { 
                             ...state.dishes[id], 
-                            ...updatedState, // 更新菜品的資料，包括選項
+                            ...updatedState, // update dishes
                         },
                     },
                 })),
@@ -44,8 +44,8 @@ const useDishStore = create(
                 })),
         }),
         {
-            name: "dish-store", // localStorage 中的 key 名稱
-            partialize: (state) => ({ dishes: state.dishes }), // 僅存儲 dishes
+            name: "dish-store", // store into localStorage
+            partialize: (state) => ({ dishes: state.dishes }),
         }
     )
 );

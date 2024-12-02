@@ -40,7 +40,7 @@ const CartItemCardList = ({ setTotalSpend }) => {
 };
 
 CartItemCardList.propTypes = {
-    setTotalSpend: PropTypes.func.isRequired, // 確保 setTotalSpend 是一個函數
+    setTotalSpend: PropTypes.func.isRequired,
 };
 
 export default CartItemCardList;

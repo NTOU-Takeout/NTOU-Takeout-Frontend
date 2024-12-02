@@ -38,12 +38,12 @@ const LoginForm = () => {
             const response = await loginClient.loginUser(userDetails);
             console.log("登入成功:", response);
 
-            navigate("/"); // 登入成功後導向到 dashboard
+            navigate("/"); // navigate to home page after login succeed
         } catch (err) {
             console.error("登入失敗:", err.message);
             setError(err.message);
         } finally {
-            setIsLoading(false); // 結束加載狀態
+            setIsLoading(false);
         }
     };
     return (

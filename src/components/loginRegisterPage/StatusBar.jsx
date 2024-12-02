@@ -7,7 +7,7 @@ const StatusBar = ({status, setStatus}) => {
     <div className="text-center">
       <h1 className="text-2xl font-bold mb-6">{status ? "登入" : "註冊"}</h1>
       <div className="border border-neutral-500 rounded-md relative flex items-center w-[70vw]">
-        {/* 滑動背景 */}
+        {/* sliding switch login/register */}
         <div
           className={`absolute top-0 left-0 w-1/2 h-full bg-orange-500 rounded-md transition-transform duration-300 ${
             status ? "translate-x-0" : "translate-x-full"

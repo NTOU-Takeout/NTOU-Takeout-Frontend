@@ -35,7 +35,7 @@ const CartItemCard = ({ dishId, dishItem }) => {
             <div className="ml-4 flex-grow">
                 <h2 className="text-lg font-semibold">{name}</h2>
                 <p className="text-sm text-gray-500">
-                    {formattedOptions} (額外加價 $ {extraCost})
+                    {formattedOptions} ( + $ {extraCost})
                 </p>
                 <p className="text-xl mt-2">
                     $ {Math.floor(quantity * (price + extraCost))}

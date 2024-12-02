@@ -7,12 +7,12 @@ import useDishStore from "../../../stores/dishDetailStore"; // Import your Zusta
 const OptionCard = ({
     title,
     description,
-    options = [], // pass in an array of options
-    type, // default to single selection
-    dishId, // Pass the dish id as prop
+    options = [],
+    type,
+    dishId,
 }) => {
     const [selectedOptions, setSelectedOptions] = useState([]);
-    const { dishes, updateDish } = useDishStore(); // Get your store actions
+    const { dishes, updateDish } = useDishStore();
 
     // Initialize the selected options from the store if the dish already exists
     useEffect(() => {
@@ -22,11 +22,11 @@ const OptionCard = ({
     }, [dishes, dishId]);
 
     const handleCheckboxChange = (option) => {
-        // 獲取目前的菜品狀態
+        // Get current dish state
         const currentDish = dishes[dishId] || {};
         const { selectedOptions: currentOptions = [] } = currentDish;
     
-        // 設置新的選擇
+        // Set new options
         let updatedOptions = [...currentOptions];
     
         if (type === "single") {
@@ -42,13 +42,13 @@ const OptionCard = ({
                 : [...updatedOptions, option.name]; // Add selection
         }
     
-        // 計算總額外費用
+        // calculate extra cost
         const totalExtraCost = updatedOptions.reduce((acc, optionName) => {
             const selectedOption = options.find((opt) => opt.name === optionName);
             return acc + (selectedOption ? selectedOption.extraCost : 0);
         }, 0);
     
-        // 更新到 Zustand Store
+        // update dish to store
         updateDish(dishId, {
             selectedOptions: updatedOptions,
             extraCost: totalExtraCost,
@@ -106,7 +106,7 @@ OptionCard.propTypes = {
         }),
     ),
     type: PropTypes.oneOf(["single", "multiple"]),
-    dishId: PropTypes.string.isRequired, // Ensure that each OptionCard has a unique dishId
+    dishId: PropTypes.string.isRequired,
 };
 
 export default OptionCard;

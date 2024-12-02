@@ -12,7 +12,7 @@ const CartOption = ({dishId}) => {
 };
 
 CartOption.propTypes = {
-    dishId: PropTypes.string.isRequired, // Assume dishId is a string, adjust if it's another type
+    dishId: PropTypes.string.isRequired,
 };
 
 export default CartOption;
