@@ -19,7 +19,7 @@ const MerchantMenuSidebar = ({ merchantName }) => {
     const theme = useThemeStore((state) => state.themeMode);
     const toggleTheme = useThemeStore((state) => state.toggleTheme);
     const closeSidebar = useSidebarStore((state) => state.closeSidebar);
-    console.log(isOpen, "asdlkawfqf");
+    //console.log(isOpen, "asdlkawfqf");
     return (
         <>
             {isOpen && (
@@ -43,6 +43,8 @@ const MerchantMenuSidebar = ({ merchantName }) => {
                         iconSize="2xl"
                         iconColor={"#053766"}
                         style={"py-8"}
+                        path="/merchantPage"
+                        onClick={closeSidebar}
                     />
                     <MerchantMenuSidebarButton
                         text="主頁"
@@ -50,6 +52,8 @@ const MerchantMenuSidebar = ({ merchantName }) => {
                         iconSize="lg"
                         iconColor={"#053766"}
                         style={"px-4 py-4"}
+                        path="/merchantPage"
+                        onClick={closeSidebar}
                     />
                     <MerchantMenuSidebarButton
                         text="訂單"

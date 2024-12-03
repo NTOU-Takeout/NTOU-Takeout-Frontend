@@ -19,7 +19,6 @@ const MerchantSidebar = ({ merchantName }) => {
     const theme = useThemeStore((state) => state.themeMode);
     const toggleTheme = useThemeStore((state) => state.toggleTheme);
     const closeSidebar = useSidebarStore((state) => state.closeSidebar);
-    console.log(isOpen, "asdlkawfqf");
     return (
         <>
             {isOpen && (

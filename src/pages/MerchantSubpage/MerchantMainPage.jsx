@@ -5,8 +5,8 @@ import MerchantSidebar from "../../components/merchantManagePage/merchantMainCom
 function MerchantMainPage() {
     const toggleSidebar = useSidebarStore((state) => state.toggleSidebar);
     const merchantName = "海洋大學店";
-    const isOpen = useSidebarStore((state) => state.isOpen);
-    console.log(isOpen);
+    //const isOpen = useSidebarStore((state) => state.isOpen);
+    //console.log(isOpen);
     return (
         <div>
             <MerchantHeader

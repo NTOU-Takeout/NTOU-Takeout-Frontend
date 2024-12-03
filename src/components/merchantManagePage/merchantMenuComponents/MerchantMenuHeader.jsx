@@ -11,24 +11,19 @@ const MerchantMenuHeader = ({
 }) => {
     return (
         <header className="fixed z-30 top-0 left-0 w-full flex justify-between items-center bg-orange-400 text-white shadow-md p-3">
-            {/* 左侧图标 */}
             <div className="text-xl  flex items-center">
                 <div className=" cursor-pointer" onClick={onLeftClick}>
                     <FontAwesomeIcon icon={leftIcon} />
                 </div>
                 <span className="ml-2 text-lg font-bold">{title}</span>
             </div>
-
-            {/* 右侧按钮组 */}
             <div className="flex items-center gap-2">
-                {/* 添加按钮 */}
                 <button
                     onClick={onAddClick}
                     className="bg-white text-black rounded-full p-2 flex items-center justify-center shadow-md"
                 >
                     <FontAwesomeIcon icon={faPlus} />
                 </button>
-                {/* 预览按钮 */}
                 <button
                     onClick={onPreviewClick}
                     className="bg-white  text-black rounded px-3 py-1 font-semibold shadow-md"
