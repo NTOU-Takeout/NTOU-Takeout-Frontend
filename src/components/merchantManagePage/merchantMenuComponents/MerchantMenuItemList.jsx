@@ -44,7 +44,12 @@ const MerchantMenuItemList = () => {
     };
 
     const handleEdit = (id) => {
-        console.log(`Edit clicked for item with id ${id}!`);
+        const item = items.find((item) => item.id === id);
+        if (item) {
+            console.log(`Edit clicked for item:`, item);
+        } else {
+            console.log(`Item with id ${id} not found!`);
+        }
     };
 
     return (

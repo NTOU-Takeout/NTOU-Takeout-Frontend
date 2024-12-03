@@ -11,7 +11,10 @@ const MerchantMenuItem = ({
     onEdit,
 }) => {
     return (
-        <div className="flex items-center justify-between bg-white p-4 rounded-lg shadow-md mb-4">
+        <div
+            className="flex items-center justify-between bg-white p-4 rounded-lg shadow-md mb-4"
+            onClick={onEdit}
+        >
             <div className="flex items-center">
                 <img
                     src={pictureURL}
