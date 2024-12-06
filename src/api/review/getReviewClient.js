@@ -2,7 +2,7 @@ const getReviewClient = {
     getReivewByIds: async (reviewIds) => {
         console.log("getReviewByIds", reviewIds);
         const response = await fetch(
-            `${import.meta.env.VITE_BASE_URL}/api/review/getReviewsByIds`,
+            `${import.meta.env.VITE_BASE_URL}/api/v1/stores/reviews/query`,
             {
                 method: "POST",
                 headers: {
