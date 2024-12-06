@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
 import Merchant from "./Merchant";
@@ -10,7 +10,6 @@ import useSelectionStore from "../../stores/selectionStore";
 
 function MerchantList() {
     const { addMerchants } = useMerchantStore();
-    const [merchantIds, setMerchantIds] = useState([]);
     const LOAD_SIZE = 4;
 
     const isSubmitted = useSelectionStore((state) => state.isSubmitted);
@@ -18,6 +17,15 @@ function MerchantList() {
     const { ref, inView } = useInView({
         rootMargin: "100px",
     });
+    if (localStorage.getItem("selectedSortBy") === "null")
+        localStorage.setItem("selectedSortBy", "rating");
+    if (localStorage.getItem("selectedSortDir") === "null")
+        localStorage.setItem("selectedSortDir", "desc");
+    if (localStorage.getItem("selectedKeyword") === "null")
+        localStorage.setItem("selectedKeyword", "");
+    const sortBy = localStorage.getItem("selectedSortBy");
+    const sortDir = localStorage.getItem("selectedSortDir");
+    const keyword = localStorage.getItem("selectedKeyword");
 
     const {
         data: merchantIdList,
@@ -26,17 +34,8 @@ function MerchantList() {
         error: merchantIdListError,
         isSuccess: isMerchantIdListSuccess,
     } = useQuery({
-        queryKey: ["defaultMerchantIdList"],
+        queryKey: ["MerchantIdList", sortBy, sortDir, keyword],
         queryFn: async () => {
-            if (localStorage.getItem("selectedSortBy") === "null")
-                localStorage.setItem("selectedSortBy", "rating");
-            if (localStorage.getItem("selectedSortDir") === "null")
-                localStorage.setItem("selectedSortDir", "desc");
-            if (localStorage.getItem("selectedKeyword") === "null")
-                localStorage.setItem("selectedKeyword", "");
-            const sortBy = localStorage.getItem("selectedSortBy");
-            const sortDir = localStorage.getItem("selectedSortDir");
-            const keyword = localStorage.getItem("selectedKeyword");
             const merchants = await getStoreClient.getStoreIdList({
                 sortBy,
                 sortDir,
@@ -46,12 +45,8 @@ function MerchantList() {
             return merchants.data;
         },
         enabled: isSubmitted,
+        staleTime: 1000 * 60 * 10,//10 minutes  
     });
-
-    //set merchantIds when merchantIdList is fetched
-    useEffect(() => {
-        setMerchantIds(merchantIdList);
-    }, [merchantIdList]);
 
     // Use useInfiniteQuery to fetch merchants in pages
     const {
@@ -63,11 +58,13 @@ function MerchantList() {
         isError: isMerchantsError,
         error: merchantsError,
     } = useInfiniteQuery({
-        queryKey: ["merchants", merchantIds],
+        queryKey: ["merchants", merchantIdList], //will refetch when merchantIdList changes
         queryFn: async ({ pageParam }) => {
             const start = pageParam * LOAD_SIZE;
             const end = start + LOAD_SIZE;
+            console.debug("merchantIds", merchantIdList);
             const idList = merchantIdList.slice(start, end);
+
             if (idList.length === 0) {
                 return [];
             }
