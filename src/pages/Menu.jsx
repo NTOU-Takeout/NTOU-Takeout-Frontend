@@ -76,6 +76,7 @@ function Menu() {
             return categories;
         },
         enabled: menuId != undefined,
+        refetchOnWindowFocus: false,
     });
 
     // Fetch dish details for each category separately
@@ -92,6 +93,7 @@ function Menu() {
                 };
             },
             enabled: menuId != undefined && !!category.second.length,
+            refetchOnWindowFocus: false,
         })),
     });
 
