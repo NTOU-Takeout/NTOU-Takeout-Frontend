@@ -1,5 +1,5 @@
 import { useState } from "react";
-import MenuItemCard from "./MenuItem";
+import MenuItemCard from "./MenuItemCard";
 import MenuDishDetail from "./MenuDishDetail";
 import PropTypes from "prop-types";
 function MenuSection({ sectionRefs, categoryData }) {
