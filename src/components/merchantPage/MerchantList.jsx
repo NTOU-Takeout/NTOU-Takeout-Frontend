@@ -43,7 +43,7 @@ function MerchantList() {
                 keyword,
             });
             setIsSubmitted(false);
-            return merchants;
+            return merchants.data;
         },
         enabled: isSubmitted,
     });
@@ -51,7 +51,7 @@ function MerchantList() {
     //set merchantIds when merchantIdList is fetched
     useEffect(() => {
         setMerchantIds(merchantIdList);
-    }, [isMerchantIdListSuccess, merchantIdList]);
+    }, [merchantIdList]);
 
     // Use useInfiniteQuery to fetch merchants in pages
     const {
@@ -67,14 +67,13 @@ function MerchantList() {
         queryFn: async ({ pageParam }) => {
             const start = pageParam * LOAD_SIZE;
             const end = start + LOAD_SIZE;
-            const idList = merchantIds.slice(start, end);
-
+            const idList = merchantIdList.slice(start, end);
             if (idList.length === 0) {
                 return [];
             }
             const merchants = await getStoreClient.getMerchantsByIdList(idList);
-            addMerchants(merchants);
-            return merchants;
+            addMerchants(merchants.data);
+            return merchants.data;
         },
         initialPageParam: 0,
         getNextPageParam: (lastPage, allPages) => {

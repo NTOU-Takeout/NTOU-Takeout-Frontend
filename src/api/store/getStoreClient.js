@@ -1,7 +1,7 @@
 const getStoreClient = {
     getStoreIdList: async (params = {}) => {
         const url = new URL(
-            `${import.meta.env.VITE_BASE_URL}/api/store/getIdList`,
+            `${import.meta.env.VITE_BASE_URL}/api/v2/stores/search`,
         );
 
         Object.keys(params).forEach((key) =>
@@ -15,9 +15,8 @@ const getStoreClient = {
         return data;
     },
     getMerchantsByIdList: async (idList) => {
-        console.log("getMerchantsByIdList", idList);
         const response = await fetch(
-            `${import.meta.env.VITE_BASE_URL}/api/store/getStoresByIds`,
+            `${import.meta.env.VITE_BASE_URL}/api/v2/stores/query`,
             {
                 method: "POST",
                 headers: {
