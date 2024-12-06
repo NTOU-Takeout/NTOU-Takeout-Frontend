@@ -9,7 +9,7 @@ import MenuSection from "../components/merchantPage/MenuSection";
 import useMerchantStore from "../stores/merchantStore";
 import useAllDishStore from "../stores/allDishStore";
 import useNavStore from "../stores/merchantMenuNav";
-import useAllDishStore from "../stores/allDishesStore";
+import useAllDishesStore from "../stores/allDishesStore";
 import getStoreClient from "../api/store/getStoreClient";
 import getMenuClient from "../api/menu/getMenuClient";
 
@@ -18,7 +18,7 @@ function Menu() {
     const sectionRefs = useRef([]);
     const [isNavbarFixed, setIsNavbarFixed] = useState(false);
     const setNavbarItems = useNavStore((state) => state.setNavbarItems);
-    const setDishes = useAllDishStore((state) => state.setDishes);
+    const setDishes = useAllDishesStore((state) => state.setDishes);
     // handle scroll to section
     const handleScrollToSection = (index) => {
         sectionRefs.current[index]?.scrollIntoView({
@@ -40,7 +40,7 @@ function Menu() {
     }, []);
 
     const getMerchantById = useMerchantStore((state) => state.getMerchantById);
-    // const [menuId, setMenuId] = useState(null);
+    const [menuId, setMenuId] = useState(null);
     const [merchant, setMerchant] = useState(null);
 
     // get merchant data
