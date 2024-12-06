@@ -1,16 +1,15 @@
 const getMenuClient = {
-    getMenuByMenuId: async (storeId) => {
-        console.log("getMenuByMenuId", storeId);
+    getMenuByMenuId: async (menuId) => {
         const response = await fetch(
-            `${import.meta.env.VITE_BASE_URL}/api/v1/stores/${storeId}/menu`,
+            `${import.meta.env.VITE_BASE_URL}/api/v2/menu/${menuId}`,
         );
         if (!response.ok) {
             throw new Error(`Failed to fetch menu by ID: ${storeId}`);
         }
-        const data = await response.json();
-        return data;
+        const res = await response.json();
+        return res;
     },
-    getDishsByDishIds: async (storeId, categoryName) => {
+    getDishsByCategory: async (storeId, categoryName) => {
         console.log("getDishsByDishIds", storeId);
         const response = await fetch(
             `${import.meta.env.VITE_BASE_URL}/api/v1/stores/${storeId}/menu/dishes?category=${categoryName}`,
@@ -19,13 +18,12 @@ const getMenuClient = {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                // body: JSON.stringify(dishIds),
             },
         );
         if (!response.ok) {
-            throw new Error(`Failed to fetch details for dish ID: ${storeId}`);
+            throw new Error(`Failed to fetch dishes by category: ${categoryName}`);
         }
-        
+
         const data = await response.json();
         return data;
     },

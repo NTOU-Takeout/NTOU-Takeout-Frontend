@@ -8,10 +8,11 @@ const MenuItemCard = ({ food, onClick }) => {
 
     return (
         <div
-            className="font-notoTC menu-item block cursor-pointer"
+            className="w-full cursor-pointer bg-white rounded-lg shadow-lg overflow-hidden"
             onClick={() => onClick(food)}
         >
-            <div className=" h-[17rem] flex m-8 max-w-xl bg-white text-white rounded-lg overflow-hidden shadow-lg font-notoTC">
+
+            <div className=" h-[17rem] flex max-w-xl bg-white text-white">
                 {/* Image */}
                 <div className="w-64 overflow-hidden aspect-[5/3]">
                     {" "}

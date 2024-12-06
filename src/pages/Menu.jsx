@@ -7,6 +7,7 @@ import MenuHeader from "../components/merchantPage/MenuHeader";
 import MenuNavbar from "../components/merchantPage/MenuNavbar";
 import MenuSection from "../components/merchantPage/MenuSection";
 import useMerchantStore from "../stores/merchantStore";
+import useAllDishStore from "../stores/allDishStore";
 import useNavStore from "../stores/merchantMenuNav";
 import useAllDishStore from "../stores/allDishesStore";
 import getStoreClient from "../api/store/getStoreClient";
@@ -18,7 +19,6 @@ function Menu() {
     const [isNavbarFixed, setIsNavbarFixed] = useState(false);
     const setNavbarItems = useNavStore((state) => state.setNavbarItems);
     const setDishes = useAllDishStore((state) => state.setDishes);
-
     // handle scroll to section
     const handleScrollToSection = (index) => {
         sectionRefs.current[index]?.scrollIntoView({
@@ -48,15 +48,15 @@ function Menu() {
         const merchantData = getMerchantById(merchantId);
         if (merchantData) {
             setMerchant(merchantData);
-            // setMenuId(merchantData.menuId);
-        } else {
+            setMenuId(merchantData.menuId);
+        } else { // if merchant data is not in store, fetch it
             const fetchMerchantData = async () => {
                 try {
-                    const data = await getStoreClient.getMerchantsByIdList([
+                    const res = await getStoreClient.getMerchantsByIdList([
                         merchantId,
                     ]);
-                    setMerchant(data[0]);
-                    // setMenuId(data[0]?.menuId || null);
+                    setMerchant(res.data[0]);
+                    setMenuId(res.data[0]?.menuId || null);
                 } catch (error) {
                     console.error("Failed to fetch merchant data:", error);
                 }
@@ -67,32 +67,31 @@ function Menu() {
 
     // Fetch menu category list and dish details
     const { data: menuCategoryList = [] } = useQuery({
-        queryKey: ["menuCategoryList" + merchantId],
+        queryKey: ["menuCategoryList", menuId],
         queryFn: async () => {
-            if (!merchantId) return [];
-            const data = await getMenuClient.getMenuByMenuId(merchantId);
+            const res = await getMenuClient.getMenuByMenuId(menuId);
+            const categories = res.data.categories;
             // Update navbar items
-            setNavbarItems(data.categories.map((category) => category.first));
-            console.log("menuCategoryList:", data.categories);
-            return data.categories;
+            setNavbarItems(categories.map((category) => category.first));
+            return categories;
         },
-        enabled: !!merchantId,
+        enabled: menuId != undefined,
+        refetchOnWindowFocus: false,
     });
 
     // Fetch dish details for each category separately
     const categoryQueries = useQueries({
         queries: menuCategoryList.map((category) => ({
-            queryKey: ["categoryDishes" + merchantId + category.first],
+            queryKey: ["categoryDishes", merchantId, category.first],
             queryFn: async () => {
-                // const dishIds = category.second;
-                const dishDetails =
-                    await getMenuClient.getDishsByDishIds(merchantId, category.first);
+                const dishDetails = await getMenuClient.getDishsByCategory(merchantId, category.first);
                 return {
                     categoryName: category.first,
                     dishes: dishDetails,
                 };
             },
-            enabled: !!merchantId && !!category.second.length,
+            enabled: menuId != undefined && !!category.second.length,
+            refetchOnWindowFocus: false,
         })),
     });
     useEffect(() => {
@@ -108,12 +107,22 @@ function Menu() {
         });
     }, [categoryQueries, setDishes]);
 
+    useEffect(() => {
+        categoryQueries.forEach((query) => {
+            if (query.isSuccess && query.data) {
+                // save dishes' data to allDishStore
+                const dishesToStore = query.data.dishes.reduce((acc, dish) => {
+                    acc[dish.id] = dish;
+                    return acc;
+                }, {});
+                setDishes(dishesToStore);
+            }
+        });
+    }, [categoryQueries, setDishes]);
     // Transform the queries results into categoryData
     const categoryData = categoryQueries
         .map((query) => query.data)
         .filter(Boolean); // Filter out undefined results
-    console.log(categoryData);
-    
     return merchant && merchantId ? (
         <div>
             <MenuHeader merchantData={merchant} />
