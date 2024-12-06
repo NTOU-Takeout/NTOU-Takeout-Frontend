@@ -2,7 +2,7 @@ const registerClient = {
     registerUser: async (userDetails) => {
         console.log("registerUser", userDetails);
         const response = await fetch(
-            `${import.meta.env.VITE_BASE_URL}/api/v1/auth/register`,
+            `${import.meta.env.VITE_BASE_URL}/api/v2/auth/register`,
             {
                 method: "POST",
                 headers: {
