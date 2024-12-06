@@ -62,7 +62,6 @@ function MerchantList() {
         queryFn: async ({ pageParam }) => {
             const start = pageParam * LOAD_SIZE;
             const end = start + LOAD_SIZE;
-            console.debug("merchantIds", merchantIdList);
             const idList = merchantIdList.slice(start, end);
 
             if (idList.length === 0) {

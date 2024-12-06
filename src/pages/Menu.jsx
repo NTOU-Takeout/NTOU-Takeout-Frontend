@@ -55,7 +55,6 @@ function Menu() {
                         merchantId,
                     ]);
                     setMerchant(res.data[0]);
-                    console.debug("merchant data: ", res.data[0]);
                     setMenuId(res.data[0]?.menuId || null);
                 } catch (error) {
                     console.error("Failed to fetch merchant data:", error);
@@ -84,9 +83,7 @@ function Menu() {
         queries: menuCategoryList.map((category) => ({
             queryKey: ["categoryDishes", merchantId, category.first],
             queryFn: async () => {
-                console.debug("api param: ", merchantId, category.first);
                 const dishDetails = await getMenuClient.getDishsByCategory(merchantId, category.first);
-                console.debug("dishDetails: ", dishDetails);
                 return {
                     categoryName: category.first,
                     dishes: dishDetails,
