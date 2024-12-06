@@ -9,7 +9,7 @@ const MenuItemCard = ({ food, onClick }) => {
             onClick={() => onClick(food)}
         >
 
-            <div className=" h-[17rem] flex max-w-xl bg-white text-white rounded-lg overflow-hidden shadow-lg font-notoTC">
+            <div className=" h-[17rem] flex max-w-xl bg-white text-white">
                 {/* Image */}
                 <div className="w-64 overflow-hidden aspect-[5/3]">
                     {" "}
