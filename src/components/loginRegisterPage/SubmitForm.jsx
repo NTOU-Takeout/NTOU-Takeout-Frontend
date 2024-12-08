@@ -2,8 +2,7 @@ import PropTypes from "prop-types";
 import LoginForm from "./form/LoginForm";
 import RegisterForm from "./form/RegisterForm";
 
-const SubmitForm = ({status}) => {
-
+const SubmitForm = ({ status }) => {
     return (
         <div className="">
             {status ? (
@@ -12,7 +11,7 @@ const SubmitForm = ({status}) => {
                 <RegisterForm />
             )}
         </div>
-  );
+    );
 };
 
 SubmitForm.propTypes = {

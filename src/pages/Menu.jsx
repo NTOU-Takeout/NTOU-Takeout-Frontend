@@ -7,7 +7,6 @@ import MenuHeader from "../components/merchantPage/MenuHeader";
 import MenuNavbar from "../components/merchantPage/MenuNavbar";
 import MenuSection from "../components/merchantPage/MenuSection";
 import useMerchantStore from "../stores/merchantStore";
-import useAllDishStore from "../stores/allDishStore";
 import useNavStore from "../stores/merchantMenuNav";
 import useAllDishesStore from "../stores/allDishesStore";
 import getStoreClient from "../api/store/getStoreClient";

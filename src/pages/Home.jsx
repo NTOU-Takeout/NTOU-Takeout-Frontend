@@ -7,7 +7,7 @@ import MerchantList from "../components/merchantPage/MerchantList";
 function Home() {
     const toggleSidebar = useSidebarStore((state) => state.toggleSidebar);
     return (
-        <div className="">
+        <div>
             <Header
                 title="NTOU Takeout"
                 onLeftClick={toggleSidebar}

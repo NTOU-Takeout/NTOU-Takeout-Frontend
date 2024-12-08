@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CryptoJS from "crypto-js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import { useRegisterMutation } from "../../../hooks/loginRegisterPage/useRegisterMutation";
 import registerClient from "../../../api/auth/registerClient";
 
 const RegisterForm = () => {
@@ -12,53 +13,53 @@ const RegisterForm = () => {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
-    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
+    const {
+        registerMutation,
+        isLoading,
+    } = useRegisterMutation();
+    const validateForm = () => {
         if (!username || !email || !phone || !password || !confirmPassword) {
             setError("請填寫所有欄位");
-            return;
+            return false;
         }
 
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
         if (!passwordRegex.test(password)) {
             setError("密碼必須至少包含一個大小寫字母和一個數字，且長度至少為8個字符");
-            return;
+            return false;
         }
+
         if (password !== confirmPassword) {
             setError("兩次輸入的密碼不符合");
-            return;
+            return false;
         }
 
+        return true;
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         setError("");
-        setIsLoading(true);
 
+        if (!validateForm()) {
+            return;
+        }
         try {
-            
-            const hashedPassword = await CryptoJS.SHA256(password);
-            const pPasword = hashedPassword.toString();
-            const userDetails = {
-                name: username,
+            await registerMutation({
+                username,
                 email,
-                phoneNumber: phone,
-                password: pPasword,
-                gender: "OTHER",
-                role: "CUSTOMER",
-            };
-            console.log("passwd regis",pPasword);
-            
-            const response = await registerClient.registerUser(userDetails);
-            console.log("註冊成功:", response);
+                phone,
+                password,
+            });
 
-            navigate("/");
+            setUsername("");
+            setEmail("");
+            setPhone("");
+            setPassword("");
+            setConfirmPassword("");
         } catch (err) {
-            console.error("註冊失敗:", err.message);
-            setError(err.message);
-        } finally {
-            setIsLoading(false);
+            setError(err.message || "註冊失敗，請稍後再試");
         }
     };
 
@@ -69,6 +70,7 @@ const RegisterForm = () => {
                     type="text"
                     placeholder="名稱"
                     value={username}
+                    autoComplete="username"
                     onChange={(e) => setUsername(e.target.value)}
                     className="w-full px-4 py-2 mb-4 border rounded-lg focus:outline-none focus:ring focus:ring-orange-300"
                 />
@@ -76,6 +78,7 @@ const RegisterForm = () => {
                     type="email"
                     placeholder="電子信箱"
                     value={email}
+                    autoComplete="email"
                     onChange={(e) => setEmail(e.target.value)}
                     className="w-full px-4 py-2 mb-4 border rounded-lg focus:outline-none focus:ring focus:ring-orange-300"
                 />
@@ -83,6 +86,7 @@ const RegisterForm = () => {
                     type="tel"
                     placeholder="電話"
                     value={phone}
+                    autoComplete="tel"
                     onChange={(e) => setPhone(e.target.value)}
                     className="w-full px-4 py-2 mb-4 border rounded-lg focus:outline-none focus:ring focus:ring-orange-300"
                 />
@@ -90,6 +94,7 @@ const RegisterForm = () => {
                     type="password"
                     placeholder="密碼"
                     value={password}
+                    autoComplete="new-password"
                     onChange={(e) => setPassword(e.target.value)}
                     className="w-full px-4 py-2 mb-4 border rounded-lg focus:outline-none focus:ring focus:ring-orange-300"
                 />
@@ -97,6 +102,7 @@ const RegisterForm = () => {
                     type="password"
                     placeholder="再次輸入密碼"
                     value={confirmPassword}
+                    autoComplete="new-password"
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     className="w-full px-4 py-2 mb-2 border rounded-lg focus:outline-none focus:ring focus:ring-orange-300"
                 />

@@ -1,19 +1,17 @@
-import CryptoJS from "crypto-js";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { Link } from "react-router-dom";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import loginClient from "../../../api/auth/loginClient";
-
+import { useLoginMutation } from "../../../hooks/loginRegisterPage/useLoginMutation";
 const LoginForm = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
-    const [isLoading, setIsLoading] = useState(false);
-    const navigate = useNavigate();
-
+    const {
+        loginMutation,
+        isLoading,
+    } = useLoginMutation();
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -23,27 +21,17 @@ const LoginForm = () => {
         }
 
         setError("");
-        setIsLoading(true);
 
         try {
-            const hashedPassword = await CryptoJS.SHA256(password);
-            const pPasword = hashedPassword.toString();
-            const userDetails = {
+            await loginMutation({
                 email,
-                password: pPasword,
-            };
-            console.log("passwd login",pPasword);
+                password,
+            });
 
-            
-            const response = await loginClient.loginUser(userDetails);
-            console.log("登入成功:", response);
-
-            navigate("/"); // navigate to home page after login succeed
+            setEmail('');
+            setPassword('');
         } catch (err) {
-            console.error("登入失敗:", err.message);
-            setError(err.message);
-        } finally {
-            setIsLoading(false);
+            setError(err.message || '登入失敗，請稍後再試');
         }
     };
     return (
@@ -53,6 +41,7 @@ const LoginForm = () => {
                     type="email"
                     placeholder="電子信箱"
                     value={email}
+                    autoComplete="email"
                     onChange={(e) => setEmail(e.target.value)}
                     className="w-full px-4 py-2 mb-4 border rounded-lg focus:outline-none focus:ring focus:ring-orange-300"
                 />
@@ -60,11 +49,12 @@ const LoginForm = () => {
                     type="password"
                     placeholder="密碼"
                     value={password}
+                    autoComplete="current-password"
                     onChange={(e) => setPassword(e.target.value)}
                     className="w-full px-4 py-2 mb-2 border rounded-lg focus:outline-none focus:ring focus:ring-orange-300"
                 />
-                <Link to={`/forgetPasswd`}>
-                    <p className="text-sm ml-2 text-gray-600">忘記密碼？</p>
+                <Link to={`/auth/forgotPassword`}>
+                    <p className="text-sm ml-2 text-gray-600 underline">忘記密碼</p>
                 </Link>
 
                 {error && <p className="text-red-500 text-xs pl-2 mb-4">{error}</p>}
@@ -88,9 +78,9 @@ const LoginForm = () => {
                     <FontAwesomeIcon icon={faGoogle} className="mr-2" />
                     使用 Google 帳號登入
                 </button> */}
-          </form>
-      </div>
-  );
+            </form>
+        </div>
+    );
 };
 
 export default LoginForm;

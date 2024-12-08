@@ -4,7 +4,7 @@ const getMenuClient = {
             `${import.meta.env.VITE_BASE_URL}/api/v2/menu/${menuId}`,
         );
         if (!response.ok) {
-            throw new Error(`Failed to fetch menu by ID: ${storeId}`);
+            throw new Error(`Failed to fetch menu by ID: ${menuId}`);
         }
         const res = await response.json();
         return res;
