@@ -7,8 +7,8 @@ import MenuHeader from "../components/merchantPage/MenuHeader";
 import MenuNavbar from "../components/merchantPage/MenuNavbar";
 import MenuSection from "../components/merchantPage/MenuSection";
 import useMerchantStore from "../stores/merchantStore";
-import useAllDishStore from "../stores/allDishStore";
 import useNavStore from "../stores/merchantMenuNav";
+import useAllDishesStore from "../stores/allDishesStore";
 import getStoreClient from "../api/store/getStoreClient";
 import getMenuClient from "../api/menu/getMenuClient";
 
@@ -17,7 +17,7 @@ function Menu() {
     const sectionRefs = useRef([]);
     const [isNavbarFixed, setIsNavbarFixed] = useState(false);
     const setNavbarItems = useNavStore((state) => state.setNavbarItems);
-    const setDishes = useAllDishStore((state) => state.setDishes);
+    const setDishes = useAllDishesStore((state) => state.setDishes);
     // handle scroll to section
     const handleScrollToSection = (index) => {
         sectionRefs.current[index]?.scrollIntoView({
@@ -93,6 +93,18 @@ function Menu() {
             refetchOnWindowFocus: false,
         })),
     });
+    useEffect(() => {
+        categoryQueries.forEach((query) => {
+            if (query.isSuccess && query.data) {
+                // save dishes' data to allDishStore
+                const dishesToStore = query.data.dishes.reduce((acc, dish) => {
+                    acc[dish.id] = dish;
+                    return acc;
+                }, {});
+                setDishes(dishesToStore);
+            }
+        });
+    }, [categoryQueries, setDishes]);
 
     useEffect(() => {
         categoryQueries.forEach((query) => {

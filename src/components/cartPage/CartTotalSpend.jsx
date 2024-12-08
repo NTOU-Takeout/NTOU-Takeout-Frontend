@@ -1,7 +1,9 @@
-const CartTotalSpend = ({ orderInfo }) => {
-    const { totalSpend, merchantName } = orderInfo;
+import PropTypes from "prop-types";
+
+const CartTotalSpend = ({ orderDetail }) => {
+    const { merchantName, totalSpend } = orderDetail;
     return (
-        <div className="mt-[66px] flex justify-between items-center p-4 bg-white shadow-md rounded-lg">
+        <div className="mt-[66px] flex justify-between items-center p-4 bg-white">
             {/* Store Info */}
             <div>
                 <h1 className="text-lg font-bold text-gray-900">
@@ -16,6 +18,13 @@ const CartTotalSpend = ({ orderInfo }) => {
             </div>
         </div>
     );
+};
+
+CartTotalSpend.propTypes = {
+    orderDetail: PropTypes.shape({
+        merchantName: PropTypes.string.isRequired,
+        totalSpend: PropTypes.number.isRequired,
+    }).isRequired,
 };
 
 export default CartTotalSpend;

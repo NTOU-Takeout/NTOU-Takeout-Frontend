@@ -7,7 +7,9 @@ import Menu from "./pages/Menu";
 import Review from "./pages/Review";
 import Cart from "./pages/Cart";
 import NotFound from "./pages/NotFound";
-
+import LoginRegister from "./pages/LoginRegister";
+import ForgetPassword from "./pages/ForgetPassword";
+import Register from "./pages/Register";
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
     {
@@ -30,6 +32,21 @@ const router = createBrowserRouter([
         element: <Review />,
         errorElement: <NotFound />,
     },
+    {
+        path: "/auth/:authType",
+        element: <LoginRegister />,
+        errorElement: <NotFound />,
+    },
+    {
+        path: "/auth/forgotPassword",
+        element: <ForgetPassword />,
+        errorElement: <NotFound />,
+    },
+    {
+        path: "/Register",
+        element: <Register />,
+        errorElement: <NotFound />,
+    }
 ]);
 
 function App() {

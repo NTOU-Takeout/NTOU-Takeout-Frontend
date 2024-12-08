@@ -4,7 +4,7 @@ import MenuDishDetail from "./MenuDishDetail";
 import PropTypes from "prop-types";
 function MenuSection({ sectionRefs, categoryData }) {
     const [selectedDish, setSelectedDish] = useState(null);
-    console.log(categoryData);
+    // console.log(categoryData);
     const handleMenuItemClick = (item) => {
         // if the dish has no attributes, do not show the detail
         if (item.dishAttributes.length === 0) {
@@ -40,7 +40,10 @@ function MenuSection({ sectionRefs, categoryData }) {
             ))}
 
             {selectedDish && (
+                // console.log(selectedDish),
+                
                 <MenuDishDetail
+                    dishId ={selectedDish.id}
                     dishData={selectedDish}
                     onClose={() => setSelectedDish(null)}
                 />
