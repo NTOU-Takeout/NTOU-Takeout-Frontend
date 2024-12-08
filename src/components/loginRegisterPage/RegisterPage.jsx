@@ -3,7 +3,7 @@ import TitleText from "./specSection/TitleText";
 import DataForm from "./specSection/DataForm";
 import { Link } from "react-router-dom";
 
-const ForgetPage = () => {
+const RegisterPage = () => {
     const titleText = "註冊";
     const description = [
         "註冊驗證碼已寄出，請至您的電子信箱查收。",
@@ -68,4 +68,4 @@ const ForgetPage = () => {
     );
 };
 
-export default ForgetPage;
+export default RegisterPage;
