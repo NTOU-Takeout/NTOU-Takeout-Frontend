@@ -19,7 +19,6 @@ function Menu() {
     const sectionRefs = useRef([]);
     const [isNavbarFixed, setIsNavbarFixed] = useState(false);
     const setNavbarItems = useNavStore((state) => state.setNavbarItems);
-    const setDishes = useAllDishesStore((state) => state.setDishes);
 
     // handle scroll to section
     const handleScrollToSection = (index) => {
@@ -68,21 +67,14 @@ function Menu() {
     }, [merchantId, getMerchantById]);
 
     const menuCategoryList = useCategoryListQuery(menuId);
-    setNavbarItems(menuCategoryList.map((category) => category.first));
-    const categoryData = useCategoryQueries(menuCategoryList, merchantId);
+    const { categoryData } = useCategoryQueries(menuCategoryList, merchantId);
+    useEffect(() => {
+        if (menuCategoryList?.length) {
+            setNavbarItems(menuCategoryList.map((category) => category.first));
+        }
+    }, [menuCategoryList, setNavbarItems]);
 
-    // useEffect(() => {
-    //     categoryQueries.forEach((query) => {
-    //         if (query.isSuccess && query.data) {
-    //             // save dishes' data to allDishStore
-    //             const dishesToStore = query.data.dishes.reduce((acc, dish) => {
-    //                 acc[dish.id] = dish;
-    //                 return acc;
-    //             }, {});
-    //             setDishes(dishesToStore);
-    //         }
-    //     });
-    // }, [categoryQueries, setDishes]);
+
 
 
     return merchant && merchantId ? (

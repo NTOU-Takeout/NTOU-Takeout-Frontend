@@ -6,14 +6,16 @@ import OptionCard from "./dishOptions/OptionCard";
 import CartOption from "./dishOptions/CartOption";
 import Cookies from "js-cookie";
 
-const DishDetail = ({ dishData, onClose, dishId = "dish001" }) => {
+const DishDetail = ({ dishData, onClose }) => {
     const {
+        id: dishId,
         name,
         price,
         picture: imageUrl,
         description,
         dishAttributes: options,
     } = dishData;
+    console.debug("DishDetail dishData:", dishId, name, price, imageUrl, description, options);
     const [isVisible, setIsVisible] = useState(false);
     const [isExiting, setIsExiting] = useState(false);
 
@@ -84,7 +86,7 @@ const DishDetail = ({ dishData, onClose, dishId = "dish001" }) => {
                 </div>
                 {/* Add to cart button */}
                 {authToken && (
-                    <CartOption dishId={dishId}/>
+                    <CartOption dishId={dishId} />
                 )}
             </div>
         </div>

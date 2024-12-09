@@ -1,44 +1,45 @@
-import PropTypes from "prop-types";
-import useDishStore from "../../stores/dishDetailStore";
+import PropTypes, { object, string } from "prop-types";
+import useCartStore from "../../stores/cartStore";
+const CartItemCard = ({ dishData, imageUrl }) => {
+    const { updateQuantity, removeDish } = useCartStore();
+    const {
+        dishId,
+        dishName,
+        price,
+        quantity,
+        chosenAttributes,
+        note
+    } = dishData;
 
-const CartItemCard = ({ dishId, dishItem }) => {
-    const { name, price, picture: imageUrl, dishAttributes: options } = dishItem;
-
-    const { dishes, updateDish, removeDish } = useDishStore();
-
-    const dishState = dishes[dishId] || {};
-
-    const quantity = dishState.quantity || 1;
 
     const handleQuantityChange = (change) => {
         const newQuantity = quantity + change;
-    
         if (newQuantity < 1) {
-            // if quantity < 1, remove dish
             removeDish(dishId);
         } else {
-            updateDish(dishId, { quantity: newQuantity });
+            updateQuantity(dishId, newQuantity);
         }
     };
-    
 
-    const formattedOptions = options ? options.join(", ") : "";
-    const extraCost = dishItem.extraCost || 0;
+    const formattedAttributes = chosenAttributes?.length
+        ? chosenAttributes.map(attr => attr.name).join(", ")
+        : "";
+
 
     return (
-        <div className="relative flex items-center rounded-lg p-4 w-screen">
+        <div className="relative flex items-center rounded-lg p-4 w-screen min-w-30">
             <img
                 src={imageUrl}
-                alt="Product"
+                alt={dishName}
                 className="max-w-20 h-20 object-cover rounded-lg"
             />
             <div className="ml-4 flex-grow">
-                <h2 className="text-lg font-semibold">{name}</h2>
+                <h2 className="text-lg font-semibold">{dishName}</h2>
                 <p className="text-sm text-gray-500">
-                    {formattedOptions} ( + $ {extraCost})
+                    {formattedAttributes} ( + $ {111})
                 </p>
                 <p className="text-xl mt-2">
-                    $ {Math.floor(quantity * (price + extraCost))}
+                    $ {Math.floor(quantity * (price + 111))}
                 </p>
             </div>
             <div className="absolute bottom-[15px] right-[15px] flex items-end border border-gray-300 rounded-md">
@@ -61,14 +62,18 @@ const CartItemCard = ({ dishId, dishItem }) => {
 };
 
 CartItemCard.propTypes = {
-    dishId: PropTypes.string.isRequired,
-    dishItem: PropTypes.shape({
-        name: PropTypes.string.isRequired,
+    dishData: PropTypes.shape({
+        dishId: PropTypes.string.isRequired,
+        dishName: PropTypes.string.isRequired,
         price: PropTypes.number.isRequired,
-        picture: PropTypes.string,
-        dishAttributes: PropTypes.arrayOf(PropTypes.string),
-        extraCost: PropTypes.number,
+        quantity: PropTypes.number.isRequired,
+        chosenAttributes: PropTypes.arrayOf(PropTypes.shape({
+            name: PropTypes.string.isRequired,
+
+        })),
+        note: PropTypes.string,
     }).isRequired,
+    imageUrl: PropTypes.string.isRequired || PropTypes.object.isRequired,
 };
 
 export default CartItemCard;

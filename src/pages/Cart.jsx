@@ -19,10 +19,10 @@ function Cart() {
                 totalSpend: order.totalSpend
             }} />
             <CartItemCardList setTotalSpend={setTotalSpend} />
-            <CartOrderSection orderDetail={{
+            {/* <CartOrderSection orderDetail={{
                 totalSpend: order.totalSpend,
                 estimateTime: order.estimateTime
-            }} />
+            }} /> */}
         </div>
     );
 }

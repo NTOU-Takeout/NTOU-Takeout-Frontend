@@ -1,38 +1,79 @@
 import PropTypes from "prop-types";
-import useDishStore from "../../stores/dishDetailStore";
-import useAllDishStore from "../../stores/allDishesStore";
 import CartItemCard from "./CartItemCard";
+import { useCartQuery } from "../../hooks/cart/useCartQuery";
+import { useEffect, useMemo } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { useMerchantDataQuery } from "../../hooks/merchant/useMerchantDataQuery";
+import { useCategoryListQuery } from "../../hooks/menu/useCategoryListQuery";
+import { useCategoryQueries } from "../../hooks/menu/useCategoryQueries";
 
 const CartItemCardList = ({ setTotalSpend }) => {
-    const dishes = useDishStore((state) => state.dishes);
-    const dishData = useAllDishStore((state) => state.dishes);
+    // Fetch cart data
+    const { cartData, isLoading, isError } = useCartQuery();
+    const { merchantData, isLoading: isMerchantLoading } = useMerchantDataQuery(
+        cartData?.storeId ?? null
+    );
+    const menuCategoryList = useCategoryListQuery(merchantData?.menuId ?? null);
+    const { categoryData, isQueriesSuccess } = useCategoryQueries(
+        menuCategoryList,
+        cartData?.storeId
+    );
 
-    if (Object.keys(dishes).length === 0) {
-        return <p>目前購物車是空的。</p>;
+    // Create a map of dishes for easy access
+    const dishesMap = useMemo(() => {
+        if (!categoryData) return {};
+
+        return categoryData.reduce((acc, category) => {
+            category.dishes.forEach(dish => {
+                acc[dish.id] = dish;
+            });
+            return acc;
+        }, {});
+    }, [categoryData]);
+
+    // Calculate total spend
+    useEffect(() => {
+        if (cartData?.orderedDishes) {
+            const totalSpend = cartData.orderedDishes.reduce((sum, dish) => {
+                return sum + (dish.price * dish.quantity);
+            }, 0);
+            setTotalSpend(totalSpend);
+        }
+    }, [cartData?.orderedDishes, setTotalSpend]);
+
+
+    if (isLoading || cartData == undefined || isMerchantLoading || !isQueriesSuccess || Object.keys(dishesMap).length === 0) {
+        return (
+            <div className="flex justify-center items-center mt-4 fa-2x">
+                <FontAwesomeIcon icon={faSpinner} spinPulse />
+            </div>
+        );
     }
 
-    // calculate total spend
-    const totalSpend = Object.entries(dishes).reduce((sum, [id, dish]) => {
-        const basePrice = dishData[id]?.price || 0;
-        const extraCost = dish.extraCost || 0;
-        const quantity = dish.quantity || 1;
-        return sum + (basePrice + extraCost) * quantity;
-    }, 0);
-    setTotalSpend(totalSpend);
+    if (isError) {
+        return (
+            <div className="flex justify-center items-center mt-4 fa-2x">
+                購物車資料讀取失敗:(
+            </div>
+        );
+    }
+
+    if (!cartData.orderedDishes || cartData.orderedDishes.length === 0) {
+        return (
+            <div className="flex justify-center items-center mt-4 fa-2x">
+                目前購物車是空的:)
+            </div>
+        );
+    }
 
     return (
         <div>
-            {Object.entries(dishes).map(([id, dish]) => (
+            {cartData.orderedDishes.map((dish, _) => (
                 <CartItemCard
-                    key={id}
-                    dishId={id}
-                    dishItem={{
-                        name: dishData[id].name,
-                        price: dishData[id].price,
-                        picture: dishData[id].picture,
-                        dishAttributes: dish.selectedOptions,
-                        ...dish,
-                    }}
+                    key={_}
+                    dishData={dish}
+                    imageUrl={dishesMap[dish.dishId]?.picture || {}}
                 />
             ))}
         </div>

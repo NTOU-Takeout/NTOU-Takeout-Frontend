@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 const useDishStore = create(
+    console.debug("useDishStore initialized"),
     persist(
         (set) => ({
             dishes: {},
@@ -9,8 +10,8 @@ const useDishStore = create(
                 set((state) => ({
                     dishes: {
                         ...state.dishes,
-                        [id]: { 
-                            ...initialState, 
+                        [id]: {
+                            ...initialState,
                             quantity: 1,
                             selectedOptions: [], // save dishes' options
                         },
@@ -20,8 +21,8 @@ const useDishStore = create(
                 set((state) => ({
                     dishes: {
                         ...state.dishes,
-                        [id]: { 
-                            ...state.dishes[id], 
+                        [id]: {
+                            ...state.dishes[id],
                             ...updatedState, // update dishes
                         },
                     },

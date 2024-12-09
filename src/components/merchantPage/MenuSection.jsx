@@ -43,7 +43,6 @@ function MenuSection({ sectionRefs, categoryData }) {
                 console.debug("selectedDish:", selectedDish),
 
                 <MenuDishDetail
-                    dishId={selectedDish.id}
                     dishData={selectedDish}
                     onClose={() => setSelectedDish(null)}
                 />
