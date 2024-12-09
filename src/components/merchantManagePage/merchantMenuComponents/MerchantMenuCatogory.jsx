@@ -8,7 +8,9 @@ const MerchantMenuCategory = ({ categoryName }) => {
                 {categoryName}
                 <span className="text-orange-500 ml-2">✎</span>
             </h2>
-            <MerchantMenuItemList></MerchantMenuItemList>
+            <MerchantMenuItemList
+                categoryName={categoryName}
+            ></MerchantMenuItemList>
         </div>
     );
 };
