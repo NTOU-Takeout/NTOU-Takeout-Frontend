@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 
 const initialState = {
     id: null,
@@ -16,11 +16,9 @@ const useUserInfoStore = create(
             ...initialState,
 
             setUserInfo: (data) => {
-                console.debug('setUserInfo:', data);
                 set({
                     ...data,
                 });
-                console.debug('setUserInfo:', get());
             },
 
             getUserInfo: () => {
@@ -41,7 +39,11 @@ const useUserInfoStore = create(
         }),
         {
             name: 'user-info-storage',
-            storage: localStorage,
+            storage: createJSONStorage(() => localStorage),
+            partialize: (state) => ({
+                id: state.id,
+                isLogin: state.isLogin
+            }),
         }
     )
 );

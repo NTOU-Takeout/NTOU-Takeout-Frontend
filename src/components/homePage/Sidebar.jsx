@@ -24,19 +24,20 @@ const Sidebar = () => {
     const closeSidebar = useSidebarStore((state) => state.closeSidebar);
     const navigate = useNavigate();
     const authToken = Cookies.get("authToken");
-    const { id, isLogin } = useUserInfoStore();
+    const { id, isLogin, clearUserInfo } = useUserInfoStore();
+
     let username = "登入";
 
-    if (authToken) {
-        username = "USER01";
+    if (authToken && isLogin == true) {
+        username = id;
     } else {
         username = "登入";
     }
+
     const handleLogout = () => {
         Cookies.remove("authToken");
-
+        clearUserInfo();
         navigate("/auth/login");
-
         closeSidebar();
     };
 
@@ -54,9 +55,9 @@ const Sidebar = () => {
                 className={`font-notoTC z-50 fixed inset-y-0 left-0 bg-white w-3/5 shadow-lg border-zinc-400 border-r-1 max-w-md ${isOpen ? "translate-x-0" : "-translate-x-full"
                     } transition-transform duration-300 min-w-48`}
             >
-                <div className="p-4 ">
+                <div className="p-4 overflow-hidden">
                     <SidebarButton
-                        text={isLogin ? id : "登入"}
+                        text={username}
                         textStyle={"text-2xl px-2 "}
                         icon={faUser}
                         iconSize="2xl"
