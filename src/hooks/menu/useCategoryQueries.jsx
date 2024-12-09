@@ -1,9 +1,8 @@
 import { useQueries } from "@tanstack/react-query";
 import getMenuClient from "../../api/menu/getMenuClient";
-
 // Fetch dish details for each category separately
 export const useCategoryQueries = (menuCategoryList, merchantId) => {
-
+    let isQueriesSuccess = false;
     const categoryQueries = useQueries({
         queries: menuCategoryList.map((category) => ({
             queryKey: ["categoryDishes", merchantId, category.first],
@@ -16,13 +15,17 @@ export const useCategoryQueries = (menuCategoryList, merchantId) => {
             },
             enabled: !!category.second.length && menuCategoryList != undefined,
             refetchOnWindowFocus: false,
-            staleTime: 1000 * 60 * 10, // 10 minutes
+            staleTime: Infinity,
         })),
     });
+
     // Transform the queries results into categoryData
     const categoryData = categoryQueries
         .map((query) => query.data)
         .filter(Boolean); // Filter out undefined results
-
-    return categoryData;
+    isQueriesSuccess = true;
+    return {
+        categoryData,
+        isQueriesSuccess,
+    };
 }
