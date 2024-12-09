@@ -9,7 +9,7 @@ function Home() {
     return (
         <div>
             <Header
-                title="NTOU Takeout"
+                title="OrderNow 馬上點"
                 onLeftClick={toggleSidebar}
                 className="fixed top-0"
             />
