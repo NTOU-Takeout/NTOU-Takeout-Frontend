@@ -1,20 +1,28 @@
-import CartOrderSection from "../components/cartPage/cartOrderSection";
+import { useState } from "react";
+import CartOrderSection from "../components/cartPage/CartOrderSection";
 import CartPageHeader from "../components/cartPage/CartPageHeader";
 import CartTotalSpend from "../components/cartPage/CartTotalSpend";
+import CartItemCardList from "../components/cartPage/CartItemCardList";
+
 function Cart() {
+    const [totalSpend, setTotalSpend] = useState(0);
     const order = {
-        totalSpend: 110,
-        estimateTime: 20,
-    };
-    const orderIInfo = {
-        totalSpend: 1100,
         merchantName: "海洋大學店",
+        totalSpend: totalSpend,
+        estimateTime: 20,
     };
     return (
         <div className="mt-3">
             <CartPageHeader></CartPageHeader>
-            {/*<CartTotalSpend orderInfo={orderIInfo}></CartTotalSpend>*/}
-            {/* <CartOrderSection orderDetail={order} /> */}
+            <CartTotalSpend orderDetail={{
+                merchantName: order.merchantName,
+                totalSpend: order.totalSpend
+            }} />
+            <CartItemCardList setTotalSpend={setTotalSpend} />
+            <CartOrderSection orderDetail={{
+                totalSpend: order.totalSpend,
+                estimateTime: order.estimateTime
+            }} />
         </div>
     );
 }
