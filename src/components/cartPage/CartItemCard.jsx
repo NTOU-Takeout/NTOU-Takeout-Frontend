@@ -20,24 +20,28 @@ const CartItemCard = ({ dishData, imageUrl }) => {
         }
     };
 
+    let totalExtraCost = 0;
     const formattedAttributes = chosenAttributes?.length
-        ? chosenAttributes.map(attr => attr.name).join(", ")
+        ? chosenAttributes.map(attr => {
+            totalExtraCost += attr.extraCost || 0;
+            return attr.chosenOption;
+        }).join(", ")
         : "";
 
-
     return (
-        <div className="relative flex items-center rounded-lg p-4 w-screen min-w-30">
+        <div className="relative flex rounded-lg p-4 w-full items-start ">
             <img
                 src={imageUrl}
                 alt={dishName}
-                className="max-w-20 h-20 object-cover rounded-lg"
+                className="w-20 h-26 object-cover rounded-lg flex-shrink-0"
             />
-            <div className="ml-4 flex-grow">
-                <h2 className="text-lg font-semibold">{dishName}</h2>
-                <p className="text-sm text-gray-500">
-                    {formattedAttributes} ( + $ {111})
-                </p>
-                <p className="text-xl mt-2">
+            <div className="ml-4 flex min-w-0 flex-col h-full" >
+                <h2 className="text-lg font-semibold truncate">{dishName}</h2>
+                {formattedAttributes && <p className="text-sm text-gray-500 truncate">
+                    {formattedAttributes}(+${totalExtraCost})
+                </p>}
+                {note && <p className="text-sm text-gray-500 line-clamp-2">{note}</p>}
+                <p className="text-xl mt-2 absolute bottom-[15px]">
                     $ {price}
                 </p>
             </div>
@@ -67,7 +71,7 @@ CartItemCard.propTypes = {
         price: PropTypes.number.isRequired,
         quantity: PropTypes.number.isRequired,
         chosenAttributes: PropTypes.arrayOf(PropTypes.shape({
-            name: PropTypes.string.isRequired,
+            name: PropTypes.string,
 
         })),
         note: PropTypes.string,

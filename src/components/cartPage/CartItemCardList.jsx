@@ -38,7 +38,12 @@ const CartItemCardList = ({ setTotalSpend }) => {
             const totalSpend = cartData.orderedDishes.reduce((sum, dish) => {
                 return sum + (dish.price * dish.quantity);
             }, 0);
-            setTotalSpend(totalSpend);
+            let costs = 0;
+            const totalExtraCost = cartData.orderedDishes.reduce((sum, dish) => {
+                costs = dish.chosenAttributes.reduce((acc, attr) => acc + attr.extraCost, 0);
+                return sum + (costs * dish.quantity);
+            }, 0);
+            setTotalSpend(totalSpend + totalExtraCost);
         }
     }, [cartData?.orderedDishes, setTotalSpend]);
 
