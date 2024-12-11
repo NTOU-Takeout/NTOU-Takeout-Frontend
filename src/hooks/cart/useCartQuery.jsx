@@ -9,8 +9,8 @@ export const useCartQuery = () => {
         isError,
     } = useQuery({
         queryKey: ["cart"],
-        queryFn: async () => {
-            const res = await getCart();
+        queryFn: async ({ signal }) => {
+            const res = await getCart(signal);
             return res.data;
         },
         refetchOnWindowFocus: false,

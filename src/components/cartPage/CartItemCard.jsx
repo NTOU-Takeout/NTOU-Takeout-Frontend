@@ -1,8 +1,9 @@
 import PropTypes from "prop-types";
-import useCartStore from "../../stores/cartStore";
+import { useCartUpdateMutation } from "../../hooks/cart/useCartUpdateMutation";
+import { useState } from "react";
 const CartItemCard = ({ dishData, imageUrl }) => {
-    const { updateQuantity, removeDish } = useCartStore();
     const {
+        id,
         dishId,
         dishName,
         price,
@@ -10,14 +11,17 @@ const CartItemCard = ({ dishData, imageUrl }) => {
         chosenAttributes,
         note
     } = dishData;
+    const [nowQuantity, setNowQuantity] = useState(quantity);
+    const { patchCartAsync, patchCartPending } = useCartUpdateMutation();
 
     const handleQuantityChange = (change) => {
-        const newQuantity = quantity + change;
-        if (newQuantity < 1) {
-            removeDish(dishId);
-        } else {
-            updateQuantity(dishId, newQuantity);
-        }
+        const newQ = nowQuantity + change;
+        if (newQ <= 0) return;
+
+        // optimistic update
+        setNowQuantity(newQ);
+        // update cart
+        patchCartAsync({ orderedDishId: id, newQuantity: newQ });
     };
 
     let totalExtraCost = 0;
@@ -52,7 +56,7 @@ const CartItemCard = ({ dishData, imageUrl }) => {
                 >
                     -
                 </button>
-                <span className="px-4 py-0.5">{quantity}</span>
+                <span className="px-4 py-0.5">{nowQuantity}</span>
                 <button
                     onClick={() => handleQuantityChange(1)}
                     className="px-2 py-0 text-lg rounded-r-md"
@@ -66,6 +70,7 @@ const CartItemCard = ({ dishData, imageUrl }) => {
 
 CartItemCard.propTypes = {
     dishData: PropTypes.shape({
+        id: PropTypes.string.isRequired,
         dishId: PropTypes.string.isRequired,
         dishName: PropTypes.string.isRequired,
         price: PropTypes.number.isRequired,

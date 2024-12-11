@@ -1,11 +1,13 @@
+import axios from "axios";
 import { API } from "../axios.config";
 import Cookies from "js-cookie";
-import axios from "axios";
-export const getCart = async (signal) => {
+
+export const patchCart = async (orderedDishId, payload, signal) => {
     try {
         const authToken = Cookies.get("authToken");
-        const res = await API.get(
-            `/v1/cart`,
+        const res = await API.patch(
+            `/v1/cart/dishes/${orderedDishId}`,
+            payload,
             {
                 headers: {
                     Authorization: `Bearer ${authToken}`,
@@ -13,15 +15,15 @@ export const getCart = async (signal) => {
                 signal,
             }
         );
-        console.debug("Get cart sucess");
         return res.data;
     } catch (error) {
         if (axios.isCancel(error)) {
-            console.debug("Get cart request cancelled");
+            console.debug("PATCH cart request cancelled");
             return;
         } else {
-            console.error("Get cart error:", error);
+            console.error("PATCH cart error; ", error);
+            throw error;
         }
-        throw error;
+
     }
 };

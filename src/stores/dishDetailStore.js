@@ -2,7 +2,6 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 const useDishStore = create(
-    console.debug("useDishStore initialized"),
     persist(
         (set) => ({
             dishes: {},

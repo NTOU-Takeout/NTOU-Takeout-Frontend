@@ -15,7 +15,7 @@ function Cart() {
     const { merchantData, isLoading: isMerchantLoading } = useMerchantDataQuery(
         cartData?.storeId ?? null
     );
-    console.debug("merchantData", merchantData);
+
     const menuCategoryList = useCategoryListQuery(merchantData?.menuId ?? null);
     const { categoryData, isQueriesSuccess } = useCategoryQueries(
         menuCategoryList,
@@ -36,11 +36,16 @@ function Cart() {
 
     // Calculate total spend
     const [totalSpend, setTotalSpend] = useState(0);
+    const [totalQuantity, setTotalQuantity] = useState(0);
     useEffect(() => {
         if (cartData?.orderedDishes) {
+            let tmp = 0;
             const totalSpend = cartData.orderedDishes.reduce((sum, dish) => {
+                tmp += dish.quantity;
                 return sum + (dish.price * dish.quantity);
             }, 0);
+
+            setTotalQuantity(tmp);
             let costs = 0;
             const totalExtraCost = cartData.orderedDishes.reduce((sum, dish) => {
                 costs = dish.chosenAttributes.reduce((acc, attr) => acc + attr.extraCost, 0);
@@ -48,7 +53,9 @@ function Cart() {
             }, 0);
             setTotalSpend(totalSpend + totalExtraCost);
         }
-    }, [cartData?.orderedDishes, setTotalSpend]);
+    }, [cartData?.orderedDishes, setTotalSpend, setTotalQuantity, totalQuantity]);
+
+
 
     if (isLoading || cartData == undefined || isMerchantLoading || !isQueriesSuccess || Object.keys(dishesMap).length === 0) {
         return (
@@ -58,7 +65,12 @@ function Cart() {
             </div>
         );
     }
-
+    let predictedTime = 10 * totalQuantity;
+    if (predictedTime > 150 && predictedTime < 300) {
+        predictedTime = Math.floor(predictedTime * 0.7);
+    } else if (predictedTime >= 300) {
+        predictedTime = Math.floor(predictedTime * 0.5);
+    }
     if (isError) {
         return (
             <div className="flex justify-center items-center mt-28 fa-2x">
@@ -69,20 +81,26 @@ function Cart() {
     }
 
     return (
-        <div className="mt-3">
-            <CartPageHeader></CartPageHeader>
-            <CartTotalSpend orderDetail={{
-                merchantName: merchantData?.name,
-                totalSpend: totalSpend,
-            }} />
-            <CartItemCardList
-                cartData={cartData}
-                dishesMap={dishesMap}
-            />
-            {/* <CartOrderSection orderDetail={{
-                totalSpend: order.totalSpend,
-                estimateTime: order.estimateTime
-            }} /> */}
+        <div className="mt-3 h-dvh">
+            <div className="flex-none">
+                <CartPageHeader></CartPageHeader>
+                <CartTotalSpend orderDetail={{
+                    merchantName: merchantData?.name,
+                    totalSpend: totalSpend,
+                }} />
+            </div>
+            <div className="flex-1 overflow-auto">
+                <CartItemCardList
+                    cartData={cartData}
+                    dishesMap={dishesMap}
+                />
+            </div>
+            <div className="flex-none">
+                <CartOrderSection orderDetail={{
+                    totalSpend: totalSpend,
+                    estimateTime: (predictedTime - (totalQuantity > 2 ? 30 : 0)),
+                }} />
+            </div>
         </div>
     );
 }
