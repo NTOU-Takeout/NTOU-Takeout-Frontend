@@ -1,14 +1,18 @@
 import { create } from "zustand";
 
-const useAllDishStore = create((set) => ({
+const useAllDishesStore = create((set) => ({
     dishes: {}, // store dishes' data
+
     setDishes: (newDishes) =>
         set((state) => ({
             dishes: {
                 ...state.dishes,
                 ...newDishes,
             },
-        })),
+
+        }),
+            console.debug("setDishes", newDishes)
+        ),
 }));
 
-export default useAllDishStore;
+export default useAllDishesStore;

@@ -1,16 +1,16 @@
-import { useEffect } from "react";
+import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import useCartStore from "../../stores/cartStore";
 
 const CartIcon = () => {
     // Zustand store hook
-    const { cartCount, fetchCartCount } = useCartStore();
+    const { cartCount, fetchCartCount } = useState(0);
 
     // Fetch cart count on component mount
-    useEffect(() => {
-        fetchCartCount();
-    }, [fetchCartCount]);
+    // useEffect(() => {
+    //     fetchCartCount();
+    // }, [fetchCartCount]);
 
     return (
         <div className="cart-icon-container inline-block relative">
