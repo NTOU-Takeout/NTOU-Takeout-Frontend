@@ -9,7 +9,7 @@ export const useCartUpdateMutation = () => {
         mutateAsync: patchCartAsync,
         onError: patchCartError,
         onMutate: patchCartOnMutate,
-        isPending: patchCartPending,
+        isError: ispatchCartError,
     } = useMutation({
         mutationFn: async ({ orderedDishId, newQuantity }) => {
             if (abortControllerRef.current) {
@@ -34,8 +34,8 @@ export const useCartUpdateMutation = () => {
             await queryClient.cancelQueries(["cart"]);
             const previousCart = queryClient.getQueryData(["cart"]);
 
-            // 樂觀更新：假設 cart 資料結構為 { dishes: [{ dishId, quantity, ...}, ...] }
-            // 拷貝一份 cart state
+            // optimistic update
+            // copy previous cart and update quantity
             const newCart = { ...previousCart };
             if (newCart?.dishes) {
                 newCart.dishes = newCart.dishes.map((dish) =>
@@ -70,6 +70,6 @@ export const useCartUpdateMutation = () => {
         patchCartAsync,
         patchCartError,
         patchCartOnMutate,
-        patchCartPending,
+        ispatchCartError
     };
 }
