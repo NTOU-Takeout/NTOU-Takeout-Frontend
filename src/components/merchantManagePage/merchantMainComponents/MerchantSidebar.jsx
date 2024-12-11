@@ -56,6 +56,8 @@ const MerchantSidebar = ({ merchantName }) => {
                         iconSize="lg"
                         iconColor={"#053766"}
                         style={"px-4 py-4"}
+                        onClick={closeSidebar}
+                        path="/merchantPage/order"
                     />
                     <MerchantSidebarButton
                         text="菜單"

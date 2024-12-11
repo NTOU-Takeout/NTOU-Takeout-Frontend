@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import useSidebarStore from "../../../stores/merchantSidebarStore";
-import MerchantMenuSidebarButton from "./MerchantMenuSidebarButton";
+import MerchantOrderSidebarButton from "./MerchantOrderSidebarButton";
 import useThemeStore from "../../../stores/themeStore";
 import {
     faComment,
@@ -14,12 +14,11 @@ import {
     faChartPie,
 } from "@fortawesome/free-solid-svg-icons";
 
-const MerchantMenuSidebar = ({ merchantName }) => {
+const MerchantOrderSidebar = ({ merchantName }) => {
     const isOpen = useSidebarStore((state) => state.isOpen);
     const theme = useThemeStore((state) => state.themeMode);
     const toggleTheme = useThemeStore((state) => state.toggleTheme);
     const closeSidebar = useSidebarStore((state) => state.closeSidebar);
-    //console.log(isOpen, "asdlkawfqf");
     return (
         <>
             {isOpen && (
@@ -36,7 +35,7 @@ const MerchantMenuSidebar = ({ merchantName }) => {
                 } transition-transform duration-300 min-w-48`}
             >
                 <div className="p-4">
-                    <MerchantMenuSidebarButton
+                    <MerchantOrderSidebarButton
                         text={merchantName}
                         textStyle={"text-2xl px-2"}
                         icon={faStore}
@@ -46,7 +45,7 @@ const MerchantMenuSidebar = ({ merchantName }) => {
                         path="/merchantPage"
                         onClick={closeSidebar}
                     />
-                    <MerchantMenuSidebarButton
+                    <MerchantOrderSidebarButton
                         text="主頁"
                         icon={faHome}
                         iconSize="lg"
@@ -55,7 +54,7 @@ const MerchantMenuSidebar = ({ merchantName }) => {
                         path="/merchantPage"
                         onClick={closeSidebar}
                     />
-                    <MerchantMenuSidebarButton
+                    <MerchantOrderSidebarButton
                         text="訂單"
                         icon={faFolder}
                         iconSize="lg"
@@ -64,7 +63,7 @@ const MerchantMenuSidebar = ({ merchantName }) => {
                         onClick={closeSidebar}
                         path="/merchantPage/order"
                     />
-                    <MerchantMenuSidebarButton
+                    <MerchantOrderSidebarButton
                         text="菜單"
                         icon={faFolder}
                         iconSize="lg"
@@ -73,21 +72,21 @@ const MerchantMenuSidebar = ({ merchantName }) => {
                         onClick={closeSidebar}
                         path="/merchantPage/menu"
                     />
-                    <MerchantMenuSidebarButton
+                    <MerchantOrderSidebarButton
                         text="評論"
                         icon={faComment}
                         iconSize="lg"
                         iconColor={"#606162"}
                         style={"pt-8 pb-4 px-4"}
                     />
-                    <MerchantMenuSidebarButton
+                    <MerchantOrderSidebarButton
                         text="營業分析"
                         icon={faChartPie}
                         iconSize="lg"
                         iconColor={"#606162"}
                         style={"px-4 py-4"}
                     />
-                    <MerchantMenuSidebarButton
+                    <MerchantOrderSidebarButton
                         text="設定"
                         icon={faCog}
                         iconSize="lg"
@@ -96,13 +95,13 @@ const MerchantMenuSidebar = ({ merchantName }) => {
                     />
                 </div>
                 <div className="px-4 absolute bottom-0 left-0 right-2 flex justify-between">
-                    <MerchantMenuSidebarButton
+                    <MerchantOrderSidebarButton
                         text="登出"
                         icon={faSignOutAlt}
                         iconSize="lg"
                         iconColor={"#606162"}
                     />
-                    <MerchantMenuSidebarButton
+                    <MerchantOrderSidebarButton
                         icon={theme == "light" ? faMoon : faSun}
                         text="切換主題"
                         textStyle={"w-0  invisible"}
@@ -115,8 +114,8 @@ const MerchantMenuSidebar = ({ merchantName }) => {
         </>
     );
 };
-MerchantMenuSidebar.propTypes = {
+MerchantOrderSidebar.propTypes = {
     merchantName: PropTypes.string,
 };
 
-export default MerchantMenuSidebar;
+export default MerchantOrderSidebar;

@@ -9,6 +9,7 @@ import NotFound from "./pages/NotFound";
 import MerchantPage from "./pages/MerchantPage";
 import MerchantMainPage from "./pages/MerchantSubpage/MerchantMainPage";
 import MerchantMenuPage from "./pages/MerchantSubpage/MerchantMenuPage";
+import MerchantOrderPage from "./pages/MerchantSubpage/MerchantOrderPage";
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -45,6 +46,11 @@ const router = createBrowserRouter([
             {
                 path: "menu", // 子路由
                 element: <MerchantMenuPage />,
+                errorElement: <NotFound />,
+            },
+            {
+                path: "order", // 子路由
+                element: <MerchantOrderPage />,
                 errorElement: <NotFound />,
             },
         ],
