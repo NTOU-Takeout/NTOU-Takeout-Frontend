@@ -4,8 +4,8 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const ReceiveOrderNotify = ({
     title = "接收訂單？",
-    number = 1241213,
-    finishTime = 6,
+    number,
+    finishTime,
     items,
     onBack,
     onConfirm,
@@ -14,7 +14,6 @@ const ReceiveOrderNotify = ({
     return (
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50">
             <div className="bg-white w-[90%] max-w-md rounded-lg shadow-lg p-6 relative">
-                {/* Close Button */}
                 <button
                     className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
                     onClick={onBack}
