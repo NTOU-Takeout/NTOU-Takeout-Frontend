@@ -1,4 +1,4 @@
-import PropTypes, { object, string } from "prop-types";
+import PropTypes from "prop-types";
 import useCartStore from "../../stores/cartStore";
 const CartItemCard = ({ dishData, imageUrl }) => {
     const { updateQuantity, removeDish } = useCartStore();
@@ -10,7 +10,6 @@ const CartItemCard = ({ dishData, imageUrl }) => {
         chosenAttributes,
         note
     } = dishData;
-
 
     const handleQuantityChange = (change) => {
         const newQuantity = quantity + change;
@@ -39,7 +38,7 @@ const CartItemCard = ({ dishData, imageUrl }) => {
                     {formattedAttributes} ( + $ {111})
                 </p>
                 <p className="text-xl mt-2">
-                    $ {Math.floor(quantity * (price + 111))}
+                    $ {price}
                 </p>
             </div>
             <div className="absolute bottom-[15px] right-[15px] flex items-end border border-gray-300 rounded-md">
