@@ -1,6 +1,7 @@
 import { StrictMode } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Home from "./pages/Home";
 import Menu from "./pages/Menu";
 import Review from "./pages/Review";
@@ -62,6 +63,7 @@ function App() {
         <StrictMode>
             <QueryClientProvider client={queryClient}>
                 <RouterProvider router={router}></RouterProvider>
+                <ReactQueryDevtools initialIsOpen={false} />
             </QueryClientProvider>
         </StrictMode>
     );

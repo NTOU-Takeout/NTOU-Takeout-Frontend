@@ -38,11 +38,11 @@ const Review = () => {
             // Fetch merchant data if not in store
             const fetchMerchantData = async () => {
                 try {
-                    const data = await getStoreClient.getMerchantsByIdList([
+                    const res = await getStoreClient.getMerchantsByIdList([
                         merchantId,
                     ]);
-                    setMerchant(data[0]);
-                    setReviewIdList(data[0]?.reviewIdList || null);
+                    setMerchant(res.data[0]);
+                    setReviewIdList(res.data[0]?.reviewIdList || null);
                 } catch (error) {
                     console.error("Failed to fetch merchant data:", error);
                 }
