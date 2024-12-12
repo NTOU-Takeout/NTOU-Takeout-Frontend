@@ -25,14 +25,14 @@ const OptionCard = ({
         // Get current dish state
         const currentDish = dishes[dishId] || {};
         const { selectedOptions: currentOptions = [] } = currentDish;
-    
+
         // Set new options
         let updatedOptions = [...currentOptions];
-    
+
         if (type === "single") {
             // Single; remove selected option in the same category
             updatedOptions = updatedOptions.filter(
-                (opt) => !options.some((o) => o.name === opt) 
+                (opt) => !options.some((o) => o.name === opt)
             );
             updatedOptions.push(option.name); // Add new selected option
         } else {
@@ -41,27 +41,28 @@ const OptionCard = ({
                 ? updatedOptions.filter((opt) => opt !== option.name) // Cancel selection
                 : [...updatedOptions, option.name]; // Add selection
         }
-    
+
         // calculate extra cost
         const totalExtraCost = updatedOptions.reduce((acc, optionName) => {
             const selectedOption = options.find((opt) => opt.name === optionName);
             return acc + (selectedOption ? selectedOption.extraCost : 0);
         }, 0);
-    
+
         // update dish to store
         updateDish(dishId, {
             selectedOptions: updatedOptions,
             extraCost: totalExtraCost,
         });
-    
+
         setSelectedOptions(updatedOptions);
     };
-    
-    
+
+
 
     return (
         <div className="border rounded-lg p-4 max-w-sm mx-auto mb-8 mt-8 font-notoTC">
             <h3 className="text-lg font-semibold">{title}</h3>
+            <p className=" text-xs text-gray-500"> {type === "single" ? "選擇一個" : "選擇多個"}</p>
             <p className="text-sm text-gray-500">{description}</p>
 
             <div className="mt-4 space-y-2">
