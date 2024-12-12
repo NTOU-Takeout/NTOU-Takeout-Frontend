@@ -7,6 +7,8 @@ import ConfirmStatus from "../../components/merchantManagePage/merchantOrderComp
 import useReceiveOrderNotifyStore from "../../stores/receiveOrderNotify";
 import useFinishDishStore from "../../stores/finishDishStore";
 import useFinishTakeOutStore from "../../stores/finishTakeOut";
+import useOrderFilterStore from "../../stores/orderFilter";
+import Filter from "../../components/merchantManagePage/merchantOrderComponents/popUpWindowPanel/filter";
 function MerchantOrderPage() {
     const toggleSidebar = useSidebarStore((state) => state.toggleSidebar);
     const merchantName = "海洋大學店";
@@ -25,6 +27,11 @@ function MerchantOrderPage() {
     const isFinishTakeOutOpen = useFinishTakeOutStore((state) => state.isOpen);
     const closeFinishTakeOut = useFinishTakeOutStore(
         (state) => state.closeFinishTakeOut,
+    );
+
+    const isOrderFilterOpen = useOrderFilterStore((state) => state.isOpen);
+    const closeOrderFilter = useOrderFilterStore(
+        (state) => state.closeOrderFilter,
     );
 
     const handleRefresh = () => {
@@ -67,7 +74,6 @@ function MerchantOrderPage() {
                 merchantName={merchantName}
             ></MerchantOrderSidebar>
             <BlueNotify onRefresh={() => handleRefresh()}></BlueNotify>
-
             {isReceiveOrderNotifyOpen && (
                 <ReceiveOrderNotify
                     items={items}
@@ -98,6 +104,7 @@ function MerchantOrderPage() {
                     onCancel={handleFinishTakeOutCancel}
                 ></ConfirmStatus>
             )}
+            {isOrderFilterOpen && <Filter onBack={closeOrderFilter}></Filter>}
         </div>
     );
 }
