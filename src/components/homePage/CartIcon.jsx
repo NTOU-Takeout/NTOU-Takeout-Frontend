@@ -1,22 +1,14 @@
-import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-import useCartStore from "../../stores/cartStore";
-
+import { useSystemContext } from "../../context/SystemContext";
 const CartIcon = () => {
-    // Zustand store hook
-    const { cartCount, fetchCartCount } = useState(0);
-
-    // Fetch cart count on component mount
-    // useEffect(() => {
-    //     fetchCartCount();
-    // }, [fetchCartCount]);
-
+    const { cartCount } = useSystemContext();
+    console.debug("CartIcon cartCount:", cartCount);
     return (
-        <div className="cart-icon-container inline-block relative">
-            <FontAwesomeIcon icon={faShoppingCart} />
+        <div className="relative inline-flex items-center right-2 top-1">
+            <FontAwesomeIcon icon={faShoppingCart} className="text-xl" />
             {cartCount > 0 && (
-                <span className="cart-count absolute bottom-0 left-0 bg-red-500 text-white rounded-full px-2 py-0.5 text-xs scale-50">
+                <span className="absolute -top-2 -right-2 flex items-center justify-center min-w-[18px] h-[18px] text-xs bg-red-500 text-white rounded-full px-1">
                     {cartCount}
                 </span>
             )}
