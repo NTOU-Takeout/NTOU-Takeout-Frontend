@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
 import PropTypes from "prop-types";
-import useDishStore from "../../../stores/dishDetailStore"; // Import your Zustand store
 
 const OptionCard = ({
     title,
@@ -10,16 +9,12 @@ const OptionCard = ({
     options = [],
     type,
     dishId,
+    isRequired,
+    isError,
 }) => {
-    const [selectedOptions, setSelectedOptions] = useState([]);
-    const { dishes, updateDish } = useDishStore();
 
-    // Initialize the selected options from the store if the dish already exists
-    useEffect(() => {
-        if (dishes[dishId]) {
-            setSelectedOptions(dishes[dishId].selectedOptions || []);
-        }
-    }, [dishes, dishId]);
+    const [selectedOptions, setSelectedOptions] = useState([]);
+    const [dishes, setDishes] = useState({});
 
     const handleCheckboxChange = (option) => {
         // Get current dish state
@@ -42,22 +37,16 @@ const OptionCard = ({
                 : [...updatedOptions, option.name]; // Add selection
         }
 
-        // calculate extra cost
-        const totalExtraCost = updatedOptions.reduce((acc, optionName) => {
-            const selectedOption = options.find((opt) => opt.name === optionName);
-            return acc + (selectedOption ? selectedOption.extraCost : 0);
-        }, 0);
-
-        // update dish to store
-        updateDish(dishId, {
-            selectedOptions: updatedOptions,
-            extraCost: totalExtraCost,
-        });
+        // update dish in state
+        setDishes((prevDishes) => ({
+            ...prevDishes,
+            [dishId]: {
+                selectedOptions: updatedOptions,
+            },
+        }));
 
         setSelectedOptions(updatedOptions);
     };
-
-
 
     return (
         <div className="border rounded-lg p-4 max-w-sm mx-auto mb-8 mt-8 font-notoTC">
