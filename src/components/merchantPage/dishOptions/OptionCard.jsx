@@ -10,12 +10,23 @@ const OptionCard = ({
     type,
     dishId,
     isRequired,
-    isError,
+    isShowError,
+    setIsShowError,
 }) => {
 
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [dishes, setDishes] = useState({});
+    const [isError, setIsError] = useState(false);
+    useEffect(() => {
+        if (isRequired && selectedOptions.length === 0) {
+            setIsError(true);
+            setIsShowError(true);
 
+        } else {
+            setIsError(false);
+            setIsShowError(false);
+        }
+    }, [selectedOptions, isRequired, setIsShowError, setIsError]);
     const handleCheckboxChange = (option) => {
         // Get current dish state
         const currentDish = dishes[dishId] || {};
@@ -50,8 +61,12 @@ const OptionCard = ({
 
     return (
         <div className="border rounded-lg p-4 max-w-sm mx-auto mb-8 mt-8 font-notoTC">
-            <h3 className="text-lg font-semibold">{title}</h3>
-            <p className=" text-xs text-gray-500"> {type === "single" ? "選擇一個" : "選擇多個"}</p>
+            <h3 className="text-lg font-semibold "> {title}</h3>
+            {isRequired && (
+                <p className={`text-xs font-bold ${isError ? "text-red-500" : "text-gray-500"}`}>
+                    {"必選"}
+                </p>
+            )}
             <p className="text-sm text-gray-500">{description}</p>
 
             <div className="mt-4 space-y-2">
@@ -97,6 +112,9 @@ OptionCard.propTypes = {
     ),
     type: PropTypes.oneOf(["single", "multiple"]),
     dishId: PropTypes.string.isRequired,
+    isRequired: PropTypes.bool,
+    isShowError: PropTypes.bool,
+    setIsShowError: PropTypes.func,
 };
 
 export default OptionCard;

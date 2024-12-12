@@ -1,8 +1,7 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
-import useDishStore from "../../../stores/dishDetailStore.js";
 
-const QuantitySelector = ({ dishId }) => {
+const QuantitySelector = () => {
     const [quantity, setQuantity] = useState(1);
 
     return (

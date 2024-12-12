@@ -18,7 +18,7 @@ const DishDetail = ({ dishData, onClose }) => {
     console.debug("DishDetail dishData:", dishId, name, price, imageUrl, description, options);
     const [isVisible, setIsVisible] = useState(false);
     const [isExiting, setIsExiting] = useState(false);
-
+    const [isShowError, setIsShowError] = useState(true);
     useEffect(() => {
         setIsVisible(true);
         document.body.style.overflow = "hidden"; // forbid background scroll
@@ -78,7 +78,9 @@ const DishDetail = ({ dishData, onClose }) => {
                                 options={detail.attributeOptions}
                                 type={detail.type}
                                 dishId={dishId}
-                                dishData={dishData}
+                                isRequired={detail.isRequired}
+                                isShowError={isShowError}
+                                setIsShowError={(e) => setIsShowError(e)}
                             />
                         ))}
                     </div>
