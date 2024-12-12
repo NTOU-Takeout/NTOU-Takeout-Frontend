@@ -19,10 +19,9 @@ export const useCategoryQueries = (menuCategoryList, merchantId) => {
         })),
     });
 
-    // Transform the queries results into categoryData
     const categoryData = categoryQueries
-        .map((query) => query.data)
-        .filter(Boolean); // Filter out undefined results
+        ? categoryQueries.map((query) => query.data).filter(Boolean) // Filter out undefined results
+        : [];
     isQueriesSuccess = true;
     return {
         categoryData,

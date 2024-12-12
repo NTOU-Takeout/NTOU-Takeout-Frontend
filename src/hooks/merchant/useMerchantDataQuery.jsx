@@ -3,8 +3,10 @@ import getStoreClient from "../../api/store/getStoreClient";
 export const useMerchantDataQuery = (merchantId) => {
     const {
         data: merchantData,
+        isLoading: isMerchantLoading,
         isError,
         error,
+        refetch: refetchMerchantData,
     } = useQuery({
         queryKey: ["menuCategoryList", merchantId],
         queryFn: async () => {
@@ -19,7 +21,9 @@ export const useMerchantDataQuery = (merchantId) => {
     });
     return {
         merchantData,
+        isMerchantLoading,
         isError,
         error,
+        refetchMerchantData,
     };
 }

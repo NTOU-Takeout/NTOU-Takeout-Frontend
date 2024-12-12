@@ -32,7 +32,7 @@ const Header = ({
             <h1 className="font-noto font-bold text-2xl m-0">
                 <a href="/">{title}</a>
             </h1>
-            <div className="text-xl cursor-pointer " onClick={handleRightClick}>
+            <div className="text-xl cursor-pointer" onClick={handleRightClick}>
                 <CartIcon />
             </div>
         </header>

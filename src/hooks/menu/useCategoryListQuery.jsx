@@ -5,7 +5,9 @@ import getMenuClient from "../../api/menu/getMenuClient";
 export const useCategoryListQuery = (menuId) => {
 
     // Fetch menu category list and dish details
-    const { data: menuCategoryList = [] } = useQuery({
+    const {
+        data: menuCategoryList = []
+    } = useQuery({
         queryKey: ["menuCategoryList", menuId],
         queryFn: async () => {
             const res = await getMenuClient.getMenuByMenuId(menuId);

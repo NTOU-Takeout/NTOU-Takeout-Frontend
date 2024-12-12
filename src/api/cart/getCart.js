@@ -13,7 +13,6 @@ export const getCart = async (signal) => {
                 signal,
             }
         );
-        console.debug("Get cart sucess");
         return res.data;
     } catch (error) {
         if (axios.isCancel(error)) {
