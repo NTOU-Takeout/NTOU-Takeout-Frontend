@@ -1,10 +1,31 @@
-import useDishStore from "../../../stores/dishDetailStore";
+import useDishDetailStore from "../../../stores/dishDetailStore";
+import PropTypes from "prop-types";
+const AddToCart = ({ dishId, onRequiredMissing }) => {
 
-const AddToCart = () => {
-    const dishes = useDishStore((state) => state.dishes);
+
+    const dishes = useDishDetailStore((state) => state.dishes);
+    const allDishAttributes = useDishDetailStore((state) => state.allDishAttributes);
 
     const handleAddToCart = async () => {
-        console.log("Current Store Data:", dishes);
+        const dishDetail = dishes[dishId];
+        if (!dishDetail) { return; }
+        const choosenAttributes = dishDetail.chosenAttributes || [];
+        const requiredAttributes = allDishAttributes[dishId] || [];
+
+        //check if all required attributes are selected
+        for (const attr of requiredAttributes) {
+            if (attr.isRequired === true) {
+                const matched = choosenAttributes.filter(ca => ca.attributeName === attr.name);
+                if (matched.length === 0) {
+                    console.debug("Missing Required Attribute:", attr.name);
+                    onRequiredMissing(attr.name);
+                    return;
+                }
+            }
+        }
+
+        console.debug("Add to Cart:", dishDetail);
+
     };
 
     return (
@@ -17,6 +38,10 @@ const AddToCart = () => {
             </button>
         </div>
     );
+};
+AddToCart.propTypes = {
+    dishId: PropTypes.string.isRequired,
+    onRequiredMissing: PropTypes.func.isRequired,
 };
 
 export default AddToCart;

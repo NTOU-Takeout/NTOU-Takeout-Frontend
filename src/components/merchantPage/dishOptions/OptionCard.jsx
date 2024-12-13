@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
+import useDishDetailStore from "../../../stores/dishDetailStore";
 import PropTypes from "prop-types";
 
 const OptionCard = ({
@@ -10,51 +11,49 @@ const OptionCard = ({
     type,
     dishId,
     isRequired,
-    isShowError,
-    setIsShowError,
 }) => {
 
+    const addChosenAttribute = useDishDetailStore((state) => state.addChosenAttribute);
+    const removeChosenAttributeOption = useDishDetailStore((state) => state.removeChosenAttributeOption);
+
     const [selectedOptions, setSelectedOptions] = useState([]);
-    const [dishes, setDishes] = useState({});
     const [isError, setIsError] = useState(false);
+
+    //handle error is show
     useEffect(() => {
         if (isRequired && selectedOptions.length === 0) {
             setIsError(true);
-            setIsShowError(true);
-
         } else {
             setIsError(false);
-            setIsShowError(false);
         }
-    }, [selectedOptions, isRequired, setIsShowError, setIsError]);
-    const handleCheckboxChange = (option) => {
-        // Get current dish state
-        const currentDish = dishes[dishId] || {};
-        const { selectedOptions: currentOptions = [] } = currentDish;
+    }, [selectedOptions, isRequired, setIsError]);
 
-        // Set new options
-        let updatedOptions = [...currentOptions];
+    const handleCheckboxChange = (option) => {
+        let updatedOptions = [...selectedOptions];
 
         if (type === "single") {
-            // Single; remove selected option in the same category
-            updatedOptions = updatedOptions.filter(
-                (opt) => !options.some((o) => o.name === opt)
-            );
-            updatedOptions.push(option.name); // Add new selected option
+            updatedOptions = [option.name];
+            //update store with selected option
+            addChosenAttribute(dishId, {
+                attributeName: title,
+                chosenOption: option.name,
+                extraCost: option.extraCost || 0,
+            });
         } else {
-            // Multi: Add or cancel selection
-            updatedOptions = currentOptions.includes(option.name)
-                ? updatedOptions.filter((opt) => opt !== option.name) // Cancel selection
-                : [...updatedOptions, option.name]; // Add selection
+            if (updatedOptions.includes(option.name)) {
+                updatedOptions = updatedOptions.filter(o => o !== option.name);
+                //remove option from store
+                removeChosenAttributeOption(dishId, title, option.name);
+            } else {
+                updatedOptions.push(option.name);
+                //update store with selected option
+                addChosenAttribute(dishId, {
+                    attributeName: title,
+                    chosenOption: option.name,
+                    extraCost: option.extraCost || 0,
+                });
+            }
         }
-
-        // update dish in state
-        setDishes((prevDishes) => ({
-            ...prevDishes,
-            [dishId]: {
-                selectedOptions: updatedOptions,
-            },
-        }));
 
         setSelectedOptions(updatedOptions);
     };

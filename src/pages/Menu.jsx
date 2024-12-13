@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom";
 import { useRef, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import { useQuery, useQueries } from "@tanstack/react-query";
 import { useCategoryQueries } from "../hooks/menu/useCategoryQueries";
 import { useCategoryListQuery } from "../hooks/menu/useCategoryListQuery";
 import MenuHeader from "../components/merchantPage/MenuHeader";
@@ -10,9 +9,8 @@ import MenuNavbar from "../components/merchantPage/MenuNavbar";
 import MenuSection from "../components/merchantPage/MenuSection";
 import useMerchantStore from "../stores/merchantStore";
 import useNavStore from "../stores/merchantMenuNav";
-import useAllDishesStore from "../stores/allDishesStore";
 import getStoreClient from "../api/store/getStoreClient";
-import getMenuClient from "../api/menu/getMenuClient";
+
 
 function Menu() {
     const { merchantId } = useParams();

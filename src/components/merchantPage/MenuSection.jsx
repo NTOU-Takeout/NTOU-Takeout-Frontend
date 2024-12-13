@@ -2,9 +2,10 @@ import { useState } from "react";
 import MenuItemCard from "./MenuItemCard";
 import MenuDishDetail from "./MenuDishDetail";
 import PropTypes from "prop-types";
+
 function MenuSection({ sectionRefs, categoryData }) {
     const [selectedDish, setSelectedDish] = useState(null);
-    // console.log(categoryData);
+
     const handleMenuItemClick = (item) => {
         // if the dish has no attributes, do not show the detail
         if (item.dishAttributes.length === 0) {
@@ -12,6 +13,7 @@ function MenuSection({ sectionRefs, categoryData }) {
         }
         setSelectedDish(item);
     };
+
     return (
         <div className="font-notoTC -top-12 relative min-h-screen flex flex-col items-center justify-center container mx-auto p-4">
             {categoryData.map((category, index) => (
@@ -40,8 +42,6 @@ function MenuSection({ sectionRefs, categoryData }) {
             ))}
 
             {selectedDish && (
-                console.debug("selectedDish:", selectedDish),
-
                 <MenuDishDetail
                     dishData={selectedDish}
                     onClose={() => setSelectedDish(null)}

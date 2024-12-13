@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
-import PropTypes from "prop-types";
+import { useEffect, useState, useRef } from "react";
+import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
-import OptionCard from "./dishOptions/OptionCard";
+import useDishDetailStore from "../../stores/dishDetailStore";
 import CartOption from "./dishOptions/CartOption";
+import OptionCard from "./dishOptions/OptionCard";
+import PropTypes from "prop-types";
 import Cookies from "js-cookie";
-
 const DishDetail = ({ dishData, onClose }) => {
     const {
         id: dishId,
@@ -15,18 +16,33 @@ const DishDetail = ({ dishData, onClose }) => {
         description,
         dishAttributes: options,
     } = dishData;
-    console.debug("DishDetail dishData:", dishId, name, price, imageUrl, description, options);
+
+    const { merchantId } = useParams();
     const [isVisible, setIsVisible] = useState(false);
     const [isExiting, setIsExiting] = useState(false);
     const [isShowError, setIsShowError] = useState(true);
+    const setDishDetail = useDishDetailStore((state) => state.setDishDetail);
+    const setAllDishAttributes = useDishDetailStore((state) => state.setAllDishAttributes);
+    const authToken = Cookies.get("authToken");
+    const optionCardRefs = useRef([]);
+
     useEffect(() => {
+        setAllDishAttributes(dishId, options);
+        setDishDetail(dishId, {
+            storeId: merchantId,
+            dishId: dishId,
+            quantity: 1,
+            note: "",
+            chosenAttributes: []
+        });
+
         setIsVisible(true);
         document.body.style.overflow = "hidden"; // forbid background scroll
 
         return () => {
             document.body.style.overflow = ""; // restore background scroll
         };
-    }, []);
+    }, [setDishDetail, dishId, merchantId, options, setAllDishAttributes]);
 
     const handleClose = () => {
         setIsExiting(true);
@@ -37,7 +53,14 @@ const DishDetail = ({ dishData, onClose }) => {
         }, 500);
     };
 
-    const authToken = Cookies.get("authToken");
+    // handle scroll to the OptionCard that has required missing
+    const handleRequiredMissing = (missingAttributeName) => {
+        // find the index of the missing attribute
+        const index = options.findIndex(opt => opt.name === missingAttributeName);
+        if (index !== -1 && optionCardRefs.current[index]) {
+            optionCardRefs.current[index].scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+    };
 
     return (
         <div
@@ -71,24 +94,29 @@ const DishDetail = ({ dishData, onClose }) => {
 
                         {/* Customize options */}
                         {options.map((detail, index) => (
-                            <OptionCard
-                                key={index}
-                                title={detail.name}
-                                description={detail.description}
-                                options={detail.attributeOptions}
-                                type={detail.type}
-                                dishId={dishId}
-                                isRequired={detail.isRequired}
-                                isShowError={isShowError}
-                                setIsShowError={(e) => setIsShowError(e)}
-                            />
+                            <div key={index} ref={el => optionCardRefs.current[index] = el}>
+                                <OptionCard
+                                    title={detail.name}
+                                    description={detail.description}
+                                    options={detail.attributeOptions}
+                                    type={detail.type}
+                                    dishId={dishId}
+                                    isRequired={detail.isRequired}
+                                    isShowError={isShowError}
+                                    setIsShowError={setIsShowError}
+                                />
+                            </div>
                         ))}
                     </div>
                     <div className="py-5"></div>
                 </div>
                 {/* Add to cart button */}
                 {authToken && (
-                    <CartOption dishId={dishId} />
+                    <CartOption
+                        dishId={dishId}
+                        dishAttributes={options}
+                        onRequiredMissing={handleRequiredMissing}
+                    />
                 )}
             </div>
         </div>
