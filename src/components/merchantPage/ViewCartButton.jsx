@@ -15,7 +15,7 @@ const ViewCartButton = () => {
         navigate('/cart');
     };
     console.debug('carData:', cartData);
-    if (isLogin == true && cartData == undefined) return null;
+    if (isLogin == true && cartData == undefined || totalSpend == 0) return null;
     console.debug("cartCount:", cartCount);
     return (
         <div className="fixed bottom-4 right-6 flex z-10 ">

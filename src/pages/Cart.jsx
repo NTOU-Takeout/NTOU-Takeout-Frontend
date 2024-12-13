@@ -66,6 +66,7 @@ const Cart = () => {
             <div className="flex-none">
                 <CartPageHeader />
                 <CartTotalSpend orderDetail={{
+                    cartData: cartData,
                     merchantName: merchantData?.name,
                     totalSpend: totalSpend,
                 }} />
