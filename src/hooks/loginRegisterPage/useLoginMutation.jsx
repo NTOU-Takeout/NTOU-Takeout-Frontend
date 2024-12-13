@@ -1,12 +1,9 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
 import loginClient from '../../api/auth/loginClient';
 import useUserInfoStore from '../../stores/userInfoStore';
 import CryptoJS from 'crypto-js';
 
 export const useLoginMutation = (isEnabled = true) => {
-    // const queryClient = useQueryClient();
-    const navigate = useNavigate();
     const { setUserInfo } = useUserInfoStore();
 
     const {
@@ -24,7 +21,7 @@ export const useLoginMutation = (isEnabled = true) => {
         onSuccess: (data) => {
             setUserInfo(data);
             console.debug('Login successful return data:', data);
-            navigate('/', { replace: true });
+            window.location.assign('/');
         },
         onError: (error) => {
             console.error('Login failed:', error);
