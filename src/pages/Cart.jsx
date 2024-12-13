@@ -33,11 +33,11 @@ const Cart = () => {
             return acc;
         }, {});
     }, [categoryData]);
-    console.debug("cartData:", cartData);
-    console.debug("merchantData:", merchantData);
-    console.debug("isMerchantLoading:", isMerchantLoading);
-    console.debug("isQueriesSuccess:", isQueriesSuccess);
-    console.debug("dishesMap:", dishesMap);
+    // console.debug("cartData:", cartData);
+    // console.debug("merchantData:", merchantData);
+    // console.debug("isMerchantLoading:", isMerchantLoading);
+    // console.debug("isQueriesSuccess:", isQueriesSuccess);
+    // console.debug("dishesMap:", dishesMap);
     if (cartData == undefined || isMerchantLoading || !isQueriesSuccess) {
         return (
             <div className="flex justify-center items-center mt-28 fa-2x">

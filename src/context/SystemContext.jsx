@@ -51,7 +51,7 @@ export const SystemContextProvider = ({ children }) => {
         }
     }, [cartData?.orderedDishes]);
     const cartCount = cartData?.orderedDishes.length;
-    console.debug("cartCount:", cartCount);
+    // console.debug("cartCount:", cartCount);
     // console.debug("cartError:", cartError);
     // console.debug('cartData:', cartData);
     // console.debug('merchantData:', merchantData);
