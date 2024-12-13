@@ -2,11 +2,10 @@ import { useState } from "react";
 import MenuItemCard from "./MenuItemCard";
 import MenuDishDetail from "./MenuDishDetail";
 import PropTypes from "prop-types";
-import { useSystemContext } from "../../context/SystemContext";
+
 function MenuSection({ sectionRefs, categoryData }) {
     const [selectedDish, setSelectedDish] = useState(null);
-    const { cartData } = useSystemContext();
-    console.debug("cartData:", cartData);
+
     const handleMenuItemClick = (item) => {
         // if the dish has no attributes, do not show the detail
         if (item.dishAttributes.length === 0) {
