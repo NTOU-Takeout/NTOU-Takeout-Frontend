@@ -5,7 +5,7 @@ import QuantitySelector from "./QuantitySelector";
 const CartOption = ({ dishId, onRequiredMissing, onClose }) => {
 
     return (
-        <div className="flex jsutify-item-between fixed z-20 bottom-8 right-24">
+        <div className="flex fixed z-20 bottom-8">
             <QuantitySelector dishId={dishId} />
             <AddToCart
                 dishId={dishId}

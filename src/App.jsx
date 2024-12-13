@@ -57,7 +57,7 @@ function App() {
                 <SystemContextProvider>
                     <RouterProvider router={router}></RouterProvider>
                 </SystemContextProvider>
-                <ReactQueryDevtools initialIsOpen={false} />
+                {/* <ReactQueryDevtools initialIsOpen={false} /> */}
             </QueryClientProvider>
         </StrictMode>
     );
