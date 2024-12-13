@@ -1,4 +1,3 @@
-import { useState } from "react";
 import MenuItemCard from "./MenuItemCard";
 import MenuDishDetail from "./MenuDishDetail";
 import PropTypes from "prop-types";
@@ -6,10 +5,6 @@ import PropTypes from "prop-types";
 function MenuSection({ sectionRefs, categoryData, selectedDish, setSelectedDish }) {
 
     const handleMenuItemClick = (item) => {
-        // if the dish has no attributes, do not show the detail
-        if (item.dishAttributes.length === 0) {
-            return;
-        }
         setSelectedDish(item);
     };
 
@@ -53,5 +48,7 @@ function MenuSection({ sectionRefs, categoryData, selectedDish, setSelectedDish 
 MenuSection.propTypes = {
     sectionRefs: PropTypes.object.isRequired,
     categoryData: PropTypes.array.isRequired,
+    selectedDish: PropTypes.object,
+    setSelectedDish: PropTypes.func.isRequired,
 };
 export default MenuSection;

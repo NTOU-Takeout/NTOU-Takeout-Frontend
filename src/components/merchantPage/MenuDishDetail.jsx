@@ -71,10 +71,10 @@ const DishDetail = ({ dishData, onClose }) => {
     };
     return (
         <div
-            className={`font-notoTC fixed z-10 top-0 left-0 right-0 `}
+            className={`font-notoTC fixed z-10 top-0 left-0 right-0`}
         >
             <div
-                className={`bg-white shadow-md overflow-hidden max-h-[100vh] flex flex-col  transition-transform duration-500 ${isExiting ? "translate-y-full none" : "translate-y-0"}
+                className={`bg-white shadow-md overflow-hidden h-dvh flex flex-col  transition-transform duration-500 ${isExiting ? "translate-y-full none" : "translate-y-0"}
                                                                                                                             ${isVisible ? "translate-y-0" : "translate-y-full none"}`}
             >
                 <div className="flex-1 overflow-y-auto">
