@@ -15,7 +15,6 @@ const OptionCard = ({
 
     const addChosenAttribute = useDishDetailStore((state) => state.addChosenAttribute);
     const removeChosenAttributeOption = useDishDetailStore((state) => state.removeChosenAttributeOption);
-
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [isError, setIsError] = useState(false);
 
@@ -33,6 +32,12 @@ const OptionCard = ({
 
         if (type === "single") {
             updatedOptions = [option.name];
+            //remove all other options from store
+            options.forEach((o) => {
+                if (o.name !== option.name) {
+                    removeChosenAttributeOption(dishId, title, o.name);
+                }
+            });
             //update store with selected option
             addChosenAttribute(dishId, {
                 attributeName: title,
@@ -56,6 +61,7 @@ const OptionCard = ({
         }
 
         setSelectedOptions(updatedOptions);
+
     };
 
     return (

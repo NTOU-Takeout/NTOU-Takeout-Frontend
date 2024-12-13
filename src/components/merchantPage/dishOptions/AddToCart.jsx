@@ -1,11 +1,12 @@
 import useDishDetailStore from "../../../stores/dishDetailStore";
+import { useCartAddMutation } from "../../../hooks/cart/useCartAddMutation";
 import PropTypes from "prop-types";
-const AddToCart = ({ dishId, onRequiredMissing }) => {
+const AddToCart = ({ dishId, onRequiredMissing, onClose }) => {
 
 
     const dishes = useDishDetailStore((state) => state.dishes);
     const allDishAttributes = useDishDetailStore((state) => state.allDishAttributes);
-
+    const { postCartAsync } = useCartAddMutation();
     const handleAddToCart = async () => {
         const dishDetail = dishes[dishId];
         if (!dishDetail) { return; }
@@ -25,7 +26,8 @@ const AddToCart = ({ dishId, onRequiredMissing }) => {
         }
 
         console.debug("Add to Cart:", dishDetail);
-
+        onClose();
+        postCartAsync(dishDetail);
     };
 
     return (
@@ -42,6 +44,7 @@ const AddToCart = ({ dishId, onRequiredMissing }) => {
 AddToCart.propTypes = {
     dishId: PropTypes.string.isRequired,
     onRequiredMissing: PropTypes.func.isRequired,
+    onClose: PropTypes.func.isRequired,
 };
 
 export default AddToCart;

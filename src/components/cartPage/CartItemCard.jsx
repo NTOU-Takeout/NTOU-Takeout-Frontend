@@ -6,7 +6,6 @@ import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 const CartItemCard = ({ dishData, imageUrl }) => {
     const {
         id,
-        dishId,
         dishName,
         price,
         quantity,
@@ -21,8 +20,11 @@ const CartItemCard = ({ dishData, imageUrl }) => {
         if (newQ < 0 || newQ > 25) return;
 
 
+
         // optimistic update
-        setNowQuantity(newQ);
+        if (newQ > 0) {
+            setNowQuantity(newQ);
+        }
         // update cart
         patchCartAsync({ orderedDishId: id, newQuantity: newQ });
     };
@@ -59,12 +61,12 @@ const CartItemCard = ({ dishData, imageUrl }) => {
                         className="px-2 py-0 text-lg rounded-l-md w-7"
                     >
                         {
-                            nowQuantity <= 1 ?
+                            quantity <= 1 ?
                                 <FontAwesomeIcon icon={faTrashCan} size="xs" style={{ color: "#d00b0b", }} /> :
                                 "-"
                         }
                     </button>
-                    <span className="px-4 py-0.5">{nowQuantity}</span>
+                    <span className="px-4 py-0.5">{quantity}</span>
                     <button
                         onClick={() => handleQuantityChange(1)}
                         className="px-2 py-0 text-lg rounded-r-md w-7"

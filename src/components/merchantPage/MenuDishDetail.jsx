@@ -116,6 +116,7 @@ const DishDetail = ({ dishData, onClose }) => {
                         dishId={dishId}
                         dishAttributes={options}
                         onRequiredMissing={handleRequiredMissing}
+                        onClose={handleClose}
                     />
                 )}
             </div>

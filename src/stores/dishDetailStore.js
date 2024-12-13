@@ -76,14 +76,12 @@ const useDishDetailStore = create((set) => ({
     addChosenAttribute: (dishId, attribute) => set((state) => {
         const currentDish = state.dishes[dishId] || {};
         const currentAttributes = currentDish.chosenAttributes || [];
-        // Remove the previous selection of the same attribute
-        const filteredAttributes = currentAttributes.filter(attr => attr.attributeName !== attribute.attributeName);
         return {
             dishes: {
                 ...state.dishes,
                 [dishId]: {
                     ...currentDish,
-                    chosenAttributes: [...filteredAttributes, attribute],
+                    chosenAttributes: [...currentAttributes, attribute],
                 },
             },
         };

@@ -60,7 +60,7 @@ const Cart = () => {
     return (
         <div className="mt-3 h-dvh">
             <div className="flex-none">
-                <CartPageHeader></CartPageHeader>
+                <CartPageHeader />
                 <CartTotalSpend orderDetail={{
                     merchantName: merchantData?.name,
                     totalSpend: totalSpend,
