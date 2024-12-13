@@ -12,39 +12,40 @@ import LoginRegister from "./pages/LoginRegister";
 import ForgetPassword from "./pages/ForgetPassword";
 import Register from "./pages/Register";
 const queryClient = new QueryClient();
+const base_url = "/Order-Now-Frontend";
 const router = createBrowserRouter([
     {
-        path: "/",
+        path: `${base_url}/`,
         element: <Home />,
         errorElement: <NotFound />,
     },
     {
-        path: "/cart",
+        path: `${base_url}/cart`,
         element: <Cart />,
         errorElement: <NotFound />,
     },
     {
-        path: "/menu/:merchantId",
+        path: `${base_url}/menu/:merchantId`,
         element: <Menu />,
         errorElement: <NotFound />,
     },
     {
-        path: "/menu/:merchantId/review",
+        path: `${base_url}/menu/:merchantId/review`,
         element: <Review />,
         errorElement: <NotFound />,
     },
     {
-        path: "/auth/:authType",
+        path: `${base_url}/auth/:authType`,
         element: <LoginRegister />,
         errorElement: <NotFound />,
     },
     {
-        path: "/auth/forgotPassword",
+        path: `${base_url}/auth/forgotPassword`,
         element: <ForgetPassword />,
         errorElement: <NotFound />,
     },
     {
-        path: "/Register",
+        path: `${base_url}/Register`,
         element: <Register />,
         errorElement: <NotFound />,
     }
