@@ -12,44 +12,46 @@ import LoginRegister from "./pages/LoginRegister";
 import ForgetPassword from "./pages/ForgetPassword";
 import Register from "./pages/Register";
 const queryClient = new QueryClient();
-const base_url = "/Order-Now-Frontend";
 const router = createBrowserRouter([
     {
-        path: `${base_url}/`,
+        path: "/",
         element: <Home />,
         errorElement: <NotFound />,
     },
     {
-        path: `${base_url}/cart`,
+        path: "/cart",
         element: <Cart />,
         errorElement: <NotFound />,
     },
     {
-        path: `${base_url}/menu/:merchantId`,
+        path: "/menu/:merchantId",
         element: <Menu />,
         errorElement: <NotFound />,
     },
     {
-        path: `${base_url}/menu/:merchantId/review`,
+        path: "/menu/:merchantId/review",
         element: <Review />,
         errorElement: <NotFound />,
     },
     {
-        path: `${base_url}/auth/:authType`,
+        path: "/auth/:authType",
         element: <LoginRegister />,
         errorElement: <NotFound />,
     },
     {
-        path: `${base_url}/auth/forgotPassword`,
+        path: "/auth/forgotPassword",
         element: <ForgetPassword />,
         errorElement: <NotFound />,
     },
     {
-        path: `${base_url}/Register`,
+        path: "/Register",
         element: <Register />,
         errorElement: <NotFound />,
+    }],
+    {
+        basename: "/Order-Now-Frontend/",
     }
-]);
+);
 
 function App() {
     return (
