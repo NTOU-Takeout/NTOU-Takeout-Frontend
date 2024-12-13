@@ -2,22 +2,23 @@ import { useParams } from "react-router-dom";
 import { useRef, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import { useQuery, useQueries } from "@tanstack/react-query";
+import { useCategoryQueries } from "../hooks/menu/useCategoryQueries";
+import { useCategoryListQuery } from "../hooks/menu/useCategoryListQuery";
+import { useSystemContext } from "../context/SystemContext";
 import MenuHeader from "../components/merchantPage/MenuHeader";
 import MenuNavbar from "../components/merchantPage/MenuNavbar";
 import MenuSection from "../components/merchantPage/MenuSection";
 import useMerchantStore from "../stores/merchantStore";
-import useAllDishStore from "../stores/allDishStore";
 import useNavStore from "../stores/merchantMenuNav";
 import getStoreClient from "../api/store/getStoreClient";
-import getMenuClient from "../api/menu/getMenuClient";
+import ViewCartButton from "../components/merchantPage/ViewCartButton";
 
 function Menu() {
     const { merchantId } = useParams();
     const sectionRefs = useRef([]);
     const [isNavbarFixed, setIsNavbarFixed] = useState(false);
     const setNavbarItems = useNavStore((state) => state.setNavbarItems);
-    const setDishes = useAllDishStore((state) => state.setDishes);
+
     // handle scroll to section
     const handleScrollToSection = (index) => {
         sectionRefs.current[index]?.scrollIntoView({
@@ -64,53 +65,25 @@ function Menu() {
         }
     }, [merchantId, getMerchantById]);
 
-    // Fetch menu category list and dish details
-    const { data: menuCategoryList = [] } = useQuery({
-        queryKey: ["menuCategoryList", menuId],
-        queryFn: async () => {
-            const res = await getMenuClient.getMenuByMenuId(menuId);
-            const categories = res.data.categories;
-            // Update navbar items
-            setNavbarItems(categories.map((category) => category.first));
-            return categories;
-        },
-        enabled: menuId != undefined,
-        refetchOnWindowFocus: false,
-    });
-
-    // Fetch dish details for each category separately
-    const categoryQueries = useQueries({
-        queries: menuCategoryList.map((category) => ({
-            queryKey: ["categoryDishes", merchantId, category.first],
-            queryFn: async () => {
-                const dishDetails = await getMenuClient.getDishsByCategory(merchantId, category.first);
-                return {
-                    categoryName: category.first,
-                    dishes: dishDetails,
-                };
-            },
-            enabled: menuId != undefined && !!category.second.length,
-            refetchOnWindowFocus: false,
-        })),
-    });
-
+    const menuCategoryList = useCategoryListQuery(menuId);
+    const { categoryData } = useCategoryQueries(menuCategoryList, merchantId);
+    const [selectedDish, setSelectedDish] = useState(null);
+    // set navbar items
     useEffect(() => {
-        categoryQueries.forEach((query) => {
-            if (query.isSuccess && query.data) {
-                // save dishes' data to allDishStore
-                const dishesToStore = query.data.dishes.reduce((acc, dish) => {
-                    acc[dish.id] = dish;
-                    return acc;
-                }, {});
-                setDishes(dishesToStore);
-            }
-        });
-    }, [categoryQueries, setDishes]);
-    // Transform the queries results into categoryData
-    const categoryData = categoryQueries
-        .map((query) => query.data)
-        .filter(Boolean); // Filter out undefined results
-    return merchant && merchantId ? (
+        if (menuCategoryList?.length) {
+            setNavbarItems(menuCategoryList.map((category) => category.first));
+        }
+    }, [menuCategoryList, setNavbarItems]);
+
+    // if merchant data is not fetched yet, show loading spinner
+    if (merchantId && !merchant) {
+        return (
+            <div className="flex justify-center items-center mt-4 fa-2x">
+                <FontAwesomeIcon icon={faSpinner} spinPulse />
+            </div>
+        );
+    }
+    return (
         <div>
             <MenuHeader merchantData={merchant} />
             <MenuNavbar
@@ -119,6 +92,8 @@ function Menu() {
             />
             {categoryData.length ? (
                 <MenuSection
+                    selectedDish={selectedDish}
+                    setSelectedDish={setSelectedDish}
                     sectionRefs={sectionRefs}
                     categoryData={categoryData}
                 />
@@ -127,12 +102,11 @@ function Menu() {
                     <FontAwesomeIcon icon={faSpinner} spinPulse />
                 </div>
             )}
+            {selectedDish == null && (
+                <ViewCartButton />
+            )}
         </div>
-    ) : (
-        <div className="flex justify-center items-center mt-4 fa-2x">
-            <FontAwesomeIcon icon={faSpinner} spinPulse />
-        </div>
-    );
+    )
 }
 
 export default Menu;

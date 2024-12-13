@@ -10,7 +10,6 @@ const getMenuClient = {
         return res;
     },
     getDishsByCategory: async (storeId, categoryName) => {
-        console.log("getDishsByDishIds", storeId);
         const response = await fetch(
             `${import.meta.env.VITE_BASE_URL}/api/v1/stores/${storeId}/menu/dishes?category=${categoryName}`,
             {
