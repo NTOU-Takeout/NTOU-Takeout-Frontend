@@ -7,7 +7,7 @@ const CartTotalSpend = ({ orderDetail }) => {
             {/* Store Info */}
             <div>
                 <h1 className="text-lg font-bold text-gray-900">
-                    {cartData.orderedDishes.length ? { merchantName } : ""}
+                    {cartData.orderedDishes.length ? merchantName : ""}
                 </h1>
                 <p className="text-sm text-gray-500">訂單詳細資訊</p>
             </div>
