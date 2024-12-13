@@ -4,13 +4,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { useCategoryQueries } from "../hooks/menu/useCategoryQueries";
 import { useCategoryListQuery } from "../hooks/menu/useCategoryListQuery";
+import { useSystemContext } from "../context/SystemContext";
 import MenuHeader from "../components/merchantPage/MenuHeader";
 import MenuNavbar from "../components/merchantPage/MenuNavbar";
 import MenuSection from "../components/merchantPage/MenuSection";
 import useMerchantStore from "../stores/merchantStore";
 import useNavStore from "../stores/merchantMenuNav";
 import getStoreClient from "../api/store/getStoreClient";
-
+import ViewCartButton from "../components/merchantPage/ViewCartButton";
 
 function Menu() {
     const { merchantId } = useParams();
@@ -66,16 +67,23 @@ function Menu() {
 
     const menuCategoryList = useCategoryListQuery(menuId);
     const { categoryData } = useCategoryQueries(menuCategoryList, merchantId);
+    const [selectedDish, setSelectedDish] = useState(null);
+    // set navbar items
     useEffect(() => {
         if (menuCategoryList?.length) {
             setNavbarItems(menuCategoryList.map((category) => category.first));
         }
     }, [menuCategoryList, setNavbarItems]);
 
-
-
-
-    return merchant && merchantId ? (
+    // if merchant data is not fetched yet, show loading spinner
+    if (merchantId && !merchant) {
+        return (
+            <div className="flex justify-center items-center mt-4 fa-2x">
+                <FontAwesomeIcon icon={faSpinner} spinPulse />
+            </div>
+        );
+    }
+    return (
         <div>
             <MenuHeader merchantData={merchant} />
             <MenuNavbar
@@ -84,6 +92,8 @@ function Menu() {
             />
             {categoryData.length ? (
                 <MenuSection
+                    selectedDish={selectedDish}
+                    setSelectedDish={setSelectedDish}
                     sectionRefs={sectionRefs}
                     categoryData={categoryData}
                 />
@@ -92,12 +102,11 @@ function Menu() {
                     <FontAwesomeIcon icon={faSpinner} spinPulse />
                 </div>
             )}
+            {selectedDish == null && (
+                <ViewCartButton />
+            )}
         </div>
-    ) : (
-        <div className="flex justify-center items-center mt-4 fa-2x">
-            <FontAwesomeIcon icon={faSpinner} spinPulse />
-        </div>
-    );
+    )
 }
 
 export default Menu;

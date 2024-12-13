@@ -3,8 +3,7 @@ import MenuItemCard from "./MenuItemCard";
 import MenuDishDetail from "./MenuDishDetail";
 import PropTypes from "prop-types";
 
-function MenuSection({ sectionRefs, categoryData }) {
-    const [selectedDish, setSelectedDish] = useState(null);
+function MenuSection({ sectionRefs, categoryData, selectedDish, setSelectedDish }) {
 
     const handleMenuItemClick = (item) => {
         // if the dish has no attributes, do not show the detail
@@ -15,7 +14,7 @@ function MenuSection({ sectionRefs, categoryData }) {
     };
 
     return (
-        <div className="font-notoTC -top-12 relative min-h-screen flex flex-col items-center justify-center container mx-auto p-4">
+        <div className="font-notoTC -top-12 relative min-h-screen flex flex-col items-center justify-center container mx-auto p-4 ">
             {categoryData.map((category, index) => (
                 <div
                     key={category?.categoryName || `section-${index}`}
