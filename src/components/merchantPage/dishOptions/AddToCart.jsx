@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useDishDetailStore from "../../../stores/dishDetailStore";
 import { useCartAddMutation } from "../../../hooks/cart/useCartAddMutation";
 import { useSystemContext } from "../../../context/SystemContext";
 import ConfirmClearCartModal from "./ConfirmClearCartModal";
+import { deleteCart } from "../../../api/cart/deleteCart";
 import PropTypes from "prop-types";
 const AddToCart = ({ dishId, onRequiredMissing, onClose }) => {
     const { cartData } = useSystemContext();
@@ -11,12 +12,22 @@ const AddToCart = ({ dishId, onRequiredMissing, onClose }) => {
     const dishes = useDishDetailStore((state) => state.dishes);
     const allDishAttributes = useDishDetailStore((state) => state.allDishAttributes);
     const { postCartAsync } = useCartAddMutation();
-
-    const handleConfirm = () => {
-        // 使用者確定清空購物車並加入此商品
-        // clearCartAndAddItem(dishId);
-        console.debug("Clear Cart and Add Item:", dishId);
+    const [isClearCart, setIsClearCart] = useState(false);
+    useEffect(() => {
+        if (isClearCart && cartData?.orderedDishes.length === 0) {
+            const dishDetail = dishes[dishId];
+            console.debug("Add to Cart:", dishDetail);
+            postCartAsync(dishDetail);
+            onClose();
+            setIsClearCart(false);
+        }
+    }, [isClearCart, cartData, dishId, dishes, onClose, postCartAsync]);
+    const handleConfirm = async () => {
+        console.debug("Clear Cart and Add Item");
+        setIsClearCart(true);
+        await deleteCart();
         setIsModalOpen(false);
+
     };
 
     const handleCancel = () => {
@@ -27,10 +38,6 @@ const AddToCart = ({ dishId, onRequiredMissing, onClose }) => {
     const handleAddToCart = async () => {
         const dishDetail = dishes[dishId];
         if (!dishDetail) { return; }
-        if (cartData?.storeId !== dishDetail.storeId) {
-            setIsModalOpen(true);
-            return;
-        }
 
         const choosenAttributes = dishDetail.chosenAttributes || [];
         const requiredAttributes = allDishAttributes[dishId] || [];
@@ -47,9 +54,13 @@ const AddToCart = ({ dishId, onRequiredMissing, onClose }) => {
             }
         }
 
+        if (cartData?.storeId && cartData?.storeId !== dishDetail.storeId) {
+            setIsModalOpen(true);
+            return;
+        }
         console.debug("Add to Cart:", dishDetail);
-        onClose();
         postCartAsync(dishDetail);
+        onClose();
     };
 
     return (

@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useCartUpdateMutation } from "../../hooks/cart/useCartUpdateMutation";
 const CartOrderSection = ({ orderDetail }) => {
-    const { totalSpend, estimateTime } = orderDetail;
+    const { totalSpend, estimateTime, cartData } = orderDetail;
     const { ispatchCartError } = useCartUpdateMutation();
     const sendButtonColor = ispatchCartError ? "bg-gray-300" : "bg-white";
     return (
@@ -10,12 +10,12 @@ const CartOrderSection = ({ orderDetail }) => {
                 <span>總金額</span>
                 <span>$ {totalSpend}</span>
             </div>
-            <div className="flex justify-between mb-3 px-2 text-sm">
+            {cartData.orderedDishes.length > 0 && <div className="flex justify-between mb-3 px-2 text-sm">
                 <span>預估完成時間</span>
                 <span>
                     {estimateTime} ~ {estimateTime + 20} 分鐘
                 </span>
-            </div>
+            </div>}
             <button className={`w-full ${sendButtonColor} text-orange-500 py-2 px-2 rounded-full font-semibold `} disabled={ispatchCartError}>
                 送出訂單
             </button>
@@ -25,6 +25,7 @@ const CartOrderSection = ({ orderDetail }) => {
 
 CartOrderSection.propTypes = {
     orderDetail: PropTypes.shape({
+        cartData: PropTypes.object.isRequired,
         totalSpend: PropTypes.number.isRequired,
         estimateTime: PropTypes.number.isRequired,
     }).isRequired,

@@ -33,8 +33,12 @@ const Cart = () => {
             return acc;
         }, {});
     }, [categoryData]);
-
-    if (cartData == undefined || isMerchantLoading || !isQueriesSuccess || Object.keys(dishesMap).length === 0) {
+    console.debug("cartData:", cartData);
+    console.debug("merchantData:", merchantData);
+    console.debug("isMerchantLoading:", isMerchantLoading);
+    console.debug("isQueriesSuccess:", isQueriesSuccess);
+    console.debug("dishesMap:", dishesMap);
+    if (cartData == undefined || isMerchantLoading || !isQueriesSuccess) {
         return (
             <div className="flex justify-center items-center mt-28 fa-2x">
                 <CartPageHeader />
@@ -74,6 +78,7 @@ const Cart = () => {
             </div>
             <div className="flex-none">
                 <CartOrderSection orderDetail={{
+                    cartData: cartData,
                     totalSpend: totalSpend,
                     estimateTime: (predictedTime - (totalQuantity > 2 ? 30 : 0)),
                 }} />

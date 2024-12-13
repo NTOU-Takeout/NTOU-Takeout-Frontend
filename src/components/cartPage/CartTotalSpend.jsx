@@ -22,7 +22,7 @@ const CartTotalSpend = ({ orderDetail }) => {
 
 CartTotalSpend.propTypes = {
     orderDetail: PropTypes.shape({
-        merchantName: PropTypes.string.isRequired,
+        merchantName: PropTypes.string,
         totalSpend: PropTypes.number.isRequired,
     }).isRequired,
 };
