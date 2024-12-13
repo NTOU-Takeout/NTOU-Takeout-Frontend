@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import useDishDetailStore from "../../../stores/dishDetailStore";
+import { useCartDeleteMutation } from "../../../hooks/cart/useCartDeleteMutation";
 import { useCartAddMutation } from "../../../hooks/cart/useCartAddMutation";
 import { useSystemContext } from "../../../context/SystemContext";
 import ConfirmClearCartModal from "./ConfirmClearCartModal";
-import { deleteCart } from "../../../api/cart/deleteCart";
 import PropTypes from "prop-types";
 const AddToCart = ({ dishId, onRequiredMissing, onClose }) => {
     const { cartData } = useSystemContext();
@@ -11,33 +11,16 @@ const AddToCart = ({ dishId, onRequiredMissing, onClose }) => {
 
     const dishes = useDishDetailStore((state) => state.dishes);
     const allDishAttributes = useDishDetailStore((state) => state.allDishAttributes);
+    const { deleteCartAsync } = useCartDeleteMutation();
     const { postCartAsync } = useCartAddMutation();
-    const [isClearCart, setIsClearCart] = useState(false);
-    useEffect(() => {
-        if (isClearCart && cartData?.orderedDishes.length === 0) {
-            const dishDetail = dishes[dishId];
-            console.debug("Add to Cart:", dishDetail);
-            /*
-            backend issue here:
-            can't not delete cart currently , because delte will cause get request, then DB cart will create twice 
-
-             */
-            // postCartAsync(dishDetail);
-
-            onClose();
-            setIsClearCart(false);
-        }
-    }, [isClearCart, cartData, dishId, dishes, onClose, postCartAsync]);
-    const handleConfirm = async () => {
-        console.debug("Clear Cart and Add Item");
-        setIsClearCart(true);
-        await deleteCart();
+    const handleConfirm = () => {
         setIsModalOpen(false);
-
+        const dishDetail = dishes[dishId];
+        deleteCartAsync(dishDetail)
+        onClose();
     };
 
     const handleCancel = () => {
-        console.debug("Cancel Clear Cart");
         setIsModalOpen(false);
     };
 
@@ -53,7 +36,6 @@ const AddToCart = ({ dishId, onRequiredMissing, onClose }) => {
             if (attr.isRequired === true) {
                 const matched = choosenAttributes.filter(ca => ca.attributeName === attr.name);
                 if (matched.length === 0) {
-                    console.debug("Missing Required Attribute:", attr.name);
                     onRequiredMissing(attr.name);
                     return;
                 }
@@ -64,7 +46,6 @@ const AddToCart = ({ dishId, onRequiredMissing, onClose }) => {
             setIsModalOpen(true);
             return;
         }
-        console.debug("Add to Cart:", dishDetail);
         postCartAsync(dishDetail);
         onClose();
     };
