@@ -62,6 +62,13 @@ const DishDetail = ({ dishData, onClose }) => {
         }
     };
 
+    // handle scroll to the next OptionCard for better user experience
+    const handleSelectNext = (currentIndex) => {
+        const nextIndex = currentIndex + 1;
+        if (optionCardRefs.current[nextIndex]) {
+            optionCardRefs.current[nextIndex].scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    };
     return (
         <div
             className={`font-notoTC fixed z-10 top-0 left-0 right-0`}
@@ -104,6 +111,7 @@ const DishDetail = ({ dishData, onClose }) => {
                                     isRequired={detail.isRequired}
                                     isShowError={isShowError}
                                     setIsShowError={setIsShowError}
+                                    onSelectNext={() => handleSelectNext(index)}
                                 />
                             </div>
                         ))}

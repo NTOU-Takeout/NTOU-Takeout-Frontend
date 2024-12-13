@@ -11,6 +11,7 @@ const OptionCard = ({
     type,
     dishId,
     isRequired,
+    onSelectNext,
 }) => {
 
     const addChosenAttribute = useDishDetailStore((state) => state.addChosenAttribute);
@@ -44,6 +45,7 @@ const OptionCard = ({
                 chosenOption: option.name,
                 extraCost: option.extraCost || 0,
             });
+            onSelectNext();
         } else {
             if (updatedOptions.includes(option.name)) {
                 updatedOptions = updatedOptions.filter(o => o !== option.name);
@@ -120,6 +122,7 @@ OptionCard.propTypes = {
     isRequired: PropTypes.bool,
     isShowError: PropTypes.bool,
     setIsShowError: PropTypes.func,
+    onSelectNext: PropTypes.func,
 };
 
 export default OptionCard;
