@@ -1,69 +1,61 @@
-import { useParams } from 'react-router-dom';
-import React, { useRef, useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { useQuery } from '@tanstack/react-query';
-import MenuHeader from '../components/merchantPage/MenuHeader';
-import MenuNavbar from '../components/merchantPage/MenuNavbar';
-import MenuSectionPage from '../components/merchantPage/MenuSectionPage';
-import useMerchantStore from '../stores/merchantStore';
-import useNavStore from '../stores/merchantMenuNav';  // 引入 nav store
-import getStoreClient from '../api/store/getStoreClient';
-import getMenuClient from '../api/menu/getMenuClient';
+import { useParams } from "react-router-dom";
+import { useRef, useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { useCategoryQueries } from "../hooks/menu/useCategoryQueries";
+import { useCategoryListQuery } from "../hooks/menu/useCategoryListQuery";
+import MenuHeader from "../components/merchantPage/MenuHeader";
+import MenuNavbar from "../components/merchantPage/MenuNavbar";
+import MenuSection from "../components/merchantPage/MenuSection";
+import useMerchantStore from "../stores/merchantStore";
+import useNavStore from "../stores/merchantMenuNav";
+import getStoreClient from "../api/store/getStoreClient";
+import ViewCartButton from "../components/merchantPage/ViewCartButton";
 
 function Menu() {
     const { merchantId } = useParams();
     const sectionRefs = useRef([]);
     const [isNavbarFixed, setIsNavbarFixed] = useState(false);
-    const [isAnimating, setIsAnimating] = useState(true);
-    
-    // 使用 nav store
-    const setNavbarItems = useNavStore((state) => state.setNavbarItems); 
+    const setNavbarItems = useNavStore((state) => state.setNavbarItems);
 
-    // 處理滾動到對應的部分
+    // handle scroll to section
     const handleScrollToSection = (index) => {
-        sectionRefs.current[index]?.scrollIntoView({ behavior: 'smooth' });
+        sectionRefs.current[index]?.scrollIntoView({
+            behavior: "smooth",
+            inline: "start",
+        });
     };
 
-    // 監控滾動事件，更新 isNavbarFixed 狀態
+    // listen for dertermine if navbar is fixed
     useEffect(() => {
         const handleScroll = () => {
             const scrollPosition = window.scrollY;
-            setIsNavbarFixed(scrollPosition > 200);
+            setIsNavbarFixed(scrollPosition > 260);
         };
-        window.addEventListener('scroll', handleScroll);
-
+        window.addEventListener("scroll", handleScroll);
         return () => {
-            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener("scroll", handleScroll);
         };
-    }, []);
-
-    // 取消動畫的延遲
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setIsAnimating(false);
-        }, 100);
-
-        return () => clearTimeout(timer);
     }, []);
 
     const getMerchantById = useMerchantStore((state) => state.getMerchantById);
     const [menuId, setMenuId] = useState(null);
     const [merchant, setMerchant] = useState(null);
-    const [categoryData, setCategoryData] = useState([]);
 
-    // 獲取商家資料
+    // get merchant data
     useEffect(() => {
         const merchantData = getMerchantById(merchantId);
         if (merchantData) {
             setMerchant(merchantData);
             setMenuId(merchantData.menuId);
-        } else {
+        } else { // if merchant data is not in store, fetch it
             const fetchMerchantData = async () => {
                 try {
-                    const [data] = await getStoreClient.getMerchantsByIdList([merchantId]);
-                    setMerchant(data);
-                    setMenuId(data?.menuId || null);
+                    const res = await getStoreClient.getMerchantsByIdList([
+                        merchantId,
+                    ]);
+                    setMerchant(res.data[0]);
+                    setMenuId(res.data[0]?.menuId || null);
                 } catch (error) {
                     console.error("Failed to fetch merchant data:", error);
                 }
@@ -72,49 +64,18 @@ function Menu() {
         }
     }, [merchantId, getMerchantById]);
 
-    // Fetch menu category list and dish details
-    const { data: menuCategoryList, isSuccess: isMenuCategoryListSuccess } = useQuery({
-        queryKey: ['menuCategoryList'+menuId], // 與 menuId 關聯
-        queryFn: async () => {
-            if (!menuId) return [];
-            const data = await getMenuClient.getMenuByMenuId(menuId);
-            return data.categories;
-        },
-        enabled: !!menuId, // 當 menuId 存在時才啟動查詢
-    });
-
-    // 獲取菜品詳細資料
-    const { data } = useQuery({
-        queryKey: ['menuCategoryData', menuId, menuCategoryList], // 關聯 menuId 和 menuCategoryList
-        queryFn: async () => {
-            if (!menuCategoryList || menuCategoryList.length === 0) return [];
-            const dishIds = menuCategoryList.flatMap((category) => category.second);
-            try {
-                const dishDetails = await getMenuClient.getDishsByDishIds(dishIds);
-                const categorizedData = menuCategoryList.map((category) => ({
-                    categoryName: category.first,
-                    dishes: category.second.map((id) => dishDetails.find((dish) => dish.id === id)),
-                }));
-
-                setCategoryData(categorizedData); 
-
-                // 更新 navbarItems 到 navstore
-                setNavbarItems(menuCategoryList.map(category => category.first)); 
-
-                return dishIds;
-            } catch (error) {
-                console.error("Failed to fetch dish details:", error);
-            }
-        },
-        enabled: isMenuCategoryListSuccess && menuCategoryList?.length > 0, // 在成功獲取 menuCategoryList 且 menuId 有效時啟用
-    });
-
-    // Debug 確認 categoryData
+    const menuCategoryList = useCategoryListQuery(menuId);
+    const { categoryData } = useCategoryQueries(menuCategoryList, merchantId);
+    const [selectedDish, setSelectedDish] = useState(null);
+    // set navbar items
     useEffect(() => {
-        console.log("categoryData:", categoryData);
-    }, [categoryData]);
+        if (menuCategoryList?.length) {
+            setNavbarItems(menuCategoryList.map((category) => category.first));
+        }
+    }, [menuCategoryList, setNavbarItems]);
 
-    if (!merchant) {
+    // if merchant data is not fetched yet, show loading spinner
+    if (merchantId && !merchant) {
         return (
             <div className="flex justify-center items-center mt-4 fa-2x">
                 <FontAwesomeIcon icon={faSpinner} spinPulse />
@@ -123,19 +84,28 @@ function Menu() {
     }
     return (
         <div>
-            <MenuHeader 
-                title={merchant.name} // 使用商家名稱
-                distance={merchant.distance || 0} // 使用商家距離
-                averageCost={merchant.averageSpend || 0} // 使用商家平均花費
-                rating={merchant.rating || 0} // 使用商家評級
-                reviews={merchant.reviewIdList || 0} // 使用商家評論數
-                bannerLink={merchant.picture} // 使用商家橫幅圖片鏈接
-                merchantId={merchantId} // 傳遞 merchantId
+            <MenuHeader merchantData={merchant} />
+            <MenuNavbar
+                onNavClick={handleScrollToSection}
+                isNavbarFixed={isNavbarFixed}
             />
-            <MenuNavbar onNavClick={handleScrollToSection} isNavbarFixed={isNavbarFixed} />
-            <MenuSectionPage sectionRefs={sectionRefs} categoryData={categoryData} /> {/* 傳遞 categoryData */}
+            {categoryData.length ? (
+                <MenuSection
+                    selectedDish={selectedDish}
+                    setSelectedDish={setSelectedDish}
+                    sectionRefs={sectionRefs}
+                    categoryData={categoryData}
+                />
+            ) : (
+                <div className="flex justify-center items-center mt-4 fa-2x">
+                    <FontAwesomeIcon icon={faSpinner} spinPulse />
+                </div>
+            )}
+            {selectedDish == null && (
+                <ViewCartButton />
+            )}
         </div>
-    );
+    )
 }
 
 export default Menu;
