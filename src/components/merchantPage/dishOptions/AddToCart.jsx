@@ -17,7 +17,13 @@ const AddToCart = ({ dishId, onRequiredMissing, onClose }) => {
         if (isClearCart && cartData?.orderedDishes.length === 0) {
             const dishDetail = dishes[dishId];
             console.debug("Add to Cart:", dishDetail);
-            postCartAsync(dishDetail);
+            /*
+            backend issue here:
+            can't not delete cart currently , because delte will cause get request, then DB cart will create twice 
+
+             */
+            // postCartAsync(dishDetail);
+
             onClose();
             setIsClearCart(false);
         }
