@@ -7,9 +7,11 @@ import { useCategoryListQuery } from "../hooks/menu/useCategoryListQuery";
 import useMerchantStore from "../stores/merchantStore";
 import useNavStore from "../stores/merchantMenuNav";
 import getStoreClient from "../api/store/getStoreClient";
-import NavbarSkeleton from "../skeleton/menu/NavbarSkeleton";
-import MenuHeaderSkeleton from "../skeleton/menu/MenuHeaderSkeleton";
-import ViewCartButtonSkeleton from "../skeleton/menu/ViewCartButtonSkeleton";
+
+const NavbarSkeleton = lazy(() => import("../skeleton/menu/NavbarSkeleton"));
+const MenuHeaderSkeleton = lazy(() => import("../skeleton/menu/MenuHeaderSkeleton"));
+const ViewCartButtonSkeleton = lazy(() => import("../skeleton/menu/ViewCartButtonSkeleton"));
+const MenuSectionSkeleton = lazy(() => import("../skeleton/menu/MenuSectionSkeleton"));
 const MenuHeader = lazy(() => import("../components/merchantPage/MenuHeader"));
 const MenuNavbar = lazy(() => import("../components/merchantPage/MenuNavbar"));
 const MenuSection = lazy(() => import("../components/merchantPage/MenuSection"));
@@ -96,18 +98,15 @@ function Menu() {
                     isNavbarFixed={isNavbarFixed}
                 />
             </Suspense>
-            {
-                <Suspense fallback={<div className="flex justify-center items-center mt-4 fa-2x">
-                    <FontAwesomeIcon icon={faSpinner} spinPulse />
-                </div>}>
-                    <MenuSection
-                        selectedDish={selectedDish}
-                        setSelectedDish={setSelectedDish}
-                        sectionRefs={sectionRefs}
-                        categoryData={categoryData}
-                    />
-                </Suspense>
-            }
+
+            <Suspense fallback={<MenuSectionSkeleton />}>
+                <MenuSection
+                    selectedDish={selectedDish}
+                    setSelectedDish={setSelectedDish}
+                    sectionRefs={sectionRefs}
+                    categoryData={categoryData}
+                />
+            </Suspense>
             {selectedDish == null && (
                 <Suspense fallback={<ViewCartButtonSkeleton />}>
                     <ViewCartButton />
