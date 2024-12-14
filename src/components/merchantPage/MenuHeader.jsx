@@ -9,6 +9,8 @@ import {
     faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import MenuInfo from "./MenuInfo";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 const MenuHeader = ({ merchantData }) => {
     const {
@@ -25,10 +27,15 @@ const MenuHeader = ({ merchantData }) => {
 
     return (
         <header className="relative top-0 left-0 w-full menu-header">
-            <div
-                className="banner bg-cover bg-center h-64 relative before:content-[''] before:absolute before:w-full before:h-full before:backdrop-blur-sm"
-                style={{ backgroundImage: `url(${picture})` }}
-            ></div>
+            <div className="relative h-64">
+                <LazyLoadImage
+                    src={picture}
+                    alt={name}
+                    className="absolute inset-0 w-full h-full object-cover"
+                    effect="blur"
+                    wrapperClassName="absolute inset-0"
+                />
+            </div>
             <Link to={`/`}>
                 <div className="pt-1 pb-1 pl-2 pr-2 return-btn absolute top-10 left-4 transform -translate-y-1/2 bg-white/60 rounded-full">
                     <FontAwesomeIcon
