@@ -1,6 +1,8 @@
 import MenuItemButton from "./MenuItemButton";
 import PropTypes from "prop-types";
 import Cookies from "js-cookie";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 const MenuItemCard = ({ food, onClick }) => {
     const { id, name, picture, price, description } = food;
@@ -17,13 +19,14 @@ const MenuItemCard = ({ food, onClick }) => {
         >
 
             <div className=" h-[17rem] flex max-w-xl bg-white text-white">
-                {/* Image */}
-                <div className="w-64 overflow-hidden aspect-[5/3]">
-                    {" "}
-                    <img
+                {/* Lazy loaded Image */}
+                <div className="w-64 overflow-hidden aspect-auto">
+                    <LazyLoadImage
                         src={picture}
-                        alt="Dish Image"
+                        alt={name}
                         className="object-cover w-full h-full"
+                        effect="blur"
+                        wrapperClassName="object-cover w-full h-full"
                     />
                 </div>
 

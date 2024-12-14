@@ -1,16 +1,19 @@
 import { useParams } from "react-router-dom";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, lazy, Suspense } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { useCategoryQueries } from "../hooks/menu/useCategoryQueries";
 import { useCategoryListQuery } from "../hooks/menu/useCategoryListQuery";
-import MenuHeader from "../components/merchantPage/MenuHeader";
-import MenuNavbar from "../components/merchantPage/MenuNavbar";
-import MenuSection from "../components/merchantPage/MenuSection";
 import useMerchantStore from "../stores/merchantStore";
 import useNavStore from "../stores/merchantMenuNav";
 import getStoreClient from "../api/store/getStoreClient";
-import ViewCartButton from "../components/merchantPage/ViewCartButton";
+import NavbarSkeleton from "../skeleton/menu/NavbarSkeleton";
+import MenuHeaderSkeleton from "../skeleton/menu/MenuHeaderSkeleton";
+import ViewCartButtonSkeleton from "../skeleton/menu/ViewCartButtonSkeleton";
+const MenuHeader = lazy(() => import("../components/merchantPage/MenuHeader"));
+const MenuNavbar = lazy(() => import("../components/merchantPage/MenuNavbar"));
+const MenuSection = lazy(() => import("../components/merchantPage/MenuSection"));
+const ViewCartButton = lazy(() => import("../components/merchantPage/ViewCartButton"));
 
 function Menu() {
     const { merchantId } = useParams();
@@ -84,25 +87,31 @@ function Menu() {
     }
     return (
         <div>
-            <MenuHeader merchantData={merchant} />
-            <MenuNavbar
-                onNavClick={handleScrollToSection}
-                isNavbarFixed={isNavbarFixed}
-            />
-            {categoryData.length ? (
-                <MenuSection
-                    selectedDish={selectedDish}
-                    setSelectedDish={setSelectedDish}
-                    sectionRefs={sectionRefs}
-                    categoryData={categoryData}
+            <Suspense fallback={<MenuHeaderSkeleton />}>
+                <MenuHeader merchantData={merchant} />
+            </Suspense>
+            <Suspense fallback={<NavbarSkeleton isNavbarFixed={false} />}>
+                <MenuNavbar
+                    onNavClick={handleScrollToSection}
+                    isNavbarFixed={isNavbarFixed}
                 />
-            ) : (
-                <div className="flex justify-center items-center mt-4 fa-2x">
+            </Suspense>
+            {
+                <Suspense fallback={<div className="flex justify-center items-center mt-4 fa-2x">
                     <FontAwesomeIcon icon={faSpinner} spinPulse />
-                </div>
-            )}
+                </div>}>
+                    <MenuSection
+                        selectedDish={selectedDish}
+                        setSelectedDish={setSelectedDish}
+                        sectionRefs={sectionRefs}
+                        categoryData={categoryData}
+                    />
+                </Suspense>
+            }
             {selectedDish == null && (
-                <ViewCartButton />
+                <Suspense fallback={<ViewCartButtonSkeleton />}>
+                    <ViewCartButton />
+                </Suspense>
             )}
         </div>
     )
