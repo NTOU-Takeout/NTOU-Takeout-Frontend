@@ -43,13 +43,13 @@ const MenuItemCard = ({ food, onClick }) => {
 
             <div className=" h-[17rem] flex max-w-xl bg-white text-white">
                 {/* Lazy loaded Image */}
-                <div className="max-w-xl overflow-hidden">
+                <div className="w-64 overflow-hidden aspect-auto">
                     <LazyLoadImage
                         src={picture}
                         alt={name}
                         className="object-cover w-full h-full"
                         effect="blur"
-                        wrapperClassName="w-full h-full"
+                        wrapperClassName="object-cover w-full h-full"
                     />
                 </div>
 
