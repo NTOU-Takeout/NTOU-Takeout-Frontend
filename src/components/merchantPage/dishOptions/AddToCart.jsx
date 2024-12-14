@@ -1,10 +1,11 @@
-import { useState } from "react";
-import useDishDetailStore from "../../../stores/dishDetailStore";
+import { useState, lazy } from "react";
 import { useCartDeleteMutation } from "../../../hooks/cart/useCartDeleteMutation";
 import { useCartAddMutation } from "../../../hooks/cart/useCartAddMutation";
 import { useSystemContext } from "../../../context/SystemContext";
-import ConfirmClearCartModal from "./ConfirmClearCartModal";
 import PropTypes from "prop-types";
+import useDishDetailStore from "../../../stores/dishDetailStore";
+const ConfirmClearCartModal = lazy(() => import("./ConfirmClearCartModal"));
+
 const AddToCart = ({ dishId, onRequiredMissing, onClose }) => {
     const { cartData } = useSystemContext();
     const [isModalOpen, setIsModalOpen] = useState(false);
