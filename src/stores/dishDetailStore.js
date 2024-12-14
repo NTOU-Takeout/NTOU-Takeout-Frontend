@@ -105,6 +105,29 @@ const useDishDetailStore = create((set) => ({
             },
         };
     }),
+
+    // Sort chosen attributes by attributeName
+    sortChosenAttributes: (dishId) => set((state) => {
+        if (!state.dishes[dishId]) return state;
+        const currentAttributes = state.dishes[dishId].chosenAttributes || [];
+        return {
+            dishes: {
+                ...state.dishes,
+                [dishId]: {
+                    ...state.dishes[dishId],
+                    chosenAttributes: currentAttributes.sort((a, b) => {
+                        if (a.attributeName !== b.attributeName) {
+                            return a.attributeName.localeCompare(b.attributeName);
+                        }
+                        if (a.chosenOption !== b.chosenOption) {
+                            return a.chosenOption.localeCompare(b.chosenOption);
+                        }
+                        return a.extraCost - b.extraCost;
+                    }),
+                },
+            },
+        };
+    }),
 }));
 
 export default useDishDetailStore;

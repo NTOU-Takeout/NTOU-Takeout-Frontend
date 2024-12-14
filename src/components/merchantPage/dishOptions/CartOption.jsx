@@ -1,7 +1,7 @@
+import { lazy } from "react";
 import PropTypes from "prop-types";
-import AddToCart from "./AddToCart";
-import QuantitySelector from "./QuantitySelector";
-
+const AddToCart = lazy(() => import("./AddToCart"));
+const QuantitySelector = lazy(() => import("./QuantitySelector"));
 const CartOption = ({ dishId, onRequiredMissing, onClose }) => {
 
     return (
