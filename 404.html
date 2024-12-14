@@ -3,9 +3,13 @@
 
 <head>
     <script>
-        console.log("here is 404");
         var path = window.location.pathname;
-        var redirectUrl = '/' + '?redirect=' + encodeURIComponent(path);
+
+        var basename = "/Order-Now-Frontend";
+        if (path.startsWith(basename)) {
+            path = path.slice(basename.length);
+        }
+        var redirectUrl = basename + "/?redirect=" + encodeURIComponent(path);
         window.location.replace(redirectUrl);
     </script>
 </head>
