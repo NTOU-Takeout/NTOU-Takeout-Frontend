@@ -35,11 +35,19 @@ export const useCartUpdateMutation = () => {
             const previousCart = queryClient.getQueryData(["cart"]);
 
             // optimistic update
-            // copy previous cart and update quantity
-            const newCart = { ...previousCart };
-            if (newCart?.dishes) {
-                newCart.dishes = newCart.dishes.map((dish) =>
-                    dish.dishId === orderedDishId
+            const newCart = previousCart ? { ...previousCart } : { orderedDishes: [] };
+            if (!newCart.orderedDishes) {
+                newCart.orderedDishes = [];
+            }
+
+            //if new quantity is 0, remove the dish from cart
+            if (newQuantity === 0) {
+                newCart.orderedDishes = newCart.orderedDishes.filter(
+                    (dish) => dish.id !== orderedDishId
+                );
+            } else {// update quantity
+                newCart.orderedDishes = newCart.orderedDishes.map((dish) =>
+                    dish.id === orderedDishId
                         ? { ...dish, quantity: newQuantity }
                         : dish
                 );
