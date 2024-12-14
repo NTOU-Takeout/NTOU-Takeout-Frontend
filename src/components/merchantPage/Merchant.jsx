@@ -2,6 +2,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar as solidStar } from "@fortawesome/free-solid-svg-icons/faStar";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 const Merchant = (props) => {
     const { id, name, averageSpend, rating, picture, reviews } = props;
 
@@ -14,10 +16,11 @@ const Merchant = (props) => {
                         border-gray-300 rounded-2xl overflow-hidden"
             >
                 <div className="object-cover w-full h-full">
-                    <img
+                    <LazyLoadImage
                         src={picture}
                         alt="Store Image"
                         className="relative w-full h-[65%] object-cover"
+                        wrapperClassName="object-cover w-full h-full"
                     />
                 </div>
 
