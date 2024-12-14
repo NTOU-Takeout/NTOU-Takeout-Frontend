@@ -4,14 +4,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { useCategoryQueries } from "../hooks/menu/useCategoryQueries";
 import { useCategoryListQuery } from "../hooks/menu/useCategoryListQuery";
-import MenuHeader from "../components/merchantPage/MenuHeader";
-import NavbarSkeleton from "../skeleton/menu/NavbarSkeleton";
-const MenuNavbar = lazy(() => import("../components/merchantPage/MenuNavbar"));
-const MenuSection = lazy(() => import("../components/merchantPage/MenuSection"));
 import useMerchantStore from "../stores/merchantStore";
 import useNavStore from "../stores/merchantMenuNav";
 import getStoreClient from "../api/store/getStoreClient";
-import ViewCartButton from "../components/merchantPage/ViewCartButton";
+import NavbarSkeleton from "../skeleton/menu/NavbarSkeleton";
+import MenuHeaderSkeleton from "../skeleton/menu/MenuHeaderSkeleton";
+import ViewCartButtonSkeleton from "../skeleton/menu/ViewCartButtonSkeleton";
+const MenuHeader = lazy(() => import("../components/merchantPage/MenuHeader"));
+const MenuNavbar = lazy(() => import("../components/merchantPage/MenuNavbar"));
+const MenuSection = lazy(() => import("../components/merchantPage/MenuSection"));
+const ViewCartButton = lazy(() => import("../components/merchantPage/ViewCartButton"));
 
 function Menu() {
     const { merchantId } = useParams();
@@ -85,7 +87,9 @@ function Menu() {
     }
     return (
         <div>
-            <MenuHeader merchantData={merchant} />
+            <Suspense fallback={<MenuHeaderSkeleton />}>
+                <MenuHeader merchantData={merchant} />
+            </Suspense>
             <Suspense fallback={<NavbarSkeleton isNavbarFixed={false} />}>
                 <MenuNavbar
                     onNavClick={handleScrollToSection}
@@ -105,7 +109,9 @@ function Menu() {
                 </Suspense>
             }
             {selectedDish == null && (
-                <ViewCartButton />
+                <Suspense fallback={<ViewCartButtonSkeleton />}>
+                    <ViewCartButton />
+                </Suspense>
             )}
         </div>
     )
