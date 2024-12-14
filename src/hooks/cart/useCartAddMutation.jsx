@@ -27,23 +27,49 @@ export const useCartAddMutation = () => {
 
         },
         // optimistic update
-        onMutate: async ({ orderedDishId, newQuantity }) => {
+        onMutate: async (payload) => {
+
             await queryClient.cancelQueries(["cart"]);
             const previousCart = queryClient.getQueryData(["cart"]);
 
-            // optimistic update
-            // copy previous cart and update quantity
-            const newCart = { ...previousCart };
-            if (newCart?.dishes) {
-                newCart.dishes = newCart.dishes.map((dish) =>
-                    dish.dishId === orderedDishId
-                        ? { ...dish, quantity: newQuantity }
-                        : dish
-                );
+            const newCart = previousCart ? { ...previousCart } : { orderedDishes: [] };
+            if (!newCart.orderedDishes) {
+                newCart.orderedDishes = [];
+            }
+
+            // find existing dish in cart
+            const existingDishIndex = newCart.orderedDishes.findIndex(
+                (dish) => dish.dishId === payload.dishId && dish.chosenAttributes === payload.chosenAttributes
+            );
+
+            if (existingDishIndex > -1) {
+                // if exist, update quantity
+                const existingDish = newCart.orderedDishes[existingDishIndex];
+                newCart.orderedDishes = [
+                    ...newCart.orderedDishes.slice(0, existingDishIndex),
+                    {
+                        ...existingDish,
+                        quantity: existingDish.quantity + payload.quantity,
+                        note: payload.note || existingDish.note,
+
+                    },
+                    ...newCart.orderedDishes.slice(existingDishIndex + 1),
+                ];
+            } else {
+                //if not exist, add new dish
+                newCart.orderedDishes.push({
+                    id: crypto.randomUUID(), // temporary id
+                    dishId: payload.dishId,
+                    dishName: payload.dishName,
+                    price: payload.price,
+                    quantity: payload.quantity,
+                    note: payload.note || "",
+                    chosenAttributes: payload.chosenAttributes || [],
+                    storeId: payload.storeId,
+                });
             }
 
             queryClient.setQueryData(["cart"], newCart);
-
             // return previous cart for rollback
             return { previousCart };
         },
