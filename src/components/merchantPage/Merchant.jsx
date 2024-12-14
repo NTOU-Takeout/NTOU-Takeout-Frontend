@@ -1,19 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBookmark as hollowFaBookmark } from "@fortawesome/free-regular-svg-icons/faBookmark";
-import { faBookmark as solidFaBookmark } from "@fortawesome/free-solid-svg-icons/faBookmark";
 import { faStar as solidStar } from "@fortawesome/free-solid-svg-icons/faStar";
-import useBookmarkStore from "../../stores/bookmarkStore";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 const Merchant = (props) => {
-    const { markedMerchants, toggleBookmark } = useBookmarkStore();
     const { id, name, averageSpend, rating, picture, reviews } = props;
-    const isMarked = markedMerchants[id] || false;
-
-    const handleBookmarkClick = () => {
-        toggleBookmark(id);
-    };
-
 
     const randomDistance = Math.floor(Math.random() * 30) + 1;
 
@@ -24,16 +14,6 @@ const Merchant = (props) => {
                         border-gray-300 rounded-2xl overflow-hidden"
             >
                 <div className="object-cover w-full h-full">
-                    <FontAwesomeIcon
-                        className="absolute right-[5%] top-[13px] z-20 p-3 fa-lg"
-                        icon={isMarked ? solidFaBookmark : hollowFaBookmark}
-                        style={{ color: isMarked ? "#8E8686" : "#8E8686" }}
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            e.preventDefault();
-                            handleBookmarkClick();
-                        }}
-                    />
                     <img
                         src={picture}
                         alt="Store Image"
