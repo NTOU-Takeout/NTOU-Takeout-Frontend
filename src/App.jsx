@@ -1,7 +1,6 @@
 import { StrictMode } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { SystemContextProvider } from "./context/SystemContext";
 import Home from "./pages/Home";
 import Menu from "./pages/Menu";
@@ -11,6 +10,7 @@ import NotFound from "./pages/NotFound";
 import LoginRegister from "./pages/LoginRegister";
 import ForgetPassword from "./pages/ForgetPassword";
 import Register from "./pages/Register";
+import OrderManagement from "./pages/OrderManagement";
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
     {
@@ -47,6 +47,11 @@ const router = createBrowserRouter([
         path: "/Register",
         element: <Register />,
         errorElement: <NotFound />,
+    },
+    {
+        path: "/OrderManagement",
+        element: <OrderManagement />,
+        // errorElement: <NotFound />,
     }
 ]);
 
