@@ -1,7 +1,7 @@
-import CartItemCardSkeleton from "../../skeleton/menu/CartItemCardSkeleton";
 import { lazy, Suspense } from "react";
-import MenuDishDetail from "./MenuDishDetail";
 import PropTypes from "prop-types";
+const CartItemCardSkeleton = lazy(() => import("../../skeleton/menu/CartItemCardSkeleton"));
+const MenuDishDetail = lazy(() => import("./MenuDishDetail"));
 const MenuItemCard = lazy(() => import("./MenuItemCard"));
 function MenuSection({ sectionRefs, categoryData, selectedDish, setSelectedDish }) {
 

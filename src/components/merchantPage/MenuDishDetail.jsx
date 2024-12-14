@@ -1,12 +1,16 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, lazy, Suspense } from "react";
 import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 import useDishDetailStore from "../../stores/dishDetailStore";
-import CartOption from "./dishOptions/CartOption";
-import OptionCard from "./dishOptions/OptionCard";
 import PropTypes from "prop-types";
 import Cookies from "js-cookie";
+
+const OptionCardSkeleton = lazy(() => import("../../skeleton/menu/dishDetail/OptionCardSkeleton"));
+const OptionCard = lazy(() => import("./dishOptions/OptionCard"));
+const CartOption = lazy(() => import("./dishOptions/CartOption"));
 const DishDetail = ({ dishData, onClose }) => {
     const {
         id: dishId,
@@ -82,11 +86,14 @@ const DishDetail = ({ dishData, onClose }) => {
                 <div className="flex-1 overflow-y-auto">
                     {/* Top image */}
                     <div className="relative h-48 overflow-hidden">
-                        <img
+                        <LazyLoadImage
                             className="w-full h-full object-cover"
                             src={imageUrl}
-                            alt="Dish Image"
+                            alt={name}
+                            effect="blur"
+                            wrapperClassName="absolute inset-0"
                         />
+
                         <button
                             onClick={handleClose}
                             className="absolute top-4 right-4 bg-white rounded-full w-8 h-8 flex items-center justify-center shadow-md"
@@ -104,17 +111,19 @@ const DishDetail = ({ dishData, onClose }) => {
                         {/* Customize options */}
                         {options.map((detail, index) => (
                             <div key={index} ref={el => optionCardRefs.current[index] = el}>
-                                <OptionCard
-                                    title={detail.name}
-                                    description={detail.description}
-                                    options={detail.attributeOptions}
-                                    type={detail.type}
-                                    dishId={dishId}
-                                    isRequired={detail.isRequired}
-                                    isShowError={isShowError}
-                                    setIsShowError={setIsShowError}
-                                    onSelectNext={() => handleSelectNext(index)}
-                                />
+                                <Suspense fallback={<OptionCardSkeleton />}>
+                                    <OptionCard
+                                        title={detail.name}
+                                        description={detail.description}
+                                        options={detail.attributeOptions}
+                                        type={detail.type}
+                                        dishId={dishId}
+                                        isRequired={detail.isRequired}
+                                        isShowError={isShowError}
+                                        setIsShowError={setIsShowError}
+                                        onSelectNext={() => handleSelectNext(index)}
+                                    />
+                                </Suspense>
                             </div>
                         ))}
                     </div>
