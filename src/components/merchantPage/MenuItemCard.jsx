@@ -4,11 +4,13 @@ import Cookies from "js-cookie";
 import { useEffect, useRef } from "react";
 import { useSystemContext } from "../../context/SystemContext";
 import { useParams } from "react-router-dom";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 const MenuItemCard = ({ food, onClick }) => {
     const { merchantId } = useParams();
     const { id, name, picture, price, description } = food;
-    // console.debug("MenuItemCard food:", food);
+
     const { cartData } = useSystemContext();
     const authToken = Cookies.get("authToken");
     const displayTextRef = useRef("+");
@@ -40,13 +42,14 @@ const MenuItemCard = ({ food, onClick }) => {
         >
 
             <div className=" h-[17rem] flex max-w-xl bg-white text-white">
-                {/* Image */}
-                <div className="w-64 overflow-hidden aspect-[5/3]">
-                    {" "}
-                    <img
+                {/* Lazy loaded Image */}
+                <div className="max-w-xl overflow-hidden">
+                    <LazyLoadImage
                         src={picture}
-                        alt="Dish Image"
+                        alt={name}
                         className="object-cover w-full h-full"
+                        effect="blur"
+                        wrapperClassName="w-full h-full"
                     />
                 </div>
 
