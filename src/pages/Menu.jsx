@@ -7,7 +7,7 @@ import { useCategoryListQuery } from "../hooks/menu/useCategoryListQuery";
 import useMerchantStore from "../stores/merchantStore";
 import useNavStore from "../stores/merchantMenuNav";
 import getStoreClient from "../api/store/getStoreClient";
-
+import MenuPageSkeleton from "../hooks/menu/MenuPageSkeleton";
 const NavbarSkeleton = lazy(() => import("../skeleton/menu/NavbarSkeleton"));
 const MenuHeaderSkeleton = lazy(() => import("../skeleton/menu/MenuHeaderSkeleton"));
 const ViewCartButtonSkeleton = lazy(() => import("../skeleton/menu/ViewCartButtonSkeleton"));
@@ -82,9 +82,7 @@ function Menu() {
     // if merchant data is not fetched yet, show loading spinner
     if (merchantId && !merchant) {
         return (
-            <div className="flex justify-center items-center mt-4 fa-2x">
-                <FontAwesomeIcon icon={faSpinner} spinPulse />
-            </div>
+            <MenuPageSkeleton />
         );
     }
     return (
