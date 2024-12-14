@@ -17,7 +17,6 @@ const OptionCard = ({
     const addChosenAttribute = useDishDetailStore((state) => state.addChosenAttribute);
     const removeChosenAttributeOption = useDishDetailStore((state) => state.removeChosenAttributeOption);
     const sortChosenAttributes = useDishDetailStore((state) => state.sortChosenAttributes);
-    const dishes = useDishDetailStore((state) => state.dishes);
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [isError, setIsError] = useState(false);
 
