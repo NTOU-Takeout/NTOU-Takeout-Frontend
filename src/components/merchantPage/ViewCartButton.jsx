@@ -9,14 +9,14 @@ const ViewCartButton = () => {
     const { cartData, cartCount, totalSpend } = useSystemContext();
     const authToken = Cookies.get("authToken");
     const isLogin = authToken ? true : false;
-    console.debug('isLogin:', isLogin);
+
     const handleClick = () => {
         if (!isLogin) return navigate('/auth/login');
         navigate('/cart');
     };
-    console.debug('carData:', cartData);
-    if (isLogin == true && cartData == undefined && totalSpend == 0) return null;
-    console.debug("cartCount:", cartCount);
+
+    if (isLogin == true && (cartData == undefined || totalSpend == 0)) return null;
+
     return (
         <div className="fixed bottom-4 right-6 flex z-10 ">
             <button
@@ -42,8 +42,8 @@ const ViewCartButton = () => {
 };
 
 ViewCartButton.propTypes = {
-    totalCost: PropTypes.number.isRequired,
-    cartCount: PropTypes.number.isRequired,
+    totalCost: PropTypes.number,
+    cartCount: PropTypes.number,
 };
 
 export default ViewCartButton;

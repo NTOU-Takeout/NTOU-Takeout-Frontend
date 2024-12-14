@@ -31,6 +31,8 @@ const DishDetail = ({ dishData, onClose }) => {
         setDishDetail(dishId, {
             storeId: merchantId,
             dishId: dishId,
+            dishName: name,
+            price: price,
             quantity: 1,
             note: "",
             chosenAttributes: []
@@ -42,7 +44,7 @@ const DishDetail = ({ dishData, onClose }) => {
         return () => {
             document.body.style.overflow = ""; // restore background scroll
         };
-    }, [setDishDetail, dishId, merchantId, options, setAllDishAttributes]);
+    }, [setDishDetail, dishId, merchantId, options, setAllDishAttributes, name, price]);
 
     const handleClose = () => {
         setIsExiting(true);

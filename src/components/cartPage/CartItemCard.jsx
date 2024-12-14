@@ -52,12 +52,13 @@ const CartItemCard = ({ dishData, imageUrl }) => {
                 <div className="ml-4 flex min-w-0 flex-col h-full" >
                     <h2 className="text-lg font-semibold truncate">{dishName}</h2>
                     {formattedAttributes && <p className="text-sm text-gray-500 truncate">
-                        {formattedAttributes}(+${totalExtraCost})
+                        +${totalExtraCost} : {formattedAttributes}
                     </p>}
                     {note && <p className="text-sm text-gray-500 line-clamp-2">{note}</p>}
-                    <p className="text-xl mt-2 absolute bottom-[15px]">
-                        $ {price}
+                    <p className="text-xl mt-2 absolute bottom-[15px] font-semibold">
+                        $ {(price + totalExtraCost) * nowQuantity}
                     </p>
+
                 </div>
                 <div className="absolute bottom-[15px] right-[15px] flex items-end border border-gray-300 rounded-md">
                     <button

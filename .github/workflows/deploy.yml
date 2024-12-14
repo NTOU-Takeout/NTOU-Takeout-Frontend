@@ -3,7 +3,7 @@ name: Deploy
 on:
     push:
         branches:
-            - deploy/version1.2
+            - feature/redirect-router
         paths-ignore:
             - "**/*.md"
             - "**/README.*"
@@ -37,7 +37,7 @@ jobs:
         name: Deploy
         needs: build
         runs-on: ubuntu-latest
-        if: github.ref == 'refs/heads/deploy/version1.2'
+        if: github.ref == 'refs/heads/feature/redirect-router'
 
         steps:
             - name: Download artifact
