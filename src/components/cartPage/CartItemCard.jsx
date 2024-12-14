@@ -67,7 +67,7 @@ const CartItemCard = ({ dishData, imageUrl }) => {
                                 "-"
                         }
                     </button>
-                    <span className="px-4 py-0.5">{quantity}</span>
+                    <span className="px-4 py-0.5">{nowQuantity}</span>
                     <button
                         onClick={() => handleQuantityChange(1)}
                         className="px-2 py-0 text-lg rounded-r-md w-7"

@@ -47,8 +47,11 @@ const router = createBrowserRouter([
         path: "/Register",
         element: <Register />,
         errorElement: <NotFound />,
+    }],
+    {
+        basename: "/Order-Now-Frontend/",
     }
-]);
+);
 
 function App() {
     return (

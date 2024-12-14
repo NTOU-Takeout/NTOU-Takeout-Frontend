@@ -23,7 +23,7 @@ export const useRegisterMutation = (isEnabled = true) => {
             return response;
         },
         onSuccess: () => {
-            window.location.assign('/auth/login');
+            window.location.assign('/Order-Now-Frontend/auth/login');
         },
         onError: (error) => {
             console.error('Registration failed:', error);
