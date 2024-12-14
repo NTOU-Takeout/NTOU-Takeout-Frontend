@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 const OrderCard = ({ order, onAccept, onReject }) => {
   return (
-    <div className="relative flex justify-between rounded-md p-4 shadow-sm mb-4 bg-white">
+    <div className="relative flex justify-between rounded-md p-4 shadow-md mb-4 bg-white">
  
       <div>
         <p className="text-lg font-bold">單號 {order.id}</p>

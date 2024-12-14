@@ -29,7 +29,7 @@ const OrderCard = ({ order }) => {
   };
 
   return (
-    <div className="relative flex justify-between rounded-lg p-4 shadow-sm mb-4 bg-white">
+    <div className="relative flex justify-between rounded-lg p-4 shadow-md mb-4 bg-white">
       
       <div>
         <p className="text-lg font-bold">單號 {order.id}</p>
