@@ -1,6 +1,16 @@
 import PropTypes from 'prop-types';
-
-const MenuItemButton = ({ displayText, onClick }) => {
+import { useParams } from 'react-router-dom';
+import { useSystemContext } from '../../context/SystemContext';
+const MenuItemButton = ({ dishId, onClick }) => {
+    const { merchantId } = useParams();
+    const { cartData } = useSystemContext();
+    let displayText = '+';
+    if (cartData?.storeId === merchantId) {
+        const totalQuantity = cartData.orderedDishes
+            .filter(d => d.dishId == dishId)
+            .reduce((sum, d) => sum + d.quantity, 0);
+        if (totalQuantity > 0) displayText = totalQuantity;
+    }
     const isPlus = displayText === '+';
     const btnClasses = isPlus
         ? 'bg-orange-500 text-white'
@@ -17,7 +27,7 @@ const MenuItemButton = ({ displayText, onClick }) => {
 };
 
 MenuItemButton.propTypes = {
-    displayText: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    dishId: PropTypes.string.isRequired,
     onClick: PropTypes.func.isRequired,
 };
 

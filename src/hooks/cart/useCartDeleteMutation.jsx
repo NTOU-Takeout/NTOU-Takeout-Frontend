@@ -26,27 +26,23 @@ export const useCartDeleteMutation = () => {
             if (abortControllerRef.current === controller) {
                 abortControllerRef.current = null;
             }
-
+            //return for onsuccess to add back to cart
             return payload;
 
         },
         // optimistic update
-        onMutate: async ({ orderedDishId, newQuantity }) => {
+        onMutate: async (payload) => {
             await queryClient.cancelQueries(["cart"]);
             const previousCart = queryClient.getQueryData(["cart"]);
-
-            // optimistic update
-            // copy previous cart and update quantity
-            const newCart = { ...previousCart };
-            if (newCart?.dishes) {
-                newCart.dishes = newCart.dishes.map((dish) =>
-                    dish.dishId === orderedDishId
-                        ? { ...dish, quantity: newQuantity }
-                        : dish
-                );
+            const newCart = previousCart ? { ...previousCart } : { orderedDishes: [] };
+            if (!newCart.orderedDishes) {
+                newCart.orderedDishes = [];
             }
-
-            queryClient.setQueryData(["cart"], newCart);
+            newCart.cost = 0;
+            newCart.orderedDishes = [];
+            newCart.storeId = undefined;
+            console.debug("previousCart", previousCart);
+            queryClient.setQueryData(["cart"], []);
 
             // return previous cart for rollback
             return { previousCart };

@@ -50,7 +50,7 @@ export const SystemContextProvider = ({ children }) => {
             setTotalSpend(totalSpend + totalExtraCost);
         }
     }, [cartData?.orderedDishes]);
-    const cartCount = cartData?.orderedDishes.length;
+    const cartCount = cartData?.orderedDishes?.length;
     // console.debug("cartCount:", cartCount);
     // console.debug("cartError:", cartError);
     // console.debug('cartData:', cartData);
