@@ -1,11 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
-import { redirect, useNavigate } from 'react-router-dom';
 import registerClient from '../../api/auth/registerClient';
 import CryptoJS from 'crypto-js';
 
 export const useRegisterMutation = (isEnabled = true) => {
-    const navigate = useNavigate();
-
     const {
         mutateAsync: registerMutation,
         isSuccess: isRegisterSuccess,

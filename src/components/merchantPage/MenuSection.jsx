@@ -1,7 +1,8 @@
-import MenuItemCard from "./MenuItemCard";
-import MenuDishDetail from "./MenuDishDetail";
+import { lazy, Suspense } from "react";
 import PropTypes from "prop-types";
-
+const CartItemCardSkeleton = lazy(() => import("../../skeleton/menu/CartItemCardSkeleton"));
+const MenuDishDetail = lazy(() => import("./MenuDishDetail"));
+const MenuItemCard = lazy(() => import("./MenuItemCard"));
 function MenuSection({ sectionRefs, categoryData, selectedDish, setSelectedDish }) {
 
     const handleMenuItemClick = (item) => {
@@ -23,11 +24,15 @@ function MenuSection({ sectionRefs, categoryData, selectedDish, setSelectedDish 
                             </p>
                             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                                 {category.dishes.map((food, index) => (
-                                    <MenuItemCard
+                                    <Suspense
+                                        fallback={<CartItemCardSkeleton />}
                                         key={index}
-                                        food={food}
-                                        onClick={handleMenuItemClick}
-                                    />
+                                    >
+                                        <MenuItemCard
+                                            food={food}
+                                            onClick={handleMenuItemClick}
+                                        />
+                                    </Suspense>
                                 ))}
                             </div>
                         </>

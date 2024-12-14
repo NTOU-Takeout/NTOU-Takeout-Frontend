@@ -3,6 +3,8 @@ import { useCartUpdateMutation } from "../../hooks/cart/useCartUpdateMutation";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 const CartItemCard = ({ dishData, imageUrl }) => {
     const {
         id,
@@ -39,21 +41,24 @@ const CartItemCard = ({ dishData, imageUrl }) => {
 
     return (
         nowQuantity <= 0 ? null :
-            <div className="relative flex rounded-lg p-4 w-full items-start ">
-                <img
+            <div className="relative flex rounded-lg p-4 w-full items-start min-h-[142px]">
+                {imageUrl && <LazyLoadImage
                     src={imageUrl}
                     alt={dishName}
                     className="w-20 h-26 object-cover rounded-lg flex-shrink-0"
-                />
+                    effect="blur"
+                    wrapperClassName="flex-shrink-0"
+                />}
                 <div className="ml-4 flex min-w-0 flex-col h-full" >
                     <h2 className="text-lg font-semibold truncate">{dishName}</h2>
                     {formattedAttributes && <p className="text-sm text-gray-500 truncate">
-                        {formattedAttributes}(+${totalExtraCost})
+                        +${totalExtraCost} : {formattedAttributes}
                     </p>}
                     {note && <p className="text-sm text-gray-500 line-clamp-2">{note}</p>}
-                    <p className="text-xl mt-2 absolute bottom-[15px]">
-                        $ {price}
+                    <p className="text-xl mt-2 absolute bottom-[15px] font-semibold">
+                        $ {(price + totalExtraCost) * nowQuantity}
                     </p>
+
                 </div>
                 <div className="absolute bottom-[15px] right-[15px] flex items-end border border-gray-300 rounded-md">
                     <button
