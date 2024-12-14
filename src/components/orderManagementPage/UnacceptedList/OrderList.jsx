@@ -4,12 +4,10 @@ import useOrderStore from '../../../stores/orderStore';
 const UnacceptedList = () => {
   const { orders, updateOrderStatus } = useOrderStore();
 
-  // 接單邏輯
   const handleAccept = (id) => {
     updateOrderStatus(id, '製作中');
   };
 
-  // 拒單邏輯
   const handleReject = (id) => {
     updateOrderStatus(id, '取消');
   };

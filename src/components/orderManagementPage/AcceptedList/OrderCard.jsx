@@ -35,7 +35,7 @@ const OrderCard = ({ order }) => {
         <p className="text-lg font-bold">單號 {order.id}</p>
         <p className="text-sm">下單時間: {order.orderedTime}</p>
         <p className="text-sm">預估取餐時間: {order.estimateTime}</p>
-        <button className="bg-orange-500 text-white px-3 py-1 rounded mt-2 hover:bg-orange-600">
+        <button className="bg-orange-500 text-white px-3 py-1 text-sm font-bold rounded mt-2 hover:bg-orange-600">
           訂單內容
         </button>
       </div>
@@ -45,7 +45,7 @@ const OrderCard = ({ order }) => {
           {isOverdue() && (
             <span className="text-red-500 text-sm ml-2 font-bold pr-2">超時</span>
           )}
-          <span className={`px-2 py-1 rounded-full text-sm font-bold ${bgColor} ${textColor}`}>
+          <span className={`px-3 py-1 rounded-md text-sm font-bold ${bgColor} ${textColor}`}>
             {order.status}
           </span>
         </div>

@@ -72,7 +72,6 @@ const useOrderStore = create((set) => ({
       orderedTime: '2024-06-01 11:20:00', 
       estimateTime: '2024-06-01 12:00:00' 
     },
-    // 新增未接單的訂單
     { 
       id: 11, 
       status: '未接單', 
