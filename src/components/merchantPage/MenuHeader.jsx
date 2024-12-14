@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, lazy } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,10 +8,9 @@ import {
     faStar,
     faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
-import MenuInfo from "./MenuInfo";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
-
+const MenuInfo = lazy(() => import("./MenuInfo"));
 const MenuHeader = ({ merchantData }) => {
     const {
         name,

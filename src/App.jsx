@@ -1,26 +1,28 @@
-import { StrictMode, useEffect } from "react";
+import { StrictMode, useEffect, lazy, Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { SystemContextProvider } from "./context/SystemContext";
-import Home from "./pages/Home";
 import Menu from "./pages/Menu";
 import Review from "./pages/Review";
-import Cart from "./pages/Cart";
 import NotFound from "./pages/NotFound";
 import LoginRegister from "./pages/LoginRegister";
 import ForgetPassword from "./pages/ForgetPassword";
 import Register from "./pages/Register";
+import CartSkeleton from "./skeleton/cart/CartSkeleton";
+import HomeSkeleton from "./skeleton/home/HomeSkeleton";
+const Cart = lazy(() => import("./pages/Cart"));
+const Home = lazy(() => import("./pages/Home"));
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <Home />,
+        element: <Suspense fallback={<HomeSkeleton />}><Home /></Suspense>,
         errorElement: <NotFound />,
     },
     {
         path: "/cart",
-        element: <Cart />,
+        element: <Suspense fallback={<CartSkeleton />}><Cart /></Suspense>,
         errorElement: <NotFound />,
     },
     {

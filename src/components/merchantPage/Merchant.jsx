@@ -8,7 +8,6 @@ const Merchant = (props) => {
     const { id, name, averageSpend, rating, picture, reviews } = props;
 
     const randomDistance = Math.floor(Math.random() * 30) + 1;
-
     return (
         <Link key={id} to={`/menu/${id}`}>
             <div
