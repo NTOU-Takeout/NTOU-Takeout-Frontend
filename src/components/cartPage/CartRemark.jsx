@@ -1,18 +1,27 @@
-const CartRemark = () => {
+import PropTypes from 'prop-types';
+
+const CartRemark = ({ onRemarkChange }) => {
+    const handleChange = (e) => {
+        const newRemark = e.target.value;
+        onRemarkChange(newRemark);
+    };
     return (
-        <div className=" bg-white flex items-center justify-center">
-            <div className="mt-20 w-[97%]">
-                <label htmlFor="note" className="block text-xl font-bold mb-2">
-                    備註
-                </label>
-                <textarea
-                    id="remarkInput"
-                    className="w-full h-24 p-4 bg-gray-100 rounded-lg text-gray-700 resize-none"
-                    placeholder="請在此輸入..."
-                />
-            </div>
+        <div className="flex flex-col justify-center font-notoTC py-6">
+            <label className="block text-xl font-bold mb-2 ">
+                備註
+            </label>
+            <textarea
+                id="remarkInput"
+                className="w-full h-28 p-4 bg-gray-100 rounded-lg text-gray-700 resize-none focus:outline-none focus:ring-2 focus:ring-gray-400"
+                placeholder="請在此輸入..."
+                onChange={handleChange}
+            />
         </div>
     );
 };
 
 export default CartRemark;
+CartRemark.propTypes = {
+    onRemarkChange: PropTypes.func.isRequired,
+};
+

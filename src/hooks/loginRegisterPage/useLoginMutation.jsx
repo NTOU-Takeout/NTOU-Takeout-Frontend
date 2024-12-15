@@ -21,7 +21,7 @@ export const useLoginMutation = (isEnabled = true) => {
         onSuccess: (data) => {
             setUserInfo(data);
             console.debug('Login successful return data:', data);
-            window.location.assign('/Order-Now-Frontend');
+            window.location.assign('/Order-Now-Frontend/');
         },
         onError: (error) => {
             console.error('Login failed:', error);
