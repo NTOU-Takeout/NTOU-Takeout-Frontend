@@ -16,7 +16,7 @@ const Menu = lazy(() => import("./pages/Menu"));
 const LoginRegister = lazy(() => import("./pages/LoginRegister"));
 const ForgetPassword = lazy(() => import("./pages/ForgetPassword"));
 const Register = lazy(() => import("./pages/Register"));
-
+const MerchantRegister = lazy(() => import("./pages/MerchantRegister"));
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
@@ -54,7 +54,14 @@ const router = createBrowserRouter([
         path: "/Register",
         element: <Register />,
         errorElement: <NotFound />,
-    }],
+    },
+    {
+        path: "/auth/merchant/register",
+        element: <MerchantRegister />,
+        errorElement: <NotFound />,
+    }
+
+],
     {
         basename: "/Order-Now-Frontend/",
     }
