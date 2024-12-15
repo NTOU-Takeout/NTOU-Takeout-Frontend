@@ -1,7 +1,7 @@
-import UnacceptedList from "../components/orderManagementPage/UnacceptedList/OrderList";
-import AcceptedList from "../components/orderManagementPage/AcceptedList/OrderList";
+import AcceptedList from '../components/OrderManagement/AcceptedList';
+import UnacceptedList from '../components/OrderManagement/UnacceptedList';
 
-function OrderManagement() {
+const OrderManagement = () => {
     return (
         <div>
             <UnacceptedList></UnacceptedList>
