@@ -1,13 +1,25 @@
-import AddToCart from "./AddToCart";
-import QuantitySelector from "./QuantitySelector";
+import { lazy } from "react";
+import PropTypes from "prop-types";
+const AddToCart = lazy(() => import("./AddToCart"));
+const QuantitySelector = lazy(() => import("./QuantitySelector"));
+const CartOption = ({ dishId, onRequiredMissing, onClose }) => {
 
-const CartOption = () => {
     return (
-        <div className="flex jsutify-item-between fixed z-20 bottom-8 right-24">
-            <QuantitySelector></QuantitySelector>
-            <AddToCart></AddToCart>
+        <div className="flex fixed z-20 bottom-8 right-6">
+            <QuantitySelector dishId={dishId} />
+            <AddToCart
+                dishId={dishId}
+                onRequiredMissing={onRequiredMissing}
+                onClose={onClose}
+            />
         </div>
     );
+};
+
+CartOption.propTypes = {
+    dishId: PropTypes.string.isRequired,
+    onRequiredMissing: PropTypes.func.isRequired,
+    onClose: PropTypes.func.isRequired,
 };
 
 export default CartOption;

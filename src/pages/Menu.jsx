@@ -1,15 +1,21 @@
 import { useParams } from "react-router-dom";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, lazy, Suspense } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import { useQuery, useQueries } from "@tanstack/react-query";
-import MenuHeader from "../components/merchantPage/MenuHeader";
-import MenuNavbar from "../components/merchantPage/MenuNavbar";
-import MenuSection from "../components/merchantPage/MenuSection";
+import { useCategoryQueries } from "../hooks/menu/useCategoryQueries";
+import { useCategoryListQuery } from "../hooks/menu/useCategoryListQuery";
 import useMerchantStore from "../stores/merchantStore";
 import useNavStore from "../stores/merchantMenuNav";
 import getStoreClient from "../api/store/getStoreClient";
-import getMenuClient from "../api/menu/getMenuClient";
+import MenuPageSkeleton from "../hooks/menu/MenuPageSkeleton";
+const NavbarSkeleton = lazy(() => import("../skeleton/menu/NavbarSkeleton"));
+const MenuHeaderSkeleton = lazy(() => import("../skeleton/menu/MenuHeaderSkeleton"));
+const ViewCartButtonSkeleton = lazy(() => import("../skeleton/menu/ViewCartButtonSkeleton"));
+const MenuSectionSkeleton = lazy(() => import("../skeleton/menu/MenuSectionSkeleton"));
+const MenuHeader = lazy(() => import("../components/merchantPage/MenuHeader"));
+const MenuNavbar = lazy(() => import("../components/merchantPage/MenuNavbar"));
+const MenuSection = lazy(() => import("../components/merchantPage/MenuSection"));
+const ViewCartButton = lazy(() => import("../components/merchantPage/ViewCartButton"));
 
 function Menu() {
     const { merchantId } = useParams();
@@ -47,14 +53,14 @@ function Menu() {
         if (merchantData) {
             setMerchant(merchantData);
             setMenuId(merchantData.menuId);
-        } else {
+        } else { // if merchant data is not in store, fetch it
             const fetchMerchantData = async () => {
                 try {
-                    const data = await getStoreClient.getMerchantsByIdList([
+                    const res = await getStoreClient.getMerchantsByIdList([
                         merchantId,
                     ]);
-                    setMerchant(data[0]);
-                    setMenuId(data[0]?.menuId || null);
+                    setMerchant(res.data[0]);
+                    setMenuId(res.data[0]?.menuId || null);
                 } catch (error) {
                     console.error("Failed to fetch merchant data:", error);
                 }
@@ -63,65 +69,49 @@ function Menu() {
         }
     }, [merchantId, getMerchantById]);
 
-    // Fetch menu category list and dish details
-    const { data: menuCategoryList = [] } = useQuery({
-        queryKey: ["menuCategoryList" + menuId],
-        queryFn: async () => {
-            if (!menuId) return [];
-            const data = await getMenuClient.getMenuByMenuId(menuId);
-            // Update navbar items
-            setNavbarItems(data.categories.map((category) => category.first));
-            console.log("menuCategoryList:", data.categories);
-            return data.categories;
-        },
-        enabled: !!menuId,
-    });
+    const menuCategoryList = useCategoryListQuery(menuId);
+    const { categoryData } = useCategoryQueries(menuCategoryList, merchantId);
+    const [selectedDish, setSelectedDish] = useState(null);
+    // set navbar items
+    useEffect(() => {
+        if (menuCategoryList?.length) {
+            setNavbarItems(menuCategoryList.map((category) => category.first));
+        }
+    }, [menuCategoryList, setNavbarItems]);
 
-    // Fetch dish details for each category separately
-    const categoryQueries = useQueries({
-        queries: menuCategoryList.map((category) => ({
-            queryKey: ["categoryDishes" + menuId + category.first],
-            queryFn: async () => {
-                const dishIds = category.second;
-                const dishDetails =
-                    await getMenuClient.getDishsByDishIds(dishIds);
-                return {
-                    categoryName: category.first,
-                    dishes: dishDetails,
-                };
-            },
-            enabled: !!menuId && !!category.second.length,
-        })),
-    });
-
-    // Transform the queries results into categoryData
-    const categoryData = categoryQueries
-        .map((query) => query.data)
-        .filter(Boolean); // Filter out undefined results
-
-    return merchant && merchantId ? (
+    // if merchant data is not fetched yet, show loading spinner
+    if (merchantId && !merchant) {
+        return (
+            <MenuPageSkeleton />
+        );
+    }
+    return (
         <div>
-            <MenuHeader merchantData={merchant} />
-            <MenuNavbar
-                onNavClick={handleScrollToSection}
-                isNavbarFixed={isNavbarFixed}
-            />
-            {categoryData.length ? (
+            <Suspense fallback={<MenuHeaderSkeleton />}>
+                <MenuHeader merchantData={merchant} />
+            </Suspense>
+            <Suspense fallback={<NavbarSkeleton isNavbarFixed={false} />}>
+                <MenuNavbar
+                    onNavClick={handleScrollToSection}
+                    isNavbarFixed={isNavbarFixed}
+                />
+            </Suspense>
+
+            <Suspense fallback={<MenuSectionSkeleton />}>
                 <MenuSection
+                    selectedDish={selectedDish}
+                    setSelectedDish={setSelectedDish}
                     sectionRefs={sectionRefs}
                     categoryData={categoryData}
                 />
-            ) : (
-                <div className="flex justify-center items-center mt-4 fa-2x">
-                    <FontAwesomeIcon icon={faSpinner} spinPulse />
-                </div>
+            </Suspense>
+            {selectedDish == null && (
+                <Suspense fallback={<ViewCartButtonSkeleton />}>
+                    <ViewCartButton />
+                </Suspense>
             )}
         </div>
-    ) : (
-        <div className="flex justify-center items-center mt-4 fa-2x">
-            <FontAwesomeIcon icon={faSpinner} spinPulse />
-        </div>
-    );
+    )
 }
 
 export default Menu;
