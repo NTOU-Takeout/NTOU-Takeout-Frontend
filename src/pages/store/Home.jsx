@@ -1,16 +1,29 @@
-import useSidebarStore from "../../stores/storePage/home/sidebarStore";
+import { useEffect } from "react";
+import { Outlet, useLocation } from "react-router-dom";
 import Header from "../../components/storePage/home/Header";
 import Sidebar from "../../components/storePage/home/Sidebar";
-import { Outlet } from "react-router-dom";
+import useSidebarStore from "../../stores/sidebarStore";
 function Home() {
     const toggleSidebar = useSidebarStore((state) => state.toggleSidebar);
+    const setTitle = useSidebarStore((state) => state.setTitle);
+    const title = useSidebarStore((state) => state.title);
     const merchantName = "海洋大學店";
-    //const isOpen = useSidebarStore((state) => state.isOpen);
-    //console.log(isOpen);
+    const location = useLocation();
+    useEffect(() => {
+        switch (true) {
+            case location.pathname.includes("menu"):
+                setTitle("菜單管理");
+                break;
+            default:
+                setTitle("首頁");
+        }
+
+    }, [setTitle, location.pathname]);
+
     return (
         <div>
             <Header
-                title={merchantName}
+                title={title}
                 onLeftClick={toggleSidebar}
             ></Header>
             <Sidebar merchantName={merchantName}></Sidebar>

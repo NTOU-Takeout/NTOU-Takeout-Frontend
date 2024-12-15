@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import useSidebarStore from "../../../stores/storePage/home/sidebarStore";
+import useSidebarStore from "../../../stores/sidebarStore";
 import SidebarButton from "../../homePage/SidebarButton";
 import useThemeStore from "../../../stores/themeStore";
 import {
@@ -19,6 +19,7 @@ const Sidebar = ({ merchantName }) => {
     const theme = useThemeStore((state) => state.themeMode);
     const toggleTheme = useThemeStore((state) => state.toggleTheme);
     const closeSidebar = useSidebarStore((state) => state.closeSidebar);
+
     return (
         <>
             {isOpen && (
@@ -40,6 +41,7 @@ const Sidebar = ({ merchantName }) => {
                         iconSize="2xl"
                         iconColor={"#053766"}
                         style={"py-8"}
+
                     />
                     <SidebarButton
                         text="主頁"
@@ -47,6 +49,7 @@ const Sidebar = ({ merchantName }) => {
                         iconSize="lg"
                         iconColor={"#053766"}
                         style={"px-4 py-4"}
+                        path="/store/123"
                     />
                     <SidebarButton
                         text="訂單"
@@ -56,13 +59,12 @@ const Sidebar = ({ merchantName }) => {
                         style={"px-4 py-4"}
                     />
                     <SidebarButton
-                        text="管理菜單"
+                        text="菜單管理"
                         icon={faFolder}
                         iconSize="lg"
                         iconColor={"#053766"}
                         style={"px-4 py-4"}
-                        onClick={closeSidebar}
-                        path="/"
+                        path="/store/123/management/menu"
                     />
                     <SidebarButton
                         text="評論"

@@ -1,7 +1,5 @@
 import { useParams } from "react-router-dom";
 import { useRef, useState, useEffect, lazy, Suspense } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { useCategoryQueries } from "../hooks/menu/useCategoryQueries";
 import { useCategoryListQuery } from "../hooks/menu/useCategoryListQuery";
 import useMerchantStore from "../stores/merchantStore";

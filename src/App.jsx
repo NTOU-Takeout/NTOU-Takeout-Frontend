@@ -58,15 +58,15 @@ const router = createBrowserRouter([
     },
     {
         path: "/store/:storeId",
-        element: <StoreHome />,
+        element: <Suspense fallback={<HomeSkeleton />}><StoreHome /></Suspense>,
         errorElement: <NotFound />,
         children: [
             {
                 path: "management/menu",
-                element: <StoreMenu />,
+                element: <Suspense fallback={<MenuPageSkeleton />}><StoreMenu /></Suspense>,
                 errorElement: <NotFound />,
-            },
-        ],
+            }
+        ]
     },
 ],
     {
