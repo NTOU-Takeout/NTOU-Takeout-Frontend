@@ -27,4 +27,3 @@ Dockerfile
 .dockerignore
 .devcontainer/
 .env
-package-lock.json

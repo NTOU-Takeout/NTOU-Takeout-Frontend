@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        var path = window.location.pathname;
+
+        var basename = "/Order-Now-Frontend";
+        if (path.startsWith(basename)) {
+            path = path.slice(basename.length);
+        }
+        var redirectUrl = basename + "/?redirect=" + encodeURIComponent(path);
+        window.location.replace(redirectUrl);
+    </script>
+</head>
+
+<body></body>
+
+</html>
