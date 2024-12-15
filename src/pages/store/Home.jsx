@@ -22,10 +22,10 @@ function Home() {
 
     return (
         <div>
-            <Header
+            {/* <Header
                 title={title}
                 onLeftClick={toggleSidebar}
-            ></Header>
+            ></Header> */}
             <Sidebar merchantName={merchantName}></Sidebar>
             <Outlet />
         </div>

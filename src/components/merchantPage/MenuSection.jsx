@@ -10,7 +10,7 @@ function MenuSection({ sectionRefs, categoryData, selectedDish, setSelectedDish 
     };
 
     return (
-        <div className="font-notoTC -top-12 relative min-h-screen flex flex-col items-center justify-center container mx-auto p-4 ">
+        <div className="font-notoTC relative min-h-screen flex flex-col justify-center container mx-auto p-4 ">
             {categoryData.map((category, index) => (
                 <div
                     key={category?.categoryName || `section-${index}`}

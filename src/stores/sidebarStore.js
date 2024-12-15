@@ -5,7 +5,7 @@ const useSidebarStore = create((set) => ({
     setTitle: (title) => set({ title: title }),
     isOpen: false,
     toggleSidebar: () => set((state) => ({ isOpen: !state.isOpen })),
-    closeSidebar: () => set({ isOpen: false }, console.debug("close")),
+    closeSidebar: () => set({ isOpen: false }),
 }));
 
 export default useSidebarStore;
