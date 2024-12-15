@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-
+import { useState, useRef, useEffect } from 'react';
+import PropTypes from 'prop-types';
 const DevToolBubble = ({ router, endPointReplacements = {} }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [position, setPosition] = useState({ x: 20, y: 20 });
@@ -10,7 +10,6 @@ const DevToolBubble = ({ router, endPointReplacements = {} }) => {
 
     const extractRoutes = (routes, parentPath = '') => {
         return routes.flatMap(route => {
-            // 确保路径之间有正确的斜线
             const normalizedParentPath = parentPath.endsWith('/') ? parentPath.slice(0, -1) : parentPath;
             const normalizedCurrentPath = route.path?.startsWith('/') ? route.path : `/${route.path || ''}`;
             const fullPath = route.path ? `${normalizedParentPath}${normalizedCurrentPath}` : '';
@@ -121,7 +120,7 @@ const DevToolBubble = ({ router, endPointReplacements = {} }) => {
                 {isOpen ? (
                     <div className="p-4 h-full flex flex-col">
                         <div className="flex justify-between items-center mb-4">
-                            <h3 className="text-white font-medium">路由导航器</h3>
+                            <h3 className="text-white font-semibold">Route Navigator</h3>
                             <button
                                 onClick={(e) => {
                                     e.stopPropagation();
@@ -159,4 +158,8 @@ const DevToolBubble = ({ router, endPointReplacements = {} }) => {
     );
 };
 
+DevToolBubble.propTypes = {
+    router: PropTypes.object.isRequired,
+    endPointReplacements: PropTypes.object
+};
 export default DevToolBubble;
