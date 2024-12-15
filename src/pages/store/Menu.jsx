@@ -113,10 +113,7 @@ function Menu() {
                     previewButton,
                 ]}
             />
-            {/* adjust the height of the header */}
-            {/* <div className="sticky h-[100px] bg-black"></div> */}
-
-            <div className="sticky top-[64px] z-20">
+            <div className="sticky top-[56px] z-20">
                 <Suspense fallback={<NavbarSkeleton isNavbarFixed={false} />}>
                     <MenuNavbar
                         onNavClick={handleScrollToSection}
@@ -124,14 +121,16 @@ function Menu() {
                     />
                 </Suspense>
             </div>
-            <Suspense fallback={<MenuSectionSkeleton />}>
-                <MenuSection
-                    selectedDish={selectedDish}
-                    setSelectedDish={setSelectedDish}
-                    sectionRefs={sectionRefs}
-                    categoryData={categoryData}
-                />
-            </Suspense>
+            <div className=" relative top-10">
+                <Suspense fallback={<MenuSectionSkeleton />}>
+                    <MenuSection
+                        selectedDish={selectedDish}
+                        setSelectedDish={setSelectedDish}
+                        sectionRefs={sectionRefs}
+                        categoryData={categoryData}
+                    />
+                </Suspense>
+            </div>
         </div >
     );
 }
