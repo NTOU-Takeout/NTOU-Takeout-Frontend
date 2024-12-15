@@ -9,6 +9,7 @@ import PropTypes from "prop-types";
 import Cookies from "js-cookie";
 
 const OptionCardSkeleton = lazy(() => import("../../skeleton/menu/dishDetail/OptionCardSkeleton"));
+const CartRemark = lazy(() => import("../cartPage/CartRemark"));
 const OptionCard = lazy(() => import("./dishOptions/OptionCard"));
 const CartOption = lazy(() => import("./dishOptions/CartOption"));
 const DishDetail = ({ dishData, onClose }) => {
@@ -29,6 +30,7 @@ const DishDetail = ({ dishData, onClose }) => {
     const setAllDishAttributes = useDishDetailStore((state) => state.setAllDishAttributes);
     const authToken = Cookies.get("authToken");
     const optionCardRefs = useRef([]);
+    const [remark, setRemark] = useState('');
 
     useEffect(() => {
         setAllDishAttributes(dishId, options);
@@ -38,7 +40,7 @@ const DishDetail = ({ dishData, onClose }) => {
             dishName: name,
             price: price,
             quantity: 1,
-            note: "",
+            note: remark,
             chosenAttributes: []
         });
 
@@ -48,7 +50,7 @@ const DishDetail = ({ dishData, onClose }) => {
         return () => {
             document.body.style.overflow = ""; // restore background scroll
         };
-    }, [setDishDetail, dishId, merchantId, options, setAllDishAttributes, name, price]);
+    }, [setDishDetail, dishId, merchantId, options, setAllDishAttributes, name, price, remark]);
 
     const handleClose = () => {
         setIsExiting(true);
@@ -126,6 +128,9 @@ const DishDetail = ({ dishData, onClose }) => {
                                 </Suspense>
                             </div>
                         ))}
+                        <div className="pb-12">
+                            <CartRemark onRemarkChange={setRemark} />
+                        </div>
                     </div>
                     <div className="py-5"></div>
                 </div>
