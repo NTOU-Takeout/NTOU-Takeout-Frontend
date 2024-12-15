@@ -18,7 +18,7 @@ const MenuItemCard = ({ food, onClick }) => {
             onClick={() => onClick(food)}
         >
 
-            <div className=" h-[17rem] flex max-w-xl bg-orange-300 text-white">
+            <div className=" h-[17rem] flex max-w-xl bg-white text-white">
                 {/* Lazy loaded Image */}
                 <div className="w-64 overflow-hidden aspect-auto">
                     <LazyLoadImage

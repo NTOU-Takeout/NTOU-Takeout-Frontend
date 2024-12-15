@@ -3,8 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import useSidebarStore from "../../stores/sidebarStore";
 import Header from "../../components/storePage/home/Header";
-import Sidebar from "../../components/storePage/home/Sidebar";
-import CategorySection from "../../components/storePage/management/menu/CategorySection";
 import NavbarSkeleton from "../../skeleton/menu/NavbarSkeleton";
 import MenuSectionSkeleton from "../../skeleton/menu/MenuSectionSkeleton";
 const MenuNavbar = lazy(() => import("../../components/merchantPage/MenuNavbar"));

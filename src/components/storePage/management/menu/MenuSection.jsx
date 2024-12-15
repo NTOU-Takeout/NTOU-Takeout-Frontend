@@ -19,7 +19,7 @@ function MenuSection({ sectionRefs, categoryData, selectedDish, setSelectedDish 
                 >
                     {
                         <>
-                            <p className="text-2xl font-notoTC my-2 font-bold">
+                            <p className="text-2xl font-notoTC mt-3 mb-5 font-bold">
                                 {category.categoryName}
                             </p>
                             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
