@@ -2,6 +2,7 @@ import { StrictMode, useEffect, lazy, Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import DevToolBubble from "./devtool/DevToolBubble";
 import { SystemContextProvider } from "./context/SystemContext";
 import NotFound from "./pages/NotFound";
 import CartSkeleton from "./skeleton/cart/CartSkeleton";
@@ -16,7 +17,8 @@ const Menu = lazy(() => import("./pages/Menu"));
 const LoginRegister = lazy(() => import("./pages/LoginRegister"));
 const ForgetPassword = lazy(() => import("./pages/ForgetPassword"));
 const Register = lazy(() => import("./pages/Register"));
-
+const StoreHome = lazy(() => import("./pages/store/Home"));
+const StoreMenu = lazy(() => import("./pages/store/Menu"));
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
@@ -54,7 +56,20 @@ const router = createBrowserRouter([
         path: "/Register",
         element: <Register />,
         errorElement: <NotFound />,
-    }],
+    },
+    {
+        path: "/store/:storeId",
+        element: <Suspense fallback={<HomeSkeleton />}><StoreHome /></Suspense>,
+        errorElement: <NotFound />,
+        children: [
+            {
+                path: "management/menu",
+                element: <Suspense fallback={<MenuPageSkeleton />}><StoreMenu /></Suspense>,
+                errorElement: <NotFound />,
+            }
+        ]
+    },
+],
     {
         basename: "/Order-Now-Frontend/",
     }
@@ -72,7 +87,17 @@ function App() {
         <StrictMode>
             <QueryClientProvider client={queryClient}>
                 <SystemContextProvider>
-                    <RouterProvider router={router}></RouterProvider>
+                    <RouterProvider router={router}>
+
+                    </RouterProvider>
+                    <DevToolBubble
+                        router={router}
+                        endPointReplacements={{
+                            merchantId: "67178651994d5f6d435d6ef8",
+                            authType: "login",
+                            storeId: "67178651994d5f6d435d6ef8",
+                        }}
+                    />
                 </SystemContextProvider>
                 {/* <ReactQueryDevtools initialIsOpen={false} /> */}
             </QueryClientProvider>

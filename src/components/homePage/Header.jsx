@@ -30,7 +30,7 @@ const Header = ({
                 <FontAwesomeIcon icon={faUser} />
             </div>
             <h1 className="font-noto font-bold text-2xl m-0">
-                <a href="/Order-Now-Frontend">{title}</a>
+                <a href="/Order-Now-Frontend/">{title}</a>
             </h1>
             <div className="text-xl cursor-pointer" onClick={handleRightClick}>
                 <CartIcon />
