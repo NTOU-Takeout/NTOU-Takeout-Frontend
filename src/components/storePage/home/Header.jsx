@@ -2,14 +2,14 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faList } from "@fortawesome/free-solid-svg-icons";
 
-// Header Component
-const MerchantHeader = ({
-    merchantName,
+const Header = ({
+    title,
     leftIcon = faList,
-    onLeftClick = () => {},
+    onLeftClick = () => { },
 }) => {
     return (
-        <header className="fixed z-30 top-0 left-0 w-full flex justify-center items-center bg-gray-300  transition-shadow duration-300 ease-in-out p-2 font-notoTC">
+        <header className="fixed z-30 top-0 left-0 w-full flex justify-center items-center bg-white  transition-shadow duration-300 ease-in-out p-2 font-notoTC shadow-md
+        ">
             <div
                 className="absolute left-4 text-xl cursor-pointer"
                 onClick={onLeftClick}
@@ -17,16 +17,16 @@ const MerchantHeader = ({
                 <FontAwesomeIcon icon={leftIcon} />
             </div>
             <h1 className="font-noto font-bold text-2xl m-0 text-center">
-                <a href="/merchantPage">{merchantName}</a>
+                <a href="/merchantPage">{title}</a>
             </h1>
         </header>
     );
 };
 
-MerchantHeader.propTypes = {
-    merchantName: PropTypes.string,
+Header.propTypes = {
+    title: PropTypes.string,
     leftIcon: PropTypes.object,
     onLeftClick: PropTypes.func,
 };
 
-export default MerchantHeader;
+export default Header;

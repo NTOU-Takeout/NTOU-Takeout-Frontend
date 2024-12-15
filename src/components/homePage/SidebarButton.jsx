@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate } from "react-router-dom";
 import useThemeStore from "../../stores/themeStore";
 import PropTypes from "prop-types";
 const SidebarButton = ({
@@ -9,13 +10,16 @@ const SidebarButton = ({
     iconColor,
     onClick,
     style,
+    path,
 }) => {
+    const navigate = useNavigate();
     const handleClick = (e) => {
         console.log({ text });
         e.stopPropagation();
         if (onClick) {
             onClick();
         }
+        navigate(path);
         console.log(useThemeStore.getState().themeMode);
     };
     return (
@@ -48,6 +52,7 @@ SidebarButton.propTypes = {
     iconColor: PropTypes.string,
     onClick: PropTypes.func,
     style: PropTypes.string,
+    path: PropTypes.string,
 };
 
 export default SidebarButton;

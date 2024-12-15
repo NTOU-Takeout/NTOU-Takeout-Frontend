@@ -2,12 +2,12 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faList, faPlus } from "@fortawesome/free-solid-svg-icons";
 
-const MerchantMenuHeader = ({
+const Header = ({
     title = "菜單管理",
     leftIcon = faList,
-    onLeftClick = () => {},
-    onAddClick = () => {},
-    onPreviewClick = () => {},
+    onLeftClick = () => { },
+    onAddClick = () => { },
+    onPreviewClick = () => { },
 }) => {
     return (
         <header className="fixed z-30 top-0 left-0 w-full flex justify-between items-center bg-orange-400 text-white shadow-md p-3">
@@ -35,7 +35,7 @@ const MerchantMenuHeader = ({
     );
 };
 
-MerchantMenuHeader.propTypes = {
+Header.propTypes = {
     title: PropTypes.string,
     leftIcon: PropTypes.object,
     onLeftClick: PropTypes.func,
@@ -43,4 +43,4 @@ MerchantMenuHeader.propTypes = {
     onPreviewClick: PropTypes.func,
 };
 
-export default MerchantMenuHeader;
+export default Header;

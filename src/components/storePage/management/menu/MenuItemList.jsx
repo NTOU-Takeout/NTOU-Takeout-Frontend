@@ -1,6 +1,6 @@
-import MerchantMenuItem from "./MerchantMenuItem";
+import MerchantMenuItem from "./MenuItem";
 
-const MerchantMenuItemList = () => {
+const MenuItemList = () => {
     const items = [
         {
             id: 1,
@@ -69,4 +69,4 @@ const MerchantMenuItemList = () => {
     );
 };
 
-export default MerchantMenuItemList;
+export default MenuItemList;

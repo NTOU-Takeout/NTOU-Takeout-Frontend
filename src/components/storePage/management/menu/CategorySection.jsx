@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
-import MerchantMenuItemList from "./MerchantMenuItemList";
+import MerchantMenuItemList from "./MenuItemList";
 
-const MerchantMenuCategory = ({ categoryName }) => {
+const CategorySection = ({ categoryName }) => {
     return (
         <div className="p-6 bg-orange-100 w-[90%] rounded-lg shadow-md mb-10">
             <h2 className="text-2xl font-bold flex items-center mb-4">
@@ -13,7 +13,7 @@ const MerchantMenuCategory = ({ categoryName }) => {
     );
 };
 
-MerchantMenuCategory.propTypes = {
+CategorySection.propTypes = {
     categoryName: PropTypes.string.isRequired,
     items: PropTypes.arrayOf(
         PropTypes.shape({
@@ -26,4 +26,4 @@ MerchantMenuCategory.propTypes = {
     ).isRequired,
 };
 
-export default MerchantMenuCategory;
+export default CategorySection;

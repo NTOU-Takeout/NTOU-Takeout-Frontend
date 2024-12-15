@@ -16,7 +16,8 @@ const Menu = lazy(() => import("./pages/Menu"));
 const LoginRegister = lazy(() => import("./pages/LoginRegister"));
 const ForgetPassword = lazy(() => import("./pages/ForgetPassword"));
 const Register = lazy(() => import("./pages/Register"));
-
+const StoreHome = lazy(() => import("./pages/store/Home"));
+const StoreMenu = lazy(() => import("./pages/store/Menu"));
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
@@ -56,18 +57,13 @@ const router = createBrowserRouter([
         errorElement: <NotFound />,
     },
     {
-        path: "/merchantPage",
-        element: <MerchantPage />,
+        path: "/store/:storeId",
+        element: <StoreHome />,
         errorElement: <NotFound />,
         children: [
             {
-                path: "", // 子路由
-                element: <MerchantMainPage />,
-                errorElement: <NotFound />,
-            },
-            {
-                path: "menu", // 子路由
-                element: <MerchantMenuPage />,
+                path: "management/menu",
+                element: <StoreMenu />,
                 errorElement: <NotFound />,
             },
         ],

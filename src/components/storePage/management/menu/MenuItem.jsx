@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const MerchantMenuItem = ({
+const MenuItem = ({
     name,
     options,
     price,
@@ -50,7 +50,7 @@ const MerchantMenuItem = ({
     );
 };
 
-MerchantMenuItem.propTypes = {
+MenuItem.propTypes = {
     name: PropTypes.string.isRequired,
     options: PropTypes.arrayOf(PropTypes.string).isRequired,
     price: PropTypes.number.isRequired,
@@ -59,9 +59,9 @@ MerchantMenuItem.propTypes = {
     onEdit: PropTypes.func,
 };
 
-MerchantMenuItem.defaultProps = {
-    onDelete: () => {},
-    onEdit: () => {},
+MenuItem.defaultProps = {
+    onDelete: () => { },
+    onEdit: () => { },
 };
 
-export default MerchantMenuItem;
+export default MenuItem;
