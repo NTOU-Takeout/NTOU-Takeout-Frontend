@@ -8,7 +8,7 @@ import CategorySection from "../../components/storePage/management/menu/Category
 import NavbarSkeleton from "../../skeleton/menu/NavbarSkeleton";
 import MenuSectionSkeleton from "../../skeleton/menu/MenuSectionSkeleton";
 const MenuNavbar = lazy(() => import("../../components/merchantPage/MenuNavbar"));
-const MenuSection = lazy(() => import("../../components/merchantPage/MenuSection"));
+const MenuSection = lazy(() => import("../../components/storePage/management/menu/MenuSection"));
 import { useCategoryQueries } from "../../hooks/menu/useCategoryQueries";
 import { useCategoryListQuery } from "../../hooks/menu/useCategoryListQuery";
 import useMerchantStore from "../../stores/merchantStore";
