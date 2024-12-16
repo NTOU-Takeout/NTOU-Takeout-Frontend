@@ -41,7 +41,7 @@ const Sidebar = ({ merchantName }) => {
                         iconSize="2xl"
                         iconColor={"#053766"}
                         style={"py-8"}
-
+                        path="/auth/login"
                     />
                     <SidebarButton
                         text="主頁"
