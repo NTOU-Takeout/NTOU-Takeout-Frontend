@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import useSidebarStore from "../../../stores/merchantSideBarStore";
-import { MerchantMenuSidebarButton } from "./MerchantMenuSidebarButton";
+import MerchantMenuSidebarButton from "./MerchantMenuSidebarButton";
 import useThemeStore from "../../../stores/themeStore";
 import {
     faComment,

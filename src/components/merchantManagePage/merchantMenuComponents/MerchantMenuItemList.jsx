@@ -52,6 +52,7 @@ const MerchantMenuItemList = ({ categoryName }) => {
     ];
 
     const handleDelete = (id) => {
+        console.log("delete ", id);
         //delete idth dish
     };
 
