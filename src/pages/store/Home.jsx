@@ -9,6 +9,7 @@ function Home() {
     const title = useSidebarStore((state) => state.title);
     const merchantName = "海洋大學店";
     const location = useLocation();
+    // set title based on location
     useEffect(() => {
         switch (true) {
             case location.pathname.includes("menu"):
