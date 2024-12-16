@@ -26,6 +26,7 @@ export const useCartUpdateMutation = () => {
             if (abortControllerRef.current === controller) {
                 abortControllerRef.current = null;
             }
+
             return res;
 
         },
@@ -61,10 +62,12 @@ export const useCartUpdateMutation = () => {
         onError: (error, variables, context) => {
             // rollback to previous cart
             if (context?.previousCart) {
+                console.debug("rollback to previous cart", context);
                 queryClient.setQueryData(["cart"], context.previousCart);
             }
             // Alert error message
             alert("更新數量失敗，請稍後再試");
+            throw error;
         },
         onSettled: () => {
             // finish or error refetch cart

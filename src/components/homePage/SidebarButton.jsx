@@ -11,6 +11,7 @@ const SidebarButton = ({
     iconColor,
     style,
     path,
+    onClick,
 }) => {
     const navigate = useNavigate();
     const setTitle = useSidebarStore((state) => state.setTitle);
@@ -19,7 +20,11 @@ const SidebarButton = ({
         e.stopPropagation();
         closeSidebar();
         setTitle(text);
-        navigate(path);
+        if (onClick) {
+            onClick();
+        } else {
+            navigate(path);
+        }
     };
     return (
         <button
@@ -51,6 +56,7 @@ SidebarButton.propTypes = {
     iconColor: PropTypes.string,
     style: PropTypes.string,
     path: PropTypes.string,
+    onClick: PropTypes.func,
 };
 
 export default SidebarButton;
