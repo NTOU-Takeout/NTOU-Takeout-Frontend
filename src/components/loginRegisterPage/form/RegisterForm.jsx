@@ -1,10 +1,7 @@
-import { useEffect, useState } from "react";
-import CryptoJS from "crypto-js";
+import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
 import { useRegisterMutation } from "../../../hooks/loginRegisterPage/useRegisterMutation";
-import registerClient from "../../../api/auth/registerClient";
 
 const RegisterForm = () => {
     const [username, setUsername] = useState("");
@@ -13,7 +10,6 @@ const RegisterForm = () => {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
-    const navigate = useNavigate();
     const {
         registerMutation,
         isLoading,

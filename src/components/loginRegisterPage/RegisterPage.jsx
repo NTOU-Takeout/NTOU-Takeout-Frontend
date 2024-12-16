@@ -1,6 +1,6 @@
 import { useState } from "react";
-import TitleText from "./specSection/TitleText";
-import DataForm from "./specSection/DataForm";
+import TitleText from "../specSection/TitleText";
+import DataForm from "../specSection/DataForm";
 import { Link } from "react-router-dom";
 
 const RegisterPage = () => {
