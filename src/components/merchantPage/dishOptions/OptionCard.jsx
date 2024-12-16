@@ -1,34 +1,81 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquare, faCheckSquare } from "@fortawesome/free-regular-svg-icons";
+import useDishDetailStore from "../../../stores/dishDetailStore";
 import PropTypes from "prop-types";
 
 const OptionCard = ({
     title,
     description,
-    options = [], // pass in an array of options
-    type, // default to single selection
+    options = [],
+    type,
+    dishId,
+    isRequired,
+    onSelectNext,
 }) => {
+
+    const addChosenAttribute = useDishDetailStore((state) => state.addChosenAttribute);
+    const removeChosenAttributeOption = useDishDetailStore((state) => state.removeChosenAttributeOption);
+    const sortChosenAttributes = useDishDetailStore((state) => state.sortChosenAttributes);
     const [selectedOptions, setSelectedOptions] = useState([]);
+    const [isError, setIsError] = useState(false);
+
+    //handle error is show
+    useEffect(() => {
+        if (isRequired && selectedOptions.length === 0) {
+            setIsError(true);
+        } else {
+            setIsError(false);
+        }
+    }, [selectedOptions, isRequired, setIsError]);
 
     const handleCheckboxChange = (option) => {
+        let updatedOptions = [...selectedOptions];
+
         if (type === "single") {
-            setSelectedOptions([option.name]);
-        } else {
-            // multiple selection
-            setSelectedOptions((prev) => {
-                if (prev.includes(option.name)) {
-                    return prev.filter((opt) => opt !== option.name); //cancel selection
-                } else {
-                    return [...prev, option.name]; // new selection
+            updatedOptions = [option.name];
+            //remove all other options from store
+            options.forEach((o) => {
+                if (o.name !== option.name) {
+                    removeChosenAttributeOption(dishId, title, o.name);
                 }
             });
+            //update store with selected option
+            addChosenAttribute(dishId, {
+                attributeName: title,
+                chosenOption: option.name,
+                extraCost: option.extraCost || 0,
+            });
+            onSelectNext();
+        } else {
+            if (updatedOptions.includes(option.name)) {
+                updatedOptions = updatedOptions.filter(o => o !== option.name);
+                //remove option from store
+                removeChosenAttributeOption(dishId, title, option.name);
+            } else {
+                updatedOptions.push(option.name);
+                //update store with selected option
+                addChosenAttribute(dishId, {
+                    attributeName: title,
+                    chosenOption: option.name,
+                    extraCost: option.extraCost || 0,
+                });
+            }
         }
+
+        sortChosenAttributes(dishId);
+        setSelectedOptions(updatedOptions);
+
     };
 
     return (
         <div className="border rounded-lg p-4 max-w-sm mx-auto mb-8 mt-8 font-notoTC">
-            <h3 className="text-lg font-semibold">{title}</h3>
+            <h3 className="text-lg font-semibold "> {title}</h3>
+            {isRequired && (
+                <p className={`text-xs font-bold ${isError ? "text-red-500" : "text-gray-500"}`}>
+                    {"必選"}
+                </p>
+            )}
             <p className="text-sm text-gray-500">{description}</p>
 
             <div className="mt-4 space-y-2">
@@ -43,11 +90,9 @@ const OptionCard = ({
                         <span className="flex items-center justify-between">
                             <span className="flex items-center">
                                 <FontAwesomeIcon
-                                    icon={
-                                        selectedOptions.includes(option.name)
-                                            ? faCheckSquare
-                                            : faSquare
-                                    }
+                                    icon={selectedOptions.includes(option.name)
+                                        ? faCheckSquare
+                                        : faSquare}
                                     className="text-gray-500 mr-2"
                                 />
                                 {option.name}
@@ -64,6 +109,7 @@ const OptionCard = ({
         </div>
     );
 };
+
 OptionCard.propTypes = {
     title: PropTypes.string,
     description: PropTypes.string,
@@ -74,5 +120,11 @@ OptionCard.propTypes = {
         }),
     ),
     type: PropTypes.oneOf(["single", "multiple"]),
+    dishId: PropTypes.string.isRequired,
+    isRequired: PropTypes.bool,
+    isShowError: PropTypes.bool,
+    setIsShowError: PropTypes.func,
+    onSelectNext: PropTypes.func,
 };
+
 export default OptionCard;

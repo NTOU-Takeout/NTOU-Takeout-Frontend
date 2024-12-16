@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import useSidebarStore from "../../../stores/merchantSidebarStore";
+import useSidebarStore from "../../../stores/merchantSideBarStore";
 import MerchantSidebarButton from "./MerchantSidebarButton";
 import useThemeStore from "../../../stores/themeStore";
 import {

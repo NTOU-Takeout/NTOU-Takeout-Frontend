@@ -1,8 +1,17 @@
+import MenuItemButton from "./MenuItemButton";
 import PropTypes from "prop-types";
+import Cookies from "js-cookie";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 const MenuItemCard = ({ food, onClick }) => {
-    const { name, picture, price, description } = food;
+    const { id, name, picture, price, description } = food;
+    const authToken = Cookies.get("authToken");
 
+    const handleButtonClick = (e) => {
+        e.stopPropagation();
+        console.log("Add to cart clicked");
+    };
     return (
         <div
             className="w-full cursor-pointer bg-white rounded-lg shadow-lg overflow-hidden"
@@ -10,13 +19,14 @@ const MenuItemCard = ({ food, onClick }) => {
         >
 
             <div className=" h-[17rem] flex max-w-xl bg-white text-white">
-                {/* Image */}
-                <div className="w-64 overflow-hidden aspect-[5/3]">
-                    {" "}
-                    <img
+                {/* Lazy loaded Image */}
+                <div className="w-64 overflow-hidden aspect-auto">
+                    <LazyLoadImage
                         src={picture}
-                        alt="Dish Image"
+                        alt={name}
                         className="object-cover w-full h-full"
+                        effect="blur"
+                        wrapperClassName="object-cover w-full h-full"
                     />
                 </div>
 
@@ -34,11 +44,14 @@ const MenuItemCard = ({ food, onClick }) => {
                     <p className="text-sm text-gray-600 mt-2 line-clamp-3 text-ellipsis">{description}</p>
 
                     {/* Add button */}
-                    <div className="flex justify-end mt-4 absolute bottom-[15px] right-[15px]">
-                        <button className="bg-orange-500 text-white rounded-full w-10 h-10 flex items-center justify-center">
-                            <span className="text-2xl font-bold mb-1">+</span>
-                        </button>
-                    </div>
+                    {authToken && (
+                        <div className="flex justify-end mt-4 absolute bottom-[15px] right-[15px]">
+                            <MenuItemButton
+                                dishId={id}
+                                onClick={handleButtonClick}
+                            />
+                        </div>)
+                    }
                 </div>
             </div>
         </div>

@@ -10,6 +10,11 @@ const MerchantMenuItem = ({
     onDelete,
     onEdit,
 }) => {
+    const handleDeleteClick = (event) => {
+        event.stopPropagation();
+        onDelete();
+    };
+
     return (
         <div
             className="flex items-center justify-between bg-white p-4 rounded-lg shadow-md mb-4"
@@ -33,8 +38,8 @@ const MerchantMenuItem = ({
                 <p className="text-xl font-bold text-black">${price}</p>
                 <div className="flex items-center space-x-2">
                     <button
-                        onClick={onDelete}
-                        className="text-red-500 hover:text-red-700 text-xl"
+                        onClick={handleDeleteClick}
+                        className="text-red-500 hover:text-red-700 text-xl z-30"
                     >
                         <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
                     </button>

@@ -1,20 +1,31 @@
-// import React, {useState} from "react";
-// import StatusBar from "../components/loginRegisterPage/StatusBar";
-// import SubmitForm from "../components/loginRegisterPage/SubmitForm";
+import { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import SubmitForm from "../components/loginRegisterPage/SubmitForm";
+import ToggleNavBar from "../components/common/ToggleNavBar";
+function LoginRegister() {
+    const { authType } = useParams();
+    const navigate = useNavigate();
+    if (authType !== "login" && authType !== "register") {
+        throw new Error("Invalid auth type");
+    }
+    const [isLogin, setIsLogin] = useState(authType === "login");
+    const handleStatusChange = (newStatus) => {
+        const newAuthType = newStatus ? "login" : "register";
+        navigate(`/auth/${newAuthType}`, { replace: true }); // replace: true to prevent adding new history
+        setIsLogin(newStatus);
+    };
+    const options = {
+        "登入": () => { handleStatusChange(true); },
+        "註冊": () => { handleStatusChange(false); },
+    }
+    return (
+        <div className="min-h-screen bg-white flex justify-center pt-20">
+            <div className="flex flex-col font-notoTC ">
+                <ToggleNavBar options={options} />
+                <SubmitForm status={isLogin} />
+            </div>
+        </div>
+    );
+}
 
-
-// function LoginRegister() {
-//   const [isLogin, setIsLogin] = useState(true);
-//     return (
-//         <div className="flex flex-col items-center justify-start mt-[4rem] min-h-[50vh]">
-//             <StatusBar
-//                 status={isLogin}
-//                 setStatus={setIsLogin}
-//             />
-//             <SubmitForm
-//                 status = {isLogin} />
-//         </div>
-//     );
-// }
-
-// export default LoginRegister;
+export default LoginRegister;

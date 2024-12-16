@@ -10,7 +10,7 @@ const MerchantMenuHeader = ({
     onPreviewClick = () => {},
 }) => {
     return (
-        <header className="fixed z-30 top-0 left-0 w-full flex justify-between items-center bg-orange-400 text-white shadow-md p-3">
+        <header className="fixed z-50 top-0 left-0 w-full flex justify-between items-center bg-orange-400 text-white shadow-md p-3">
             <div className="text-xl  flex items-center">
                 <div className=" cursor-pointer" onClick={onLeftClick}>
                     <FontAwesomeIcon icon={leftIcon} />
