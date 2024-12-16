@@ -1,7 +1,6 @@
 import { StrictMode, useEffect, lazy, Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { SystemContextProvider } from "./context/SystemContext";
 import NotFound from "./pages/NotFound";
 import CartSkeleton from "./skeleton/cart/CartSkeleton";
@@ -48,7 +47,7 @@ const router = createBrowserRouter([
     {
         path: "/auth/forgotPassword",
         element: <ForgetPassword />,
-        errorElement: <NotFound />,
+        // errorElement: <NotFound />,
     },
     {
         path: "/Register",
