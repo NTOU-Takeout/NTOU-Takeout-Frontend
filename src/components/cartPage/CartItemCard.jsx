@@ -17,7 +17,7 @@ const CartItemCard = ({ dishData, imageUrl }) => {
     const [nowQuantity, setNowQuantity] = useState(quantity);
     const { patchCartAsync } = useCartUpdateMutation();
 
-    const handleQuantityChange = (change) => {
+    const handleQuantityChange = async (change) => {
         const newQ = nowQuantity + change;
         if (newQ < 0 || newQ > 25) return;
 
@@ -28,7 +28,12 @@ const CartItemCard = ({ dishData, imageUrl }) => {
             setNowQuantity(newQ);
         }
         // update cart
-        patchCartAsync({ orderedDishId: id, newQuantity: newQ });
+        try {
+            await patchCartAsync({ orderedDishId: id, newQuantity: newQ });
+        } catch (error) {
+            console.debug("patchCartAsync error:", error);
+            setNowQuantity(quantity);
+        }
     };
 
     let totalExtraCost = 0;
