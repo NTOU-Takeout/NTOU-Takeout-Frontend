@@ -63,12 +63,7 @@ const Sidebar = () => {
                         iconSize="2xl"
                         iconColor={"#053766"}
                         style={"py-8"}
-                        onClick={() => {
-                            if (isOpen && !authToken) {
-                                navigate("/auth/login");
-                                closeSidebar();
-                            }
-                        }}
+                        path="/auth/login"
                     />
                     <SidebarButton
                         text="商家瀏覽紀錄"
