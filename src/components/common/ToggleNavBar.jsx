@@ -43,7 +43,7 @@ const ToggleNavBar = ({ options, width = 'w-full', height = '50px' }) => {
                                 options[key]();
                             }}
                             className={`
-                                relative flex-1 text-center text-lg font-bold py-2
+                                relative flex-1 text-center text-lg font-bold 
                                 transition-colors duration-300 ease-in-out z-10
                                 ${isActive ? 'text-white' : 'text-black'}
                             `}
