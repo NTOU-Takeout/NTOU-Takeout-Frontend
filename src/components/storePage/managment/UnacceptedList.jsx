@@ -5,14 +5,14 @@ const UnacceptedList = () => {
   const { orders, updateOrderStatus } = useOrderStore();
 
   const handleAccept = (id) => {
-    updateOrderStatus(id, '製作中');
+    updateOrderStatus(id, 'PROCESSING');
   };
 
   const handleReject = (id) => {
-    updateOrderStatus(id, '取消');
+    updateOrderStatus(id, 'CANCELED');
   };
 
-  const pendingOrders = orders.filter((order) => order.status === '未接單');
+  const pendingOrders = orders.filter((order) => order.status === 'PENDING');
 
   return (
     <div className="bg-gray-100 p-6">

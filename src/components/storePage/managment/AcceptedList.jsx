@@ -4,7 +4,7 @@ import useOrderStore from '../../../stores/orderStore';
 function AcceptedList() {
   const { orders, updateOrderStatus } = useOrderStore();
 
-  const filteredOrders = orders.filter((order) => order.status !== '未接單');
+  const filteredOrders = orders.filter((order) => order.status !== 'PENDING');
 
   const handleStatusChange = (orderId, nextStatus) => {
     updateOrderStatus(orderId, nextStatus);
