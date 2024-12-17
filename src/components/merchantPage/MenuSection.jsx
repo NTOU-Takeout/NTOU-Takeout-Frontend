@@ -1,19 +1,16 @@
-import { useState } from "react";
-import MenuItemCard from "./MenuItemCard";
-import MenuDishDetail from "./MenuDishDetail";
+import { lazy, Suspense } from "react";
 import PropTypes from "prop-types";
-function MenuSection({ sectionRefs, categoryData }) {
-    const [selectedDish, setSelectedDish] = useState(null);
-    console.log(categoryData);
+const CartItemCardSkeleton = lazy(() => import("../../skeleton/menu/CartItemCardSkeleton"));
+const MenuDishDetail = lazy(() => import("./MenuDishDetail"));
+const MenuItemCard = lazy(() => import("./MenuItemCard"));
+function MenuSection({ sectionRefs, categoryData, selectedDish, setSelectedDish }) {
+
     const handleMenuItemClick = (item) => {
-        // if the dish has no attributes, do not show the detail
-        if (item.dishAttributes.length === 0) {
-            return;
-        }
         setSelectedDish(item);
     };
+
     return (
-        <div className="font-notoTC -top-12 relative min-h-screen flex flex-col items-center justify-center container mx-auto p-4">
+        <div className="font-notoTC relative min-h-screen flex flex-col justify-center container mx-auto p-4 ">
             {categoryData.map((category, index) => (
                 <div
                     key={category?.categoryName || `section-${index}`}
@@ -27,11 +24,15 @@ function MenuSection({ sectionRefs, categoryData }) {
                             </p>
                             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                                 {category.dishes.map((food, index) => (
-                                    <MenuItemCard
+                                    <Suspense
+                                        fallback={<CartItemCardSkeleton />}
                                         key={index}
-                                        food={food}
-                                        onClick={handleMenuItemClick}
-                                    />
+                                    >
+                                        <MenuItemCard
+                                            food={food}
+                                            onClick={handleMenuItemClick}
+                                        />
+                                    </Suspense>
                                 ))}
                             </div>
                         </>
@@ -52,5 +53,7 @@ function MenuSection({ sectionRefs, categoryData }) {
 MenuSection.propTypes = {
     sectionRefs: PropTypes.object.isRequired,
     categoryData: PropTypes.array.isRequired,
+    selectedDish: PropTypes.object,
+    setSelectedDish: PropTypes.func.isRequired,
 };
 export default MenuSection;

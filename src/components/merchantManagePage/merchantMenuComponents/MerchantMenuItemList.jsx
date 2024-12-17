@@ -1,6 +1,13 @@
+import PropTypes from "prop-types";
 import MerchantMenuItem from "./MerchantMenuItem";
+import useDishEditBarStore from "../../../stores/merchantDishEditBar";
 
-const MerchantMenuItemList = () => {
+const MerchantMenuItemList = ({ categoryName }) => {
+    const toggleDishEditBar = useDishEditBarStore(
+        (state) => state.toggleDishEditBar,
+    );
+    const setDish = useDishEditBarStore((state) => state.setDish);
+
     const items = [
         {
             id: 1,
@@ -8,6 +15,7 @@ const MerchantMenuItemList = () => {
             options: ["大碗", "加辣"],
             price: 150,
             pictureURL: "https://picsum.photos/200/300?grayscale",
+            catogory: categoryName,
         },
         {
             id: 2,
@@ -15,6 +23,7 @@ const MerchantMenuItemList = () => {
             options: ["加蛋", "無辣"],
             price: 120,
             pictureURL: "https://picsum.photos/200/300?grayscale",
+            catogory: categoryName,
         },
         {
             id: 3,
@@ -22,6 +31,7 @@ const MerchantMenuItemList = () => {
             options: ["套餐", "附薯條"],
             price: 180,
             pictureURL: "https://picsum.photos/200/300?grayscale",
+            catogory: categoryName,
         },
         {
             id: 4,
@@ -29,6 +39,7 @@ const MerchantMenuItemList = () => {
             options: ["奶油醬", "培根"],
             price: 130,
             pictureURL: "https://picsum.photos/200/300?grayscale",
+            catogory: categoryName,
         },
         {
             id: 5,
@@ -36,22 +47,20 @@ const MerchantMenuItemList = () => {
             options: ["清蒸", "加檸檬"],
             price: 200,
             pictureURL: "https://picsum.photos/200/300?grayscale",
+            catogory: categoryName,
         },
     ];
 
     const handleDelete = (id) => {
-        console.log(`Item with id ${id} deleted!`);
+        console.log("delete ", id);
+        //delete idth dish
     };
 
     const handleEdit = (id) => {
         const item = items.find((item) => item.id === id);
-        if (item) {
-            console.log(`Edit clicked for item:`, item);
-        } else {
-            console.log(`Item with id ${id} not found!`);
-        }
+        toggleDishEditBar();
+        setDish(item);
     };
-
     return (
         <div className="p-4 ">
             {items.map((item) => (
@@ -67,6 +76,9 @@ const MerchantMenuItemList = () => {
             ))}
         </div>
     );
+};
+MerchantMenuItemList.propTypes = {
+    categoryName: PropTypes.string.isRequired,
 };
 
 export default MerchantMenuItemList;
