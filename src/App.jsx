@@ -16,11 +16,12 @@ const Review = lazy(() => import("./pages/Review"));
 const Menu = lazy(() => import("./pages/Menu"));
 const LoginRegister = lazy(() => import("./pages/LoginRegister"));
 const ForgetPassword = lazy(() => import("./pages/ForgetPassword"));
-const Register = lazy(() => import("./pages/Register"));
+const Verify = lazy(() => import("./pages/Verify.jsx"));
 const MerchantRegister = lazy(() => import("./pages/MerchantRegister"));
 const StoreHome = lazy(() => import("./pages/store/Home"));
 const StoreMenu = lazy(() => import("./pages/store/Menu"));
 const StoreOrder = lazy(() => import("./pages/store/Order"));
+const FormPage = lazy(() => import("./components/authPage/FormPage"));
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter(
@@ -76,13 +77,18 @@ const router = createBrowserRouter(
             errorElement: <NotFound />,
         },
         {
-            path: "/Register",
-            element: <Register />,
+            path: "/auth/Verify",
+            element: <Verify />,
             errorElement: <NotFound />,
         },
         {
             path: "/auth/merchant/register",
             element: <MerchantRegister />,
+            errorElement: <NotFound />,
+        },
+        {
+            path: "FormPage",
+            element: <FormPage />,
             errorElement: <NotFound />,
         },
         {
