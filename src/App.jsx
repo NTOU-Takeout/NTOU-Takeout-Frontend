@@ -1,7 +1,7 @@
 import { StrictMode, useEffect, lazy, Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+// import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import DevToolBubble from "./devtool/DevToolBubble";
 import { SystemContextProvider } from "./context/SystemContext";
 import NotFound from "./pages/NotFound";
@@ -21,6 +21,7 @@ const StoreHome = lazy(() => import("./pages/store/Home"));
 const StoreMenu = lazy(() => import("./pages/store/Menu"));
 const StoreOrder = lazy(() => import("./pages/store/Order"));
 const queryClient = new QueryClient();
+import OrderDetails from "./pages/store/OrderDetailPage";
 
 const router = createBrowserRouter(
     [
@@ -107,6 +108,11 @@ const router = createBrowserRouter(
                     errorElement: <NotFound />,
                 },
             ],
+        },
+        {
+            path: "/OrderDetails",
+            element: <OrderDetails />,
+            // errorElement: <NotFound />,
         },
     ],
     {
