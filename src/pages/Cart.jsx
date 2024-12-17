@@ -21,15 +21,15 @@ const Cart = () => {
 
     const { categoryData, isQueriesSuccess } = useCategoryQueries(
         menuCategoryList,
-        cartData?.storeId
+        cartData?.storeId,
     );
-    const [remark, setRemark] = useState('');
+    const [remark, setRemark] = useState("");
     // Create a map of dishes for easy access
     const dishesMap = useMemo(() => {
         if (!categoryData) return {};
 
         return categoryData.reduce((acc, category) => {
-            category.dishes.forEach(dish => {
+            category.dishes.forEach((dish) => {
                 acc[dish.id] = dish;
             });
             return acc;
@@ -40,7 +40,7 @@ const Cart = () => {
     // console.debug("isMerchantLoading:", isMerchantLoading);
     // console.debug("isQueriesSuccess:", isQueriesSuccess);
     // console.debug("dishesMap:", dishesMap);
-    if (cartData == undefined || isMerchantLoading || !isQueriesSuccess) {
+    if (cartData === undefined || isMerchantLoading || !isQueriesSuccess) {
         return (
             <div className="flex justify-center items-center mt-28 fa-2x">
                 <CartPageHeader />
@@ -66,32 +66,32 @@ const Cart = () => {
         <div className="mt-3">
             <div className="flex-none">
                 <CartPageHeader />
-                <CartTotalSpend orderDetail={{
-                    cartData: cartData,
-                    merchantName: merchantData?.name,
-                    totalSpend: totalSpend,
-                }} />
+                <CartTotalSpend
+                    orderDetail={{
+                        cartData: cartData,
+                        merchantName: merchantData?.name,
+                        totalSpend: totalSpend,
+                    }}
+                />
             </div>
             <div className="flex-1 overflow-auto pb-[120px] ">
-                <CartItemCardList
-                    cartData={cartData}
-                    dishesMap={dishesMap}
-                />
+                <CartItemCardList cartData={cartData} dishesMap={dishesMap} />
                 <div className="px-4">
-                    <CartRemark
-                        onRemarkChange={setRemark}
-                    />
+                    <CartRemark onRemarkChange={setRemark} />
                 </div>
             </div>
             <div className="flex-none">
-                <CartOrderSection orderDetail={{
-                    cartData: cartData,
-                    totalSpend: totalSpend,
-                    estimateTime: (predictedTime - (totalQuantity > 2 ? 30 : 0)),
-                }} />
+                <CartOrderSection
+                    orderDetail={{
+                        cartData: cartData,
+                        totalSpend: totalSpend,
+                        estimateTime:
+                            predictedTime - (totalQuantity > 2 ? 30 : 0),
+                    }}
+                />
             </div>
         </div>
     );
-}
+};
 
 export default Cart;
