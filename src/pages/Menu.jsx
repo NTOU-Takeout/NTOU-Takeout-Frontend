@@ -84,7 +84,7 @@ function Menu() {
         );
     }
     return (
-        <div>
+        <div className="flex flex-col ">
             <Suspense fallback={<MenuHeaderSkeleton />}>
                 <MenuHeader merchantData={merchant} />
             </Suspense>

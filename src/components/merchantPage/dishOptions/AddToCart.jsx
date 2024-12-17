@@ -14,10 +14,10 @@ const AddToCart = ({ dishId, onRequiredMissing, onClose }) => {
     const allDishAttributes = useDishDetailStore((state) => state.allDishAttributes);
     const { deleteCartAsync } = useCartDeleteMutation();
     const { postCartAsync } = useCartAddMutation();
-    const handleConfirm = () => {
+    const handleConfirm = async () => {
         setIsModalOpen(false);
         const dishDetail = dishes[dishId];
-        deleteCartAsync(dishDetail)
+        await deleteCartAsync(dishDetail)
         onClose();
     };
 
@@ -47,7 +47,7 @@ const AddToCart = ({ dishId, onRequiredMissing, onClose }) => {
             setIsModalOpen(true);
             return;
         }
-        postCartAsync(dishDetail);
+        await postCartAsync(dishDetail);
         onClose();
     };
 

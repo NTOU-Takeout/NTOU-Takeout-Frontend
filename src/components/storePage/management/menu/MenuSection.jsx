@@ -1,7 +1,7 @@
 import { lazy, Suspense } from "react";
 import PropTypes from "prop-types";
-const CartItemCardSkeleton = lazy(() => import("../../skeleton/menu/CartItemCardSkeleton"));
-const MenuDishDetail = lazy(() => import("./MenuDishDetail"));
+const CartItemCardSkeleton = lazy(() => import("../../../../skeleton/menu/CartItemCardSkeleton"));
+const MenuDishDetail = lazy(() => import("../../../merchantPage/MenuDishDetail"));
 const MenuItemCard = lazy(() => import("./MenuItemCard"));
 function MenuSection({ sectionRefs, categoryData, selectedDish, setSelectedDish }) {
 
@@ -19,7 +19,7 @@ function MenuSection({ sectionRefs, categoryData, selectedDish, setSelectedDish 
                 >
                     {
                         <>
-                            <p className="text-2xl font-notoTC my-2 font-bold">
+                            <p className="text-2xl font-notoTC mt-3 mb-5 font-bold">
                                 {category.categoryName}
                             </p>
                             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">

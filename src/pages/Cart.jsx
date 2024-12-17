@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import CartOrderSection from "../components/cartPage/CartOrderSection";
 import CartPageHeader from "../components/cartPage/CartPageHeader";
 import CartTotalSpend from "../components/cartPage/CartTotalSpend";
@@ -7,6 +7,7 @@ import { useCategoryQueries } from "../hooks/menu/useCategoryQueries";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { useSystemContext } from "../context/SystemContext";
+import CartRemark from "../components/cartPage/CartRemark";
 const Cart = () => {
     const {
         cartData,
@@ -22,6 +23,7 @@ const Cart = () => {
         menuCategoryList,
         cartData?.storeId
     );
+    const [remark, setRemark] = useState('');
     // Create a map of dishes for easy access
     const dishesMap = useMemo(() => {
         if (!categoryData) return {};
@@ -60,7 +62,6 @@ const Cart = () => {
             </div>
         );
     }
-
     return (
         <div className="mt-3">
             <div className="flex-none">
@@ -76,6 +77,11 @@ const Cart = () => {
                     cartData={cartData}
                     dishesMap={dishesMap}
                 />
+                <div className="px-4">
+                    <CartRemark
+                        onRemarkChange={setRemark}
+                    />
+                </div>
             </div>
             <div className="flex-none">
                 <CartOrderSection orderDetail={{
