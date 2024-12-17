@@ -35,7 +35,7 @@ const LoginRegisterSkeleton = () => {
                             <div className="h-10 bg-gray-200/50 rounded w-full animate-pulse" />
                         </div>
 
-                        {/* Additional Field for Register */}
+                        {/* Additional Field for Verify */}
                         <div className="space-y-1">
                             <div className="h-4 bg-gray-200/50 rounded w-20 animate-pulse" />
                             <div className="h-10 bg-gray-200/50 rounded w-full animate-pulse" />
