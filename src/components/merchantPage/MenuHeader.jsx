@@ -25,7 +25,7 @@ const MenuHeader = ({ merchantData }) => {
     const [showMenuInfo, setShowMenuInfo] = useState(false);
 
     return (
-        <div >
+        <div>
             <div className="relative h-56 z-0">
                 <LazyLoadImage
                     src={picture}
@@ -37,16 +37,22 @@ const MenuHeader = ({ merchantData }) => {
                 {/* Return button */}
                 <Link to={`/`}>
                     <div className="pt-1 pb-1 pl-2 pr-2 return-btn absolute top-10 left-4 transform -translate-y-1/2 bg-white/60 rounded-full">
-                        <FontAwesomeIcon icon={faArrowLeft} className="text-slate-800" />
+                        <FontAwesomeIcon
+                            icon={faArrowLeft}
+                            className="text-slate-800"
+                        />
                     </div>
                 </Link>
                 {/* Share button */}
                 <div className="pt-1 pb-1 pl-2 pr-2 share-btn absolute top-10 right-4 transform -translate-y-1/2 bg-white/60 rounded-full">
-                    <FontAwesomeIcon icon={faShareNodes} className="text-slate-800" />
+                    <FontAwesomeIcon
+                        icon={faShareNodes}
+                        className="text-slate-800"
+                    />
                 </div>
             </div>
             {/* Store information */}
-            <div className="relative z-20 bg-white rounded-t-2xl px-4 pt-4 -mt-8 font-notoTC">
+            <div className="relative z-10 bg-white rounded-t-2xl px-4 pt-4 -mt-8 font-notoTC">
                 <div className="flex items-center justify-between">
                     <div className="flex flex-col bg-green">
                         <h2 className="text-xl font-bold">{name}</h2>
@@ -86,7 +92,6 @@ const MenuHeader = ({ merchantData }) => {
                                 </span>
                             </div>
                         </Link>
-
                     </div>
                 </div>
             </div>
