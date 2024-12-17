@@ -1,103 +1,58 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
 const useOrderStore = create((set) => ({
-    orders: [
-        { 
-        id: 1, 
-        status: 'PROCESSING', 
-        total: 260, 
-        orderedTime: '2024-12-16 10:00:00', 
-        estimateTime: '2024-12-16 10:30:00' 
-        },
-        { 
-        id: 2, 
-        status: 'COMPLETED', 
-        total: 300, 
-        orderedTime: '2024-06-01 10:05:00', 
-        estimateTime: '2024-06-01 10:45:00' 
-        },
-        { 
-        id: 3, 
-        status: 'PICKED_UP', 
-        total: 350, 
-        orderedTime: '2024-06-01 09:30:00', 
-        estimateTime: '2024-06-01 10:00:00' 
-        },
-        { 
-        id: 4, 
-        status: 'CANCELED', 
-        total: 500, 
-        orderedTime: '2024-06-01 08:45:00', 
-        estimateTime: '2024-06-01 09:15:00' 
-        },
-        { 
-        id: 5, 
-        status: 'PROCESSING', 
-        total: 400, 
-        orderedTime: '2024-06-01 11:00:00', 
-        estimateTime: '2024-06-01 11:45:00' 
-        },
-        { 
-        id: 6, 
-        status: 'COMPLETED', 
-        total: 220, 
-        orderedTime: '2024-06-01 10:20:00', 
-        estimateTime: '2024-06-01 11:00:00' 
-        },
-        { 
-        id: 7, 
-        status: 'PICKED_UP', 
-        total: 280, 
-        orderedTime: '2024-06-01 09:00:00', 
-        estimateTime: '2024-06-01 09:30:00' 
-        },
-        { 
-        id: 8, 
-        status: 'CANCELED', 
-        total: 600, 
-        orderedTime: '2024-06-01 07:45:00', 
-        estimateTime: '2024-06-01 08:15:00' 
-        },
-        { 
-        id: 9, 
-        status: 'PROCESSING', 
-        total: 270, 
-        orderedTime: '2024-06-01 12:00:00', 
-        estimateTime: '2024-06-01 12:45:00' 
-        },
-        { 
-        id: 10, 
-        status: 'COMPLETED', 
-        total: 330, 
-        orderedTime: '2024-06-01 11:20:00', 
-        estimateTime: '2024-06-01 12:00:00' 
-        },
-        { 
-        id: 11, 
-        status: 'PENDING', 
-        total: 180, 
-        orderedTime: '2024-12-16 14:00:00', 
-        estimateTime: '2024-12-16 14:30:00' 
-        },
-        { 
-        id: 12, 
-        status: 'PENDING', 
-        total: 500, 
-        orderedTime: '2024-12-16 15:00:00', 
-        estimateTime: '2024-12-16 15:45:00' 
-        },
-    ],
-    updateOrderStatus: (id, newStatus) => {
-        set((state) => {
-        const updatedOrders = state.orders.map((order) =>
-            order.id === id ? { ...order, status: newStatus } : order
-        );
-        const updatedOrder = updatedOrders.find(order => order.id === id);
-        console.log(`Order ID: ${id} updated to status: ${updatedOrder.status}`);
-        
-        return { orders: updatedOrders };
-        });
+    order: {
+        id: "1234567",
+        userId: "2147483647",
+        email: "hehe@gmail.com",
+        phone: "0987-878-787",
+        time: "2024-12-01 19:09:21",
+        total: 1030,
+        note: "我的水餃不要不要皮我的水餃不要皮...",
+        status: "製作中",
+        items: [
+            {
+                id: 1,
+                name: "好好吃水餃",
+                imageUrl: "https://picsum.photos/200/300",
+                quantity: 3,
+                price: 343.542,
+                chosenAttributes: [
+                    { name: "辣度", chosenOption: "中辣", extraCost: 10 },
+                    { name: "醬料", chosenOption: "蒜泥", extraCost: 5 }
+                ],
+                note: "不吃香菜"
+            },
+            {
+                id: 2,
+                name: "好好吃水餃",
+                imageUrl: "https://picsum.photos/200/300",
+                quantity: 4,
+                price: 343.542,
+                chosenAttributes: [
+                    { name: "辣度", chosenOption: "微辣", extraCost: 0 },
+                    { name: "醬料", chosenOption: "醋", extraCost: 3 }
+                ],
+                note: "不吃辣"
+            },
+            {
+                id: 3,
+                name: "好好吃水餃",
+                imageUrl: "https://picsum.photos/200/300",
+                quantity: 2,
+                price: 343.542,
+                chosenAttributes: [
+                    { name: "辣度", chosenOption: "不辣", extraCost: 0 },
+                    { name: "醬料", chosenOption: "甜辣醬", extraCost: 4 }
+                ],
+            }
+        ],
+        estimatedTime: 25,
     },
+    setEstimatedTime: (time) =>
+        set((state) => ({
+            order: { ...state.order, estimatedTime: time },
+        })),
 }));
 
 export default useOrderStore;
