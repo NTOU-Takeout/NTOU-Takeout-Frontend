@@ -10,7 +10,7 @@ const RegisterForm = () => {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
-    const { registerMutation, isLoading } = useRegisterMutation();
+    const { registerMutation, isPending } = useRegisterMutation();
     const validateForm = () => {
         if (!username || !email || !phone || !password || !confirmPassword) {
             setError("請填寫所有欄位");
@@ -33,10 +33,10 @@ const RegisterForm = () => {
         return true;
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e, role) => {
         e.preventDefault();
+        console.debug(role);
         setError("");
-
         if (!validateForm()) {
             return;
         }
@@ -46,6 +46,7 @@ const RegisterForm = () => {
                 email,
                 phone,
                 password,
+                role,
             });
 
             setUsername("");
@@ -105,30 +106,13 @@ const RegisterForm = () => {
                 {error && (
                     <p className="text-red-500 text-xs pl-2 mb-4">{error}</p>
                 )}
-
-                <button
-                    type="submit"
-                    className="fixed bottom-[2rem] left-[15%] w-[70%] bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600 transition"
-                    disabled={isLoading}
-                    onClick={handleSubmit}
-                >
-                    {isLoading ? (
-                        <FontAwesomeIcon
-                            icon={faSpinner}
-                            spin
-                            className="mr-2"
-                        />
-                    ) : (
-                        "註冊"
-                    )}
-                </button>
                 <button
                     type="submit"
                     className="fixed bottom-[6rem] left-[15%] w-[70%] bg-white border-orange-500 border-2 text-orange-500 py-2 rounded-lg hover:bg-gray-200 transition"
-                    disabled={isLoading}
-                    onClick={handleSubmit}
+                    disabled={isPending}
+                    onClick={(e) => handleSubmit(e, "MERCHANT")}
                 >
-                    {isLoading ? (
+                    {isPending ? (
                         <FontAwesomeIcon
                             icon={faSpinner}
                             spin
@@ -136,6 +120,23 @@ const RegisterForm = () => {
                         />
                     ) : (
                         "註冊為商家"
+                    )}
+                </button>
+
+                <button
+                    type="submit"
+                    className="fixed bottom-[2rem] left-[15%] w-[70%] bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600 transition"
+                    disabled={isPending}
+                    onClick={(e) => handleSubmit(e, "CUSTOMER")}
+                >
+                    {isPending ? (
+                        <FontAwesomeIcon
+                            icon={faSpinner}
+                            spin
+                            className="mr-2"
+                        />
+                    ) : (
+                        "註冊"
                     )}
                 </button>
                 {/* <button

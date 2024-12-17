@@ -4,12 +4,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useNavigate } from "react-router-dom";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { useLoginMutation } from "../../hooks/loginRegisterPage/useLoginMutation.jsx";
+import { faEllipsis } from "@fortawesome/free-solid-svg-icons/faEllipsis";
 const LoginForm = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const navigate = useNavigate();
-    const { loginMutation, isLoading } = useLoginMutation();
+    const { loginMutation, isPending, isLoginSuccess } = useLoginMutation();
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -32,6 +33,7 @@ const LoginForm = () => {
             setError(err.message || "登入失敗，請稍後再試");
         }
     };
+
     return (
         <div className="mt-8 w-[70vw]">
             <form>
@@ -67,13 +69,14 @@ const LoginForm = () => {
                 <button
                     type="submit"
                     className="fixed bottom-[2rem] left-[15%] w-[70%] bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600 transition"
-                    disabled={isLoading}
+                    disabled={isPending}
                     onClick={handleSubmit}
                 >
-                    {isLoading ? (
+                    {isPending ? (
                         <FontAwesomeIcon
-                            icon={faSpinner}
-                            spin
+                            icon={faEllipsis}
+                            beatFade
+                            size="lg"
                             className="mr-2"
                         />
                     ) : (

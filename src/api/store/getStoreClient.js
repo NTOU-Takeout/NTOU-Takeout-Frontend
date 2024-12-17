@@ -11,8 +11,7 @@ const getStoreClient = {
         if (!response.ok) {
             throw new Error("Failed to fetch store ID list");
         }
-        const res = await response.json();
-        return res;
+        return await response.json();
     },
     getMerchantsByIdList: async (idList) => {
         const response = await fetch(
@@ -30,8 +29,7 @@ const getStoreClient = {
                 `Failed to fetch details for merchant ID: ${idList}`,
             );
         }
-        const data = await response.json();
-        return data;
+        return await response.json();
     },
 };
 
