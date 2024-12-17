@@ -21,7 +21,6 @@ const MerchantRegister = lazy(() => import("./pages/MerchantRegister"));
 const StoreHome = lazy(() => import("./pages/store/Home"));
 const StoreMenu = lazy(() => import("./pages/store/Menu"));
 const StoreOrder = lazy(() => import("./pages/store/Order"));
-const FormPage = lazy(() => import("./components/authPage/FormPage"));
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter(
