@@ -26,7 +26,7 @@ const MenuHeader = ({ merchantData }) => {
 
     return (
         <div >
-            <div className="relative h-56 z-0"> {/* 稍微降低高度 */}
+            <div className="relative h-56 z-0">
                 <LazyLoadImage
                     src={picture}
                     alt={name}
