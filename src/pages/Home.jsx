@@ -1,5 +1,5 @@
 import Header from "../components/homePage/Header";
-import useSidebarStore from "../stores/sidebarStore";
+import useSidebarStore from "../stores/common/sidebarStore";
 import Sidebar from "../components/homePage/Sidebar";
 import Searchbar from "../components/homePage/Searchbar";
 import MerchantList from "../components/merchantPage/MerchantList";
