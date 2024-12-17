@@ -87,12 +87,17 @@ const useOrderStore = create((set) => ({
       estimateTime: '2024-12-16 15:45:00' 
     },
   ],
-  updateOrderStatus: (id, newStatus) =>
-    set((state) => ({
-      orders: state.orders.map((order) =>
+  updateOrderStatus: (id, newStatus) => {
+    set((state) => {
+      const updatedOrders = state.orders.map((order) =>
         order.id === id ? { ...order, status: newStatus } : order
-      ),
-    })),
+      );
+      const updatedOrder = updatedOrders.find(order => order.id === id);
+      console.log(`Order ID: ${id} updated to status: ${updatedOrder.status}`);
+      
+      return { orders: updatedOrders };
+    });
+  },
 }));
 
 export default useOrderStore;

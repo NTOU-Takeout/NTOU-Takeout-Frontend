@@ -1,5 +1,5 @@
-import AcceptedList from '../components/OrderManagement/AcceptedList';
-import UnacceptedList from '../components/OrderManagement/UnacceptedList';
+import AcceptedList from '../components/storePage/managment/AcceptedList';
+import UnacceptedList from '../components/storePage/managment/UnacceptedList';
 
 const OrderManagement = () => {
     return (

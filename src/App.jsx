@@ -59,6 +59,11 @@ const router = createBrowserRouter([
         path: "/store/:sotreId/management/order/:type",
         element: <OrderManagement />,
         errorElement: <NotFound />,
+    },
+    {
+        path: "/order",
+        element: <OrderManagement />,
+        errorElement: <NotFound />,
     }],
     {
         basename: "/Order-Now-Frontend/",
