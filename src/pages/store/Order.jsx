@@ -1,8 +1,10 @@
 import { useState } from "react";
 import Header from "../../components/storePage/home/Header";
 import useSidebarStore from "../../stores/common/sidebarStore";
-import OrderCard from "../../components/storePage/managment/OrderCard.jsx";
+import OrderCard from "../../components/storePage/management/order/OrderCard.jsx";
 import { useSystemContext } from "../../context/SystemContext.jsx";
+import UnacceptedList from "../../components/storePage/management/order/UnacceptedList.jsx";
+import AcceptedList from "../../components/storePage/management/order/AcceptedList.jsx";
 const Home = () => {
     const [orderCount, setOrderCount] = useState(0);
     const toggleSidebar = useSidebarStore((state) => state.toggleSidebar);
@@ -39,6 +41,8 @@ const Home = () => {
                     />
                 ))}
             </div>
+            <UnacceptedList></UnacceptedList>
+            <AcceptedList></AcceptedList>
         </div>
     );
 };
