@@ -1,14 +1,14 @@
 import { useState } from "react";
-import TitleText from "../specSection/TitleText";
-import DataForm from "../specSection/DataForm";
+import TitleText from "../authPage/TitleText.jsx";
+import DataForm from "../authPage/DataForm.jsx";
 import { Link } from "react-router-dom";
 
 const MerchantRegisterPage = () => {
-    const titleText = "註冊";
+    const titleText = "商家註冊";
     const description = [
         "註冊驗證碼已寄出，請至您的電子信箱查收。",
         "請上傳您的商家基本資訊",
-        "註冊完成，稍後將跳轉至登入頁面。"
+        "註冊完成，稍後將跳轉至登入頁面。",
     ];
     const dataInput = [["驗證碼"], ["上傳商家圖片", "商家電話", "商家地址"]];
     const continueBtn = ["繼續", "繼續", "回到登入頁面"];
@@ -19,7 +19,7 @@ const MerchantRegisterPage = () => {
         code: "",
         uploadImage: "",
         phoneNumber: "",
-        address: ""
+        address: "",
     });
     const [error, setError] = useState("");
 

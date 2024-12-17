@@ -1,6 +1,7 @@
-import  { useState } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
-import TitleText from "../specSection/TitleText.jsx";
+import TitleText from "./TitleText.jsx";
+import Forms from "./Forms.jsx";
 
 const FormPage = ({
     titleText,
@@ -13,46 +14,36 @@ const FormPage = ({
     isError = true,
 }) => {
     const [formValues, setFormValues] = useState(
-        Object?.keys(formData).reduce((acc, key) => {
-            acc[key] = "";
-            return acc;
-        }, {})
+        formData
+            ? Object?.keys(formData).reduce((acc, key) => {
+                  acc[key] = "";
+                  return acc;
+              }, {})
+            : undefined,
     );
-
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormValues((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
-    };
+    //
+    // const handleInputChange = (e) => {
+    //     const { name, value } = e.target;
+    //     setFormValues((prev) => ({
+    //         ...prev,
+    //         [name]: value,
+    //     }));
+    // };
 
     const onSubmit = (e) => {
         e.preventDefault();
         handleSubmit?.(formValues);
     };
-    console.debug("titleText", titleText);
-    console.debug("descriptionText", description);
+
     return (
-        <form onSubmit={onSubmit} className="w-full text-center h-dvh px-10">
+        <form onSubmit={onSubmit} className="w-[70%] text-center pt-20 h-dvh">
             {titleText && <TitleText titleData={[titleText, description]} />}
 
-            {Object?.entries(formData).length > 0 &&
-                <div className="space-y-4 mt-10">
-                    {Object.entries(formData).map(([name, placeholder]) => (
-                        <div key={name} className="w-full pt-4">
-                            <input
-                                type="text"
-                                name={name}
-                                placeholder={placeholder}
-                                value={formValues[name]}
-                                onChange={handleInputChange}
-                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
-                        </div>
-                    ))}
-                </div>
-            }
+            <Forms
+                formData={formData}
+                formValues={formValues}
+                setFormValues={setFormValues}
+            />
 
             {errorMessageText && isError && (
                 <p className="text-red-500 text-sm mt-2 text-start">

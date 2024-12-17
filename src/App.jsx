@@ -72,23 +72,30 @@ const router = createBrowserRouter(
             errorElement: <NotFound />,
         },
         {
-            path: "/auth/forgotPassword",
-            element: <ForgetPassword />,
+            path: "/auth/reset/password",
+            element: (
+                <Suspense fallback={LoginRegisterSkeleton}>
+                    <ForgetPassword />
+                </Suspense>
+            ),
             errorElement: <NotFound />,
         },
         {
             path: "/auth/Verify",
-            element: <Verify />,
+            element: (
+                <Suspense fallback={LoginRegisterSkeleton}>
+                    <Verify />
+                </Suspense>
+            ),
             errorElement: <NotFound />,
         },
         {
-            path: "/auth/merchant/register",
-            element: <MerchantRegister />,
-            errorElement: <NotFound />,
-        },
-        {
-            path: "FormPage",
-            element: <FormPage />,
+            path: "/auth/register/merchant",
+            element: (
+                <Suspense fallback={LoginRegisterSkeleton}>
+                    <MerchantRegister />
+                </Suspense>
+            ),
             errorElement: <NotFound />,
         },
         {
@@ -129,7 +136,7 @@ const router = createBrowserRouter(
 function App() {
     useEffect(() => {
         const searchParams = new URLSearchParams(window.location.search);
-        const redirectPath = searchParams.get('redirect');
+        const redirectPath = searchParams.get("redirect");
         if (redirectPath) {
             router.navigate(redirectPath, { replace: true });
         }
