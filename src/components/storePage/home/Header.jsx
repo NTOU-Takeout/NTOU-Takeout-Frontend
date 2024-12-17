@@ -8,9 +8,8 @@ const Header = ({
     onLeftClick,
     rightComponents = [],
 }) => {
-    console.log('Header rightComponents:', rightComponents);
-    console.log('Header rightComponents length:', rightComponents.length);
-    console.log('Header rightComponents type:', typeof rightComponents);
+    const currentUrl = window.location.href;
+    console.debug("rightComponents", rightComponents);
     return (
         <header
             className="fixed z-30 top-0 left-0 w-full flex flex-row items-center justify-between bg-white  transition-shadow duration-300 ease-in-out p-3 font-notoTC shadow-md"
@@ -22,7 +21,7 @@ const Header = ({
                 <FontAwesomeIcon icon={leftIcon} />
             </div>
             <h1 className="font-bold text-xl ml-12">
-                <a href="/merchantPage">{title}</a>
+                <a href={currentUrl}>{title}</a>
             </h1>
             {rightComponents.length > 0 && (
                 <div className="flex items-center gap-4">

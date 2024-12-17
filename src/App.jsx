@@ -19,66 +19,105 @@ const ForgetPassword = lazy(() => import("./pages/ForgetPassword"));
 const Register = lazy(() => import("./pages/Register"));
 const StoreHome = lazy(() => import("./pages/store/Home"));
 const StoreMenu = lazy(() => import("./pages/store/Menu"));
+const StoreOrder = lazy(() => import("./pages/store/Order"));
 const queryClient = new QueryClient();
 
-const router = createBrowserRouter([
-    {
-        path: "/",
-        element: <Suspense fallback={<HomeSkeleton />}><Home /></Suspense>,
-        errorElement: <NotFound />,
-    },
-    {
-        path: "/cart",
-        element: <Suspense fallback={<CartSkeleton />}><Cart /></Suspense>,
-        errorElement: <NotFound />,
-    },
-    {
-        path: "/menu/:merchantId",
-        element: <Suspense fallback={<MenuPageSkeleton />}><Menu /></Suspense>,
-        errorElement: <NotFound />,
-    },
-    {
-        path: "/menu/:merchantId/review",
-        element: <Suspense fallback={<ReviewSkeleton />}><Review /></Suspense>,
-        errorElement: <NotFound />,
-    },
-    {
-        path: "/auth/:authType",
-        element: <Suspense fallback={<LoginRegisterSkeleton />}><LoginRegister /></Suspense>,
-        errorElement: <NotFound />,
-    },
-    {
-        path: "/auth/forgotPassword",
-        element: <ForgetPassword />,
-        errorElement: <NotFound />,
-    },
-    {
-        path: "/Register",
-        element: <Register />,
-        errorElement: <NotFound />,
-    },
-    {
-        path: "/store/:storeId",
-        element: <Suspense fallback={<HomeSkeleton />}><StoreHome /></Suspense>,
-        errorElement: <NotFound />,
-        children: [
-            {
-                path: "management/menu",
-                element: <Suspense fallback={<MenuPageSkeleton />}><StoreMenu /></Suspense>,
-                errorElement: <NotFound />,
-            }
-        ]
-    },
-],
+const router = createBrowserRouter(
+    [
+        {
+            path: "/",
+            element: (
+                <Suspense fallback={<HomeSkeleton />}>
+                    <Home />
+                </Suspense>
+            ),
+            errorElement: <NotFound />,
+        },
+        {
+            path: "/cart",
+            element: (
+                <Suspense fallback={<CartSkeleton />}>
+                    <Cart />
+                </Suspense>
+            ),
+            errorElement: <NotFound />,
+        },
+        {
+            path: "/menu/:merchantId",
+            element: (
+                <Suspense fallback={<MenuPageSkeleton />}>
+                    <Menu />
+                </Suspense>
+            ),
+            errorElement: <NotFound />,
+        },
+        {
+            path: "/menu/:merchantId/review",
+            element: (
+                <Suspense fallback={<ReviewSkeleton />}>
+                    <Review />
+                </Suspense>
+            ),
+            errorElement: <NotFound />,
+        },
+        {
+            path: "/auth/:authType",
+            element: (
+                <Suspense fallback={<LoginRegisterSkeleton />}>
+                    <LoginRegister />
+                </Suspense>
+            ),
+            errorElement: <NotFound />,
+        },
+        {
+            path: "/auth/forgotPassword",
+            element: <ForgetPassword />,
+            errorElement: <NotFound />,
+        },
+        {
+            path: "/Register",
+            element: <Register />,
+            errorElement: <NotFound />,
+        },
+        {
+            path: "/store/:storeId",
+            element: (
+                <Suspense fallback={<HomeSkeleton />}>
+                    <StoreHome />
+                </Suspense>
+            ),
+            errorElement: <NotFound />,
+            children: [
+                {
+                    path: "management/menu",
+                    element: (
+                        <Suspense fallback={<MenuPageSkeleton />}>
+                            <StoreMenu />
+                        </Suspense>
+                    ),
+                    errorElement: <NotFound />,
+                },
+                {
+                    path: "management/order",
+                    element: (
+                        <Suspense fallback={<MenuPageSkeleton />}>
+                            <StoreOrder />
+                        </Suspense>
+                    ),
+                    errorElement: <NotFound />,
+                },
+            ],
+        },
+    ],
     {
         basename: "/Order-Now-Frontend/",
-    }
+    },
 );
 
 function App() {
     useEffect(() => {
         const searchParams = new URLSearchParams(window.location.search);
-        const redirectPath = searchParams.get('redirect');
+        const redirectPath = searchParams.get("redirect");
         if (redirectPath) {
             router.navigate(redirectPath, { replace: true });
         }
@@ -87,9 +126,7 @@ function App() {
         <StrictMode>
             <QueryClientProvider client={queryClient}>
                 <SystemContextProvider>
-                    <RouterProvider router={router}>
-
-                    </RouterProvider>
+                    <RouterProvider router={router}></RouterProvider>
                     <DevToolBubble
                         router={router}
                         endPointReplacements={{
