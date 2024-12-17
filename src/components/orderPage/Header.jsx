@@ -17,7 +17,7 @@ const Header = ({ orderId, status, onBackClick }) => {
 
     return (
         <header className="bg-orange-500 px-6 py-4 flex items-center justify-between">
-            {/* Back Button */}
+            {/* Back icon */}
             <button
                 onClick={onBackClick}
                 className="text-white text-2xl mr-4"
@@ -41,7 +41,7 @@ const Header = ({ orderId, status, onBackClick }) => {
 Header.propTypes = {
     orderId: PropTypes.string.isRequired,
     status: PropTypes.oneOf(["製作中", "未取餐", "已取餐", "取消"]).isRequired,
-    onBackClick: PropTypes.func.isRequired, // Add onBackClick as a prop
+    onBackClick: PropTypes.func.isRequired,
 };
 
 export default Header;
