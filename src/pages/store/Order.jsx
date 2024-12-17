@@ -19,6 +19,7 @@ const Home = () => {
     );
     const { cartData } = useSystemContext();
     console.debug("cartData", cartData);
+    const cartStatus = cartData.status;
     return (
         <div>
             <Header
@@ -26,8 +27,17 @@ const Home = () => {
                 onLeftClick={toggleSidebar}
                 rightComponents={[orderCountButton]}
             />
-            <div className="sticky top-[56px] z-20">
-                {/*<OrderCard order={}*/}
+            <div className="relative top-20">
+                {cartData.orderedDishes.map((dish, _) => (
+                    <OrderCard
+                        key={_}
+                        order={{
+                            ...dish,
+                            status: "PENDING",
+                        }}
+                        showStatus={true}
+                    />
+                ))}
             </div>
         </div>
     );
