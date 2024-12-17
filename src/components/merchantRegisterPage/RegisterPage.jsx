@@ -1,6 +1,7 @@
 import { useState } from "react";
 import TitleText from "../specSection/TitleText";
 import DataForm from "../specSection/DataForm";
+import uploadImageToImgur from "../../api/image/imgurUpload";
 import { Link } from "react-router-dom";
 
 const MerchantRegisterPage = () => {
@@ -22,6 +23,7 @@ const MerchantRegisterPage = () => {
         address: ""
     });
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false); // 用於控制按鈕的狀態
 
     const handleInputChange = (field, value) => {
         setFormData({ ...formData, [field]: value });
@@ -53,13 +55,28 @@ const MerchantRegisterPage = () => {
         return true;
     };
 
-    const handleContinue = () => {
+    const handleContinue = async () => {
         if (!validateStep()) return;
 
         setError("");
+        if (currentStep === 1 && formData.uploadImage) {
+            // 若是上傳圖片，先上傳圖片到 Imgur
+            setLoading(true); // 開始加載
+            const imageUrl = await uploadImageToImgur(formData.uploadImage);
+            if (imageUrl) {
+                setFormData({ ...formData, uploadImage: imageUrl });
+            } else {
+                setError("圖片上傳失敗");
+                setLoading(false);
+                return;
+            }
+        }
+
         if (currentStep < 2) {
             setCurrentStep(currentStep + 1);
         }
+
+        setLoading(false);
     };
 
     return (
@@ -79,8 +96,9 @@ const MerchantRegisterPage = () => {
                 <button
                     onClick={handleContinue}
                     className="fixed bottom-[2rem] left-[15%] w-[70%] bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600 transition"
+                    disabled={loading} // 按鈕禁用狀態
                 >
-                    {continueBtn[currentStep]}
+                    {loading ? "上傳中..." : continueBtn[currentStep]}
                 </button>
             ) : (
                 <Link

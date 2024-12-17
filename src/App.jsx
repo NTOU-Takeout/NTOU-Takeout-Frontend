@@ -57,7 +57,7 @@ const router = createBrowserRouter([
     {
         path: "/auth/merchant/register",
         element: <MerchantRegister />,
-        errorElement: <NotFound />,
+        // errorElement: <NotFound />,
     }
 
 ],
