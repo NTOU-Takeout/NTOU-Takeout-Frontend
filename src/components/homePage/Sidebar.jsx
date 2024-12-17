@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import useSidebarStore from "../../stores/sidebarStore";
+import useSidebarStore from "../../stores/common/sidebarStore";
 import SidebarButton from "./SidebarButton";
 import useThemeStore from "../../stores/themeStore";
 import Cookies from "js-cookie";

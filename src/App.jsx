@@ -10,12 +10,6 @@ import HomeSkeleton from "./skeleton/home/HomeSkeleton";
 import ReviewSkeleton from "./skeleton/review/ReviewSkeleton";
 import MenuPageSkeleton from "./hooks/menu/MenuPageSkeleton";
 import LoginRegisterSkeleton from "./skeleton/auth/LoginRegisterSkeleton";
-import MerchantSkeleton from "./skeleton/merchant/MerchantSkeleton";
-import MerchantPage from "./pages/MerchantPage";
-import MerchantMainPage from "./pages/MerchantSubpage/MerchantMainPage";
-import MerchantMenuPage from "./pages/MerchantSubpage/MerchantMenuPage";
-import MerchantOrderPage from "./pages/MerchantSubpage/MerchantOrderPage";
-
 const Cart = lazy(() => import("./pages/Cart"));
 const Home = lazy(() => import("./pages/Home"));
 const Review = lazy(() => import("./pages/Review"));
@@ -25,7 +19,7 @@ const ForgetPassword = lazy(() => import("./pages/ForgetPassword"));
 const Register = lazy(() => import("./pages/Register"));
 const StoreHome = lazy(() => import("./pages/store/Home"));
 const StoreMenu = lazy(() => import("./pages/store/Menu"));
-const merchantPage = lazy(() => import("./pages/MerchantPage"));
+const StoreOrder = lazy(() => import("./pages/store/Order"));
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter(
@@ -103,52 +97,17 @@ const router = createBrowserRouter(
                     ),
                     errorElement: <NotFound />,
                 },
-            ],
-        },
-        {
-            path: "/merchantPage",
-            element: <MerchantPage />,
-            errorElement: <NotFound />,
-            children: [
                 {
-                    path: "", // 子路由
-                    element: <MerchantMainPage />,
-                    errorElement: <NotFound />,
-                },
-                {
-                    path: "menu", // 子路由
-                    element: <MerchantMenuPage />,
-                    errorElement: <NotFound />,
-                },
-                {
-                    path: "order", // 子路由
-                    element: <MerchantOrderPage />,
+                    path: "management/order",
+                    element: (
+                        <Suspense fallback={<MenuPageSkeleton />}>
+                            <StoreOrder />
+                        </Suspense>
+                    ),
                     errorElement: <NotFound />,
                 },
             ],
         },
-        // {
-        //     path: "/merchantPage",
-        //     element: <MerchantPage />,
-        //     errorElement: <NotFound />,
-        //     children: [
-        //         {
-        //             path: "", // 子路由
-        //             element: <MerchantMainPage />,
-        //             errorElement: <NotFound />,
-        //         },
-        //         {
-        //             path: "menu", // 子路由
-        //             element: <MerchantMenuPage />,
-        //             errorElement: <NotFound />,
-        //         },
-        //         {
-        //             path: "order", // 子路由
-        //             element: <MerchantOrderPage />,
-        //             errorElement: <NotFound />,
-        //         },
-        //     ],
-        // }
     ],
     {
         basename: "/Order-Now-Frontend/",

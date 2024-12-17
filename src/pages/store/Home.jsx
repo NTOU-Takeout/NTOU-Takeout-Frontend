@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import Header from "../../components/storePage/home/Header";
 import Sidebar from "../../components/storePage/home/Sidebar";
-import useSidebarStore from "../../stores/sidebarStore";
+import useSidebarStore from "../../stores/common/sidebarStore";
 function Home() {
     const toggleSidebar = useSidebarStore((state) => state.toggleSidebar);
     const setTitle = useSidebarStore((state) => state.setTitle);
@@ -14,6 +14,9 @@ function Home() {
         switch (true) {
             case location.pathname.includes("menu"):
                 setTitle("菜單管理");
+                break;
+            case location.pathname.includes("order"):
+                setTitle("訂單管理");
                 break;
             default:
                 setTitle("首頁");

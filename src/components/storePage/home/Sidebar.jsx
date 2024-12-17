@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import useSidebarStore from "../../../stores/sidebarStore";
+import useSidebarStore from "../../../stores/common/sidebarStore";
 import SidebarButton from "../../homePage/SidebarButton";
 import useThemeStore from "../../../stores/themeStore";
 import {
@@ -52,11 +52,12 @@ const Sidebar = ({ merchantName }) => {
                         path="/store/123"
                     />
                     <SidebarButton
-                        text="訂單"
+                        text="訂單管理"
                         icon={faFolder}
                         iconSize="lg"
                         iconColor={"#053766"}
                         style={"px-4 py-4"}
+                        path="/store/123/management/order"
                     />
                     <SidebarButton
                         text="菜單管理"

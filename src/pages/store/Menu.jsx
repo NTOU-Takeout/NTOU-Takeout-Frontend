@@ -1,7 +1,7 @@
 import { lazy, Suspense, useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import useSidebarStore from "../../stores/sidebarStore";
+import useSidebarStore from "../../stores/common/sidebarStore";
 import Header from "../../components/storePage/home/Header";
 import NavbarSkeleton from "../../skeleton/menu/NavbarSkeleton";
 import MenuSectionSkeleton from "../../skeleton/menu/MenuSectionSkeleton";
@@ -13,7 +13,8 @@ import useMerchantStore from "../../stores/merchantStore";
 import useNavStore from "../../stores/merchantMenuNav";
 import getStoreClient from "../../api/store/getStoreClient";
 import MenuPageSkeleton from "../../hooks/menu/MenuPageSkeleton";
-function Menu() {
+
+const Menu = () => {
     const toggleSidebar = useSidebarStore((state) => state.toggleSidebar);
     const title = useSidebarStore((state) => state.title);
     const merchantId = "67178651994d5f6d435d6ef8";
@@ -101,6 +102,7 @@ function Menu() {
             預覽
         </button>
     );
+
     return (
         <div>
             <Header
@@ -129,7 +131,7 @@ function Menu() {
                     />
                 </Suspense>
             </div>
-        </div >
+        </div>
     );
 }
 
