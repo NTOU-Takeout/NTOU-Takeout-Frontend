@@ -33,7 +33,7 @@ const Home = () => {
                         key={_}
                         order={{
                             ...dish,
-                            status: "PENDING",
+                            status: "CANCELED",
                         }}
                         showStatus={true}
                     />
