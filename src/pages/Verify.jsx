@@ -1,5 +1,3 @@
-// import RegisterPage from "../components/loginRegisterPage/RegisterPage";
-// import ForgotPasswordPage from "../components/forgotPasswordPage/ForgotPasswordPage";
 import FormPage from "../components/authPage/FormPage.jsx";
 function Verify() {
     const title = "請輸入驗證碼";
@@ -18,6 +16,7 @@ function Verify() {
                 titleText={title}
                 description={description}
                 formData={formData}
+                continueBtnText={continueBtnText}
                 continiueBtnText={continueBtnText}
                 errorMessageText={errorMessageText}
                 handleSubmit={handleSubmit}
