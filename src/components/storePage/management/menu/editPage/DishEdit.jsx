@@ -3,7 +3,7 @@ import EditHeader from "./EditHeader";
 import DishForm from "./DishForm";
 import DishOptionList from "./DishOptionList";
 import { useState } from "react";
-import useEditDishStore from "../../../../../stores/EditDishStore";
+import useEditDishStore from "../../../../../stores/dishEditStore";
 import useMenuStore from "../../../../../stores/menuStore";
 function DishEdit({ dishData, onClose }) {
     const [description, setDescription] = useState(dishData.description);

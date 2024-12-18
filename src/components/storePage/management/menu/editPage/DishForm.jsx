@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import useEditDishStore from "../../../../../stores/EditDishStore";
+import useEditDishStore from "../../../../../stores/dishEditStore";
 
 const DishForm = ({
     defaultName,

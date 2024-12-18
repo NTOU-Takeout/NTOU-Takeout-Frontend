@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ToggleNavBar from "../../../../common/ToggleNavBar";
-import useEditDishStore from "../../../../../stores/EditDishStore";
+import useEditDishStore from "../../../../../stores/dishEditStore";
 
 const DishOptionList = ({ group, groupIndex, onDeleteGroup }) => {
     const setGroup = useEditDishStore((state) => state.setGroup);

@@ -2,7 +2,7 @@ import { lazy, Suspense, useState } from "react";
 import PropTypes from "prop-types";
 import { faEdit } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import useEditDishStore from "../../../../stores/EditDishStore";
+import useEditDishStore from "../../../../stores/dishEditStore";
 
 const CartItemCardSkeleton = lazy(
     () => import("../../../../skeleton/menu/CartItemCardSkeleton"),
