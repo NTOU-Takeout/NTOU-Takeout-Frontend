@@ -8,7 +8,6 @@ const DishForm = ({
     defaultCategory,
     onImageUpload,
 }) => {
-    // 获取 zustand 的方法
     const updateDishDescription = useEditDishStore(
         (state) => state.updateDishDescription,
     );
@@ -18,7 +17,6 @@ const DishForm = ({
         (state) => state.updateDishCategory,
     );
 
-    // 输入框和文本框的 `onChange` 事件监听
     const handleNameChange = (e) => {
         updateDishName(e.target.value);
     };
@@ -37,7 +35,6 @@ const DishForm = ({
 
     return (
         <div className="mt-10 p-6 bg-white">
-            {/* 名稱輸入 */}
             <div className="mb-4">
                 <label className="block text-sm font-bold mb-2">名稱：</label>
                 <input
@@ -49,7 +46,6 @@ const DishForm = ({
                 />
             </div>
 
-            {/* 商品描述 */}
             <div className="mb-4">
                 <label className="block text-sm font-bold mb-2">
                     商品描述：
@@ -62,7 +58,6 @@ const DishForm = ({
                 ></textarea>
             </div>
 
-            {/* 圖片 */}
             <div className="mb-4">
                 <label className="block text-sm font-bold mb-2">圖片：</label>
                 <div className="flex items-center">
@@ -81,7 +76,6 @@ const DishForm = ({
                 </div>
             </div>
 
-            {/* 價格 */}
             <div className="mb-4">
                 <label className="block text-sm font-bold mb-2">價格：</label>
                 <input
@@ -93,7 +87,6 @@ const DishForm = ({
                 />
             </div>
 
-            {/* 類別 */}
             <div className="mb-4">
                 <label className="block text-sm font-bold mb-2">類別：</label>
                 <input

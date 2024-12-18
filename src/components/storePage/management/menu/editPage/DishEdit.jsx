@@ -22,11 +22,11 @@ function DishEdit({ dishData, onClose }) {
         console.log(dish);
         updateDishById(dish.id, dish);
 
-        onClose(); // Pass the updated data back to the parent
+        onClose();
     };
 
     const handleBack = () => {
-        onClose(); // Close without saving
+        onClose();
     };
 
     const handleImageUpload = () => {
@@ -50,14 +50,12 @@ function DishEdit({ dishData, onClose }) {
 
     return (
         <div>
-            {/* Header */}
             <EditHeader
                 dishName={name}
                 onBack={handleBack}
                 onSave={handleSave}
             ></EditHeader>
 
-            {/* Dish Form */}
             <DishForm
                 defaultName={name}
                 defaultDescription={description}
@@ -70,7 +68,6 @@ function DishEdit({ dishData, onClose }) {
                 onCategoryChange={setCategoryName}
             ></DishForm>
 
-            {/* Dish Option List */}
             {groups.map((singleGroup, index) => (
                 <DishOptionList
                     key={index}

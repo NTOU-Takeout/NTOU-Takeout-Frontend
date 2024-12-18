@@ -17,7 +17,6 @@ const DishOptionList = ({ group, groupIndex, onDeleteGroup }) => {
     const dish = useEditDishStore((state) => state.dish);
     const updateGroupName = useEditDishStore((state) => state.updateGroupName);
     console.log(dish);
-    // 每次 options 或 groupName 更新时同步到 store
     useEffect(() => {
         console.log(groupIndex);
         console.log(groupName, options, isSingleSelect);
