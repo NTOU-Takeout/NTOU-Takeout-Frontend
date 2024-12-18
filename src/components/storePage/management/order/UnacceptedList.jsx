@@ -1,7 +1,7 @@
 import OrderCard from "./OrderCard.jsx";
 import useOrderStore from "../../../../stores/orderStore.js";
 
-const UnacceptedList = () => {
+// const UnacceptedList = () => {
     const { orders, updateOrderStatus } = useOrderStore();
 
     const handleAccept = (id) => {

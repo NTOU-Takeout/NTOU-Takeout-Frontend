@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useActiveTabStore } from '../../stores/common/useActiveTabStore';
 import PropTypes from 'prop-types';
 
+
 const ToggleNavBar = ({ options, width = 'w-full', height = '50px' }) => {
     const { activeTab, setActiveTab } = useActiveTabStore();
     const keys = Object.keys(options);
@@ -22,7 +23,6 @@ const ToggleNavBar = ({ options, width = 'w-full', height = '50px' }) => {
             className={`relative border border-gray-300 rounded-2xl p-1 ${width}`}
             style={{ height }}
         >
-            {/* 內層容器：透過 flex 均分按鈕區塊，不額外有 padding，highlight bar 在此絕對定位 */}
             <div className="relative w-full h-full flex overflow-hidden rounded-xl">
                 {/* Highlight bar */}
                 <div
