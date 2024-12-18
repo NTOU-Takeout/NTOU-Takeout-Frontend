@@ -1,7 +1,7 @@
-import { useMutation } from '@tanstack/react-query';
-import loginClient from '../../api/auth/loginClient';
-import useUserInfoStore from '../../stores/userInfoStore';
-import CryptoJS from 'crypto-js';
+import { useMutation } from "@tanstack/react-query";
+import loginClient from "../../api/auth/loginClient";
+import useUserInfoStore from "../../stores/userInfoStore";
+import CryptoJS from "crypto-js";
 
 export const useLoginMutation = (isEnabled = true) => {
     const { setUserInfo } = useUserInfoStore();
@@ -9,22 +9,22 @@ export const useLoginMutation = (isEnabled = true) => {
     const {
         mutateAsync: loginMutation,
         isSuccess: isLoginSuccess,
-        isLoading,
-
+        isPending,
     } = useMutation({
         mutationFn: async (userDetails) => {
-            const hashedPassword = CryptoJS.SHA256(userDetails.password).toString();
-            userDetails.password = hashedPassword;
+            userDetails.password = CryptoJS.SHA256(
+                userDetails.password,
+            ).toString();
             const response = await loginClient.loginUser(userDetails);
             return response;
         },
         onSuccess: (data) => {
             setUserInfo(data);
-            console.debug('Login successful return data:', data);
-            window.location.assign('/Order-Now-Frontend/');
+            console.debug("Login successful return data:", data);
+            window.location.assign("/Order-Now-Frontend/");
         },
         onError: (error) => {
-            console.error('Login failed:', error);
+            console.error("Login failed:", error);
             throw error;
         },
         enabled: isEnabled,
@@ -33,6 +33,6 @@ export const useLoginMutation = (isEnabled = true) => {
     return {
         loginMutation,
         isLoginSuccess,
-        isLoading,
+        isPending,
     };
 };

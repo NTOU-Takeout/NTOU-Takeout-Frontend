@@ -1,7 +1,7 @@
 import { StrictMode, useEffect, lazy, Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+// import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import DevToolBubble from "./devtool/DevToolBubble";
 import { SystemContextProvider } from "./context/SystemContext";
 import NotFound from "./pages/NotFound";
@@ -16,11 +16,13 @@ const Review = lazy(() => import("./pages/Review"));
 const Menu = lazy(() => import("./pages/Menu"));
 const LoginRegister = lazy(() => import("./pages/LoginRegister"));
 const ForgetPassword = lazy(() => import("./pages/ForgetPassword"));
-const Register = lazy(() => import("./pages/Register"));
+const Verify = lazy(() => import("./pages/Verify.jsx"));
+const MerchantRegister = lazy(() => import("./pages/MerchantRegister"));
 const StoreHome = lazy(() => import("./pages/store/Home"));
 const StoreMenu = lazy(() => import("./pages/store/Menu"));
 const StoreOrder = lazy(() => import("./pages/store/Order"));
 const queryClient = new QueryClient();
+import OrderDetails from "./pages/store/OrderDetailPage";
 
 const router = createBrowserRouter(
     [
@@ -70,13 +72,30 @@ const router = createBrowserRouter(
             errorElement: <NotFound />,
         },
         {
-            path: "/auth/forgotPassword",
-            element: <ForgetPassword />,
+            path: "/auth/reset/password",
+            element: (
+                <Suspense fallback={LoginRegisterSkeleton}>
+                    <ForgetPassword />
+                </Suspense>
+            ),
             errorElement: <NotFound />,
         },
         {
-            path: "/Register",
-            element: <Register />,
+            path: "/auth/Verify",
+            element: (
+                <Suspense fallback={LoginRegisterSkeleton}>
+                    <Verify />
+                </Suspense>
+            ),
+            errorElement: <NotFound />,
+        },
+        {
+            path: "/auth/register/merchant",
+            element: (
+                <Suspense fallback={LoginRegisterSkeleton}>
+                    <MerchantRegister />
+                </Suspense>
+            ),
             errorElement: <NotFound />,
         },
         {
@@ -107,6 +126,11 @@ const router = createBrowserRouter(
                     errorElement: <NotFound />,
                 },
             ],
+        },
+        {
+            path: "/OrderDetails",
+            element: <OrderDetails />,
+            // errorElement: <NotFound />,
         },
     ],
     {
