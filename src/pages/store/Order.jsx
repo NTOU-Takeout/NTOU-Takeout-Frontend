@@ -57,27 +57,27 @@ const Home = () => {
     );
 
     const handleRefresh = () => {
-        console.log("To do refresh");
+        console.log("需要去refresh");
     };
     const handleReceiveOrderNotifyConfirm = () => {
-        console.log("confirm");
+        console.log("接收訂單的confirm");
     };
     const handleReceiveOrderNotifyCancel = () => {
-        console.log("cancel");
+        console.log("接收訂單的cancel");
     };
 
     const handleFinishDishConfirm = () => {
-        console.log("confirm");
+        console.log("已製作完成的confirm");
     };
     const handleFinishDishCancel = () => {
-        console.log("cancel");
+        console.log("已製作完成的cancel");
     };
 
     const handleFinishTakeOutConfirm = () => {
-        console.log("confirm");
+        console.log("已取餐的confirm");
     };
     const handleFinishTakeOutCancel = () => {
-        console.log("cancel");
+        console.log("已取餐的cancel");
     };
 
     const items = [
