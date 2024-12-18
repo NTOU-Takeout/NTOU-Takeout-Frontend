@@ -76,7 +76,7 @@ const Menu = () => {
         }
     }, [merchantId, getMerchantById]);
 
-    const categoryData = useMenuStore((state) => state.menu);
+    const categoryData = useMenuStore((state) => state.menu.categories);
 
     const menuCategoryList = useCategoryListQuery(menuId);
     //const { categoryData } = useCategoryQueries(menuCategoryList, merchantId);

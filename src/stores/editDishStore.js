@@ -7,11 +7,15 @@ const useEditDishStore = create((set) => ({
         picture: "",
         price: 0,
         description: "",
-        categoryName: "",
-        groups: [],
+        category: "",
+        salesVolume: 0,
+        dishAttributes: [],
     },
 
+    // 設置整個 dish
     setDish: (newDish) => set({ dish: newDish }),
+
+    // 更新單一欄位
     updateDishName: (name) =>
         set((state) => ({ dish: { ...state.dish, name } })),
     updateDishPicture: (picture) =>
@@ -20,83 +24,99 @@ const useEditDishStore = create((set) => ({
         set((state) => ({ dish: { ...state.dish, price } })),
     updateDishDescription: (description) =>
         set((state) => ({ dish: { ...state.dish, description } })),
-    updateDishCategory: (categoryName) =>
-        set((state) => ({ dish: { ...state.dish, categoryName } })),
-    setGroup: (index, updatedGroup) =>
+    updateDishCategory: (category) =>
+        set((state) => ({ dish: { ...state.dish, category } })),
+    updateDishSalesVolume: (salesVolume) =>
+        set((state) => ({ dish: { ...state.dish, salesVolume } })),
+
+    // 管理 dishAttributes
+    setAttribute: (index, updatedAttribute) =>
         set((state) => ({
             dish: {
                 ...state.dish,
-                groups: state.dish.groups.map((group, i) =>
-                    i === index ? updatedGroup : group,
+                dishAttributes: state.dish.dishAttributes.map((attr, i) =>
+                    i === index ? updatedAttribute : attr,
+                ),
+            },
+        })),
+    addAttribute: (attribute) =>
+        set((state) => ({
+            dish: {
+                ...state.dish,
+                dishAttributes: [...state.dish.dishAttributes, attribute],
+            },
+        })),
+    deleteAttribute: (index) =>
+        set((state) => ({
+            dish: {
+                ...state.dish,
+                dishAttributes: state.dish.dishAttributes.filter(
+                    (_, i) => i !== index,
                 ),
             },
         })),
 
-    addGroup: (group) =>
-        set((state) => ({
-            dish: { ...state.dish, groups: [...state.dish.groups, group] },
-        })),
-    deleteGroup: (index) =>
+    // 管理 attributeOptions
+    addOptionToAttribute: (attrIndex, newOption) =>
         set((state) => ({
             dish: {
                 ...state.dish,
-                groups: state.dish.groups.filter((_, i) => i !== index),
+                dishAttributes: state.dish.dishAttributes.map((attr, i) =>
+                    i === attrIndex
+                        ? {
+                              ...attr,
+                              attributeOptions: [
+                                  ...attr.attributeOptions,
+                                  newOption,
+                              ],
+                          }
+                        : attr,
+                ),
             },
         })),
-    updateGroupOption: (groupIndex, optionIndex, updatedOption) =>
+    updateOptionInAttribute: (attrIndex, optionIndex, updatedOption) =>
         set((state) => ({
             dish: {
                 ...state.dish,
-                groups: state.dish.groups.map((group, i) =>
-                    i === groupIndex
+                dishAttributes: state.dish.dishAttributes.map((attr, i) =>
+                    i === attrIndex
                         ? {
-                              ...group,
-                              options: group.options.map((option, j) =>
-                                  j === optionIndex ? updatedOption : option,
+                              ...attr,
+                              attributeOptions: attr.attributeOptions.map(
+                                  (option, j) =>
+                                      j === optionIndex
+                                          ? updatedOption
+                                          : option,
                               ),
                           }
-                        : group,
+                        : attr,
                 ),
             },
         })),
-    addOptionToGroup: (groupIndex, option) =>
+    deleteOptionFromAttribute: (attrIndex, optionIndex) =>
         set((state) => ({
             dish: {
                 ...state.dish,
-                groups: state.dish.groups.map((group, i) =>
-                    i === groupIndex
-                        ? { ...group, options: [...group.options, option] }
-                        : group,
-                ),
-            },
-        })),
-    deleteOptionFromGroup: (groupIndex, optionIndex) =>
-        set((state) => ({
-            dish: {
-                ...state.dish,
-                groups: state.dish.groups.map((group, i) =>
-                    i === groupIndex
+                dishAttributes: state.dish.dishAttributes.map((attr, i) =>
+                    i === attrIndex
                         ? {
-                              ...group,
-                              options: group.options.filter(
+                              ...attr,
+                              attributeOptions: attr.attributeOptions.filter(
                                   (_, j) => j !== optionIndex,
                               ),
                           }
-                        : group,
+                        : attr,
                 ),
             },
         })),
-    updateGroupName: (groupIndex, newGroupName) =>
+
+    // 更新 attribute 名稱
+    updateAttributeName: (attrIndex, newName) =>
         set((state) => ({
             dish: {
                 ...state.dish,
-                groups: state.dish.groups.map((group, i) =>
-                    i === groupIndex
-                        ? {
-                              ...group,
-                              groupName: newGroupName,
-                          }
-                        : group,
+                dishAttributes: state.dish.dishAttributes.map((attr, i) =>
+                    i === attrIndex ? { ...attr, name: newName } : attr,
                 ),
             },
         })),

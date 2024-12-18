@@ -66,16 +66,6 @@ const MenuItemCard = ({ food, onClick, onDelete, onUp, onDown }) => {
                     <p className="text-sm text-gray-600 mt-2 line-clamp-3 text-ellipsis">
                         {description}
                     </p>
-
-                    {/* Add button */}
-                    {authToken && (
-                        <div className="flex justify-end mt-4 absolute bottom-[15px] right-[15px]">
-                            <MenuItemButton
-                                dishId={id}
-                                onClick={handleButtonClick}
-                            />
-                        </div>
-                    )}
                 </div>
                 <div className="absolute bottom-4 right-5 flex space-x-2">
                     <button

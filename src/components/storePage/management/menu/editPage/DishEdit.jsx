@@ -9,11 +9,12 @@ function DishEdit({ dishData, onClose }) {
     const [description, setDescription] = useState(dishData.description);
     const [name, setName] = useState(dishData.name);
     const [price, setPrice] = useState(dishData.price);
-    const [categoryName, setCategoryName] = useState(dishData.categoryName);
-    const [groups, setGroups] = useState(dishData.groups);
+    const [categoryName, setCategoryName] = useState(dishData.category);
+    const [groups, setGroups] = useState(dishData.dishAttributes);
 
     const dish = useEditDishStore((state) => state.dish);
-    const deleteGroup = useEditDishStore((state) => state.deleteGroup);
+
+    const deleteGroup = useEditDishStore((state) => state.deleteAttribute);
 
     const updateDishById = useMenuStore((state) => state.updateDishById);
 
@@ -90,8 +91,8 @@ DishEdit.propTypes = {
         picture: PropTypes.string.isRequired,
         price: PropTypes.number.isRequired,
         description: PropTypes.string,
-        categoryName: PropTypes.string,
-        groups: PropTypes.arrayOf(
+        category: PropTypes.string,
+        dishAttributes: PropTypes.arrayOf(
             PropTypes.shape({
                 groupName: PropTypes.string.isRequired,
                 options: PropTypes.arrayOf(

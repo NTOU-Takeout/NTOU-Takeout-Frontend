@@ -6,16 +6,20 @@ import ToggleNavBar from "../../../../common/ToggleNavBar";
 import useEditDishStore from "../../../../../stores/EditDishStore";
 
 const DishOptionList = ({ group, groupIndex, onDeleteGroup }) => {
-    const setGroup = useEditDishStore((state) => state.setGroup);
+    const setGroup = useEditDishStore((state) => state.setAttribute);
 
-    const [options, setOptions] = useState(group.options);
-    const [groupName, setGroupName] = useState(group.groupName);
+    const [options, setOptions] = useState(group.attributeOptions);
+    const [groupName, setGroupName] = useState(group.name);
+
     const [isEditingGroupName, setIsEditingGroupName] = useState(false);
     const [editingOptionIndex, setEditingOptionIndex] = useState(null);
     const [editingField, setEditingField] = useState(null);
     const [isSingleSelect, setIsSingleSelect] = useState(true);
+
     const dish = useEditDishStore((state) => state.dish);
-    const updateGroupName = useEditDishStore((state) => state.updateGroupName);
+    const updateGroupName = useEditDishStore(
+        (state) => state.updateAttributeName,
+    );
     console.log(dish);
     useEffect(() => {
         console.log(groupIndex);
@@ -179,8 +183,8 @@ const DishOptionList = ({ group, groupIndex, onDeleteGroup }) => {
 
 DishOptionList.propTypes = {
     group: PropTypes.shape({
-        groupName: PropTypes.string.isRequired,
-        options: PropTypes.arrayOf(
+        name: PropTypes.string.isRequired,
+        attributeOptions: PropTypes.arrayOf(
             PropTypes.shape({
                 name: PropTypes.string.isRequired,
                 price: PropTypes.number.isRequired,
