@@ -1,7 +1,7 @@
 import { StrictMode, useEffect, lazy, Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+// import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import DevToolBubble from "./devtool/DevToolBubble";
 import { SystemContextProvider } from "./context/SystemContext";
 import NotFound from "./pages/NotFound";
@@ -10,23 +10,19 @@ import HomeSkeleton from "./skeleton/home/HomeSkeleton";
 import ReviewSkeleton from "./skeleton/review/ReviewSkeleton";
 import MenuPageSkeleton from "./hooks/menu/MenuPageSkeleton";
 import LoginRegisterSkeleton from "./skeleton/auth/LoginRegisterSkeleton";
-import MerchantSkeleton from "./skeleton/merchant/MerchantSkeleton";
-import MerchantPage from "./pages/MerchantPage";
-import MerchantMainPage from "./pages/MerchantSubpage/MerchantMainPage";
-import MerchantMenuPage from "./pages/MerchantSubpage/MerchantMenuPage";
-import MerchantOrderPage from "./pages/MerchantSubpage/MerchantOrderPage";
-
 const Cart = lazy(() => import("./pages/Cart"));
 const Home = lazy(() => import("./pages/Home"));
 const Review = lazy(() => import("./pages/Review"));
 const Menu = lazy(() => import("./pages/Menu"));
 const LoginRegister = lazy(() => import("./pages/LoginRegister"));
 const ForgetPassword = lazy(() => import("./pages/ForgetPassword"));
-const Register = lazy(() => import("./pages/Register"));
+const Verify = lazy(() => import("./pages/Verify.jsx"));
+const MerchantRegister = lazy(() => import("./pages/MerchantRegister"));
 const StoreHome = lazy(() => import("./pages/store/Home"));
 const StoreMenu = lazy(() => import("./pages/store/Menu"));
-const merchantPage = lazy(() => import("./pages/MerchantPage"));
+const StoreOrder = lazy(() => import("./pages/store/Order"));
 const queryClient = new QueryClient();
+import OrderDetails from "./pages/store/OrderDetailPage";
 
 const router = createBrowserRouter(
     [
@@ -76,13 +72,30 @@ const router = createBrowserRouter(
             errorElement: <NotFound />,
         },
         {
-            path: "/auth/forgotPassword",
-            element: <ForgetPassword />,
+            path: "/auth/reset/password",
+            element: (
+                <Suspense fallback={LoginRegisterSkeleton}>
+                    <ForgetPassword />
+                </Suspense>
+            ),
             errorElement: <NotFound />,
         },
         {
-            path: "/Register",
-            element: <Register />,
+            path: "/auth/Verify",
+            element: (
+                <Suspense fallback={LoginRegisterSkeleton}>
+                    <Verify />
+                </Suspense>
+            ),
+            errorElement: <NotFound />,
+        },
+        {
+            path: "/auth/register/merchant",
+            element: (
+                <Suspense fallback={LoginRegisterSkeleton}>
+                    <MerchantRegister />
+                </Suspense>
+            ),
             errorElement: <NotFound />,
         },
         {
@@ -103,52 +116,22 @@ const router = createBrowserRouter(
                     ),
                     errorElement: <NotFound />,
                 },
+                {
+                    path: "management/order",
+                    element: (
+                        <Suspense fallback={<MenuPageSkeleton />}>
+                            <StoreOrder />
+                        </Suspense>
+                    ),
+                    errorElement: <NotFound />,
+                },
             ],
         },
         {
-            path: "/merchantPage",
-            element: <MerchantPage />,
-            errorElement: <NotFound />,
-            children: [
-                {
-                    path: "", // 子路由
-                    element: <MerchantMainPage />,
-                    errorElement: <NotFound />,
-                },
-                {
-                    path: "menu", // 子路由
-                    element: <MerchantMenuPage />,
-                    errorElement: <NotFound />,
-                },
-                {
-                    path: "order", // 子路由
-                    element: <MerchantOrderPage />,
-                    errorElement: <NotFound />,
-                },
-            ],
+            path: "/OrderDetails",
+            element: <OrderDetails />,
+            // errorElement: <NotFound />,
         },
-        // {
-        //     path: "/merchantPage",
-        //     element: <MerchantPage />,
-        //     errorElement: <NotFound />,
-        //     children: [
-        //         {
-        //             path: "", // 子路由
-        //             element: <MerchantMainPage />,
-        //             errorElement: <NotFound />,
-        //         },
-        //         {
-        //             path: "menu", // 子路由
-        //             element: <MerchantMenuPage />,
-        //             errorElement: <NotFound />,
-        //         },
-        //         {
-        //             path: "order", // 子路由
-        //             element: <MerchantOrderPage />,
-        //             errorElement: <NotFound />,
-        //         },
-        //     ],
-        // }
     ],
     {
         basename: "/Order-Now-Frontend/",

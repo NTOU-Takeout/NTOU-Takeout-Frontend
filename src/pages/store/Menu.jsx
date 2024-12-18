@@ -1,23 +1,32 @@
 import { lazy, Suspense, useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import useSidebarStore from "../../stores/sidebarStore";
+import useSidebarStore from "../../stores/common/sidebarStore";
 import Header from "../../components/storePage/home/Header";
 import NavbarSkeleton from "../../skeleton/menu/NavbarSkeleton";
 import MenuSectionSkeleton from "../../skeleton/menu/MenuSectionSkeleton";
-const MenuNavbar = lazy(() => import("../../components/merchantPage/MenuNavbar"));
-const MenuSection = lazy(() => import("../../components/storePage/management/menu/MenuSection"));
+const MenuNavbar = lazy(
+    () => import("../../components/merchantPage/MenuNavbar"),
+);
+const MenuSection = lazy(
+    () => import("../../components/storePage/management/menu/MenuSection"),
+);
 import { useCategoryQueries } from "../../hooks/menu/useCategoryQueries";
 import { useCategoryListQuery } from "../../hooks/menu/useCategoryListQuery";
 import useMerchantStore from "../../stores/merchantStore";
 import useNavStore from "../../stores/merchantMenuNav";
 import getStoreClient from "../../api/store/getStoreClient";
 import MenuPageSkeleton from "../../hooks/menu/MenuPageSkeleton";
-function Menu() {
+import useMenuStore from "../../stores/menuStore";
+import DishEdit from "../../components/storePage/management/menu/editPage/DishEdit";
+
+const Menu = () => {
     const toggleSidebar = useSidebarStore((state) => state.toggleSidebar);
     const title = useSidebarStore((state) => state.title);
     const merchantId = "67178651994d5f6d435d6ef8";
-    const onAddClick = () => { console.debug("add click") };
+    const onAddClick = () => {
+        console.debug("add click");
+    };
     const sectionRefs = useRef([]);
     const [isNavbarFixed, setIsNavbarFixed] = useState(false);
     const setNavbarItems = useNavStore((state) => state.setNavbarItems);
@@ -50,7 +59,8 @@ function Menu() {
         if (merchantData) {
             setMerchant(merchantData);
             setMenuId(merchantData.menuId);
-        } else { // if merchant data is not in store, fetch it
+        } else {
+            // if merchant data is not in store, fetch it
             const fetchMerchantData = async () => {
                 try {
                     const res = await getStoreClient.getMerchantsByIdList([
@@ -66,8 +76,10 @@ function Menu() {
         }
     }, [merchantId, getMerchantById]);
 
+    const categoryData = useMenuStore((state) => state.menu);
+
     const menuCategoryList = useCategoryListQuery(menuId);
-    const { categoryData } = useCategoryQueries(menuCategoryList, merchantId);
+    //const { categoryData } = useCategoryQueries(menuCategoryList, merchantId);
     const [selectedDish, setSelectedDish] = useState(null);
     // set navbar items
     useEffect(() => {
@@ -78,9 +90,7 @@ function Menu() {
 
     // if merchant data is not fetched yet, show loading spinner
     if (merchantId && !merchant) {
-        return (
-            <MenuPageSkeleton />
-        );
+        return <MenuPageSkeleton />;
     }
 
     const addButton = (
@@ -101,15 +111,25 @@ function Menu() {
             預覽
         </button>
     );
+    const handleUpdate = (newDish) => {
+        console.log(newDish, "!!!");
+        setSelectedDish(null);
+    };
+    if (selectedDish) {
+        return (
+            <DishEdit
+                dishData={selectedDish}
+                onClose={(dish) => handleUpdate(dish)}
+            />
+        );
+    }
+
     return (
         <div>
             <Header
                 title={title}
                 onLeftClick={toggleSidebar}
-                rightComponents={[
-                    addButton,
-                    previewButton,
-                ]}
+                rightComponents={[addButton, previewButton]}
             />
             <div className="sticky top-[56px] z-20">
                 <Suspense fallback={<NavbarSkeleton isNavbarFixed={false} />}>
@@ -129,8 +149,8 @@ function Menu() {
                     />
                 </Suspense>
             </div>
-        </div >
+        </div>
     );
-}
+};
 
 export default Menu;

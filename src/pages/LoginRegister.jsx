@@ -1,6 +1,6 @@
 import { useState } from "react";
+import SubmitForm from "../components/authPage/SubmitForm.jsx";
 import { useParams, useNavigate } from "react-router-dom";
-import SubmitForm from "../components/loginRegisterPage/SubmitForm";
 import ToggleNavBar from "../components/common/ToggleNavBar";
 function LoginRegister() {
     const { authType } = useParams();
@@ -15,9 +15,13 @@ function LoginRegister() {
         setIsLogin(newStatus);
     };
     const options = {
-        "登入": () => { handleStatusChange(true); },
-        "註冊": () => { handleStatusChange(false); },
-    }
+        登入: () => {
+            handleStatusChange(true);
+        },
+        註冊: () => {
+            handleStatusChange(false);
+        },
+    };
     return (
         <div className="min-h-screen bg-white flex justify-center pt-20">
             <div className="flex flex-col font-notoTC ">

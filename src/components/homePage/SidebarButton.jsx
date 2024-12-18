@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
-import useSidebarStore from "../../stores/sidebarStore";
+import useSidebarStore from "../../stores/common/sidebarStore";
 import PropTypes from "prop-types";
 
 const SidebarButton = ({
