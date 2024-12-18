@@ -89,9 +89,9 @@ const OrderCard = ({
     };
     console.debug("order status", order.status);
     return (
-        <div className="relative flex justify-between rounded-lg p-4 shadow-md mb-4 bg-white">
+        <div className="relative flex justify-between rounded-lg p-4 shadow-lg mb-6 bg-gray-50">
             {/* Order Info */}
-            <div>
+            <div className="flex flex-col items-start text-start">
                 <p className="text-lg font-bold">單號 {order.id}</p>
                 <p className="text-sm">下單時間: {order.orderTime}</p>
                 <p className="text-sm ">預估取餐時間: {order.estimatedTime}</p>
