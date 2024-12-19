@@ -103,9 +103,9 @@ const router = createBrowserRouter(
             path: "/store/:storeId",
             element: (
                 <Suspense fallback={<HomeSkeleton />}>
-                    {/*<ProtectedRoute>*/}
-                    <StoreHome />
-                    {/*</ProtectedRoute>*/}
+                    <ProtectedRoute>
+                        <StoreHome />
+                    </ProtectedRoute>
                 </Suspense>
             ),
             errorElement: <NotFound />,
