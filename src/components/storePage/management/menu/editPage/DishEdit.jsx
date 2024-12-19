@@ -3,8 +3,10 @@ import EditHeader from "./EditHeader";
 import DishForm from "./DishForm";
 import DishOptionList from "./DishOptionList";
 import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useEditDishStore from "../../../../../stores/EditDishStore";
 import useMenuStore from "../../../../../stores/menuStore";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 function DishEdit({ dishData, onClose }) {
     const [description, setDescription] = useState(dishData.description);
     const [name, setName] = useState(dishData.name);
@@ -48,6 +50,18 @@ function DishEdit({ dishData, onClose }) {
             ),
         );
     };
+    const handleAddGroup = () => {
+        setGroups((prevGroups) => [
+            ...prevGroups,
+            {
+                name: "新屬性",
+                description: "",
+                type: "single",
+                isRequired: false,
+                attributeOptions: [],
+            },
+        ]);
+    };
 
     return (
         <div>
@@ -80,6 +94,16 @@ function DishEdit({ dishData, onClose }) {
                     }
                 ></DishOptionList>
             ))}
+
+            {/* Add Attribute */}
+            <div className="flex justify-center mt-6 z-50">
+                <button
+                    className="text-orange-500 hover:text-orange-700 flex items-center"
+                    onClick={handleAddGroup}
+                >
+                    <FontAwesomeIcon icon={faPlus} size="lg" className="mr-2" />
+                </button>
+            </div>
         </div>
     );
 }

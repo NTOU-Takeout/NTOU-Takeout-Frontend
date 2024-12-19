@@ -56,6 +56,24 @@ const useEditDishStore = create((set) => ({
             },
         })),
 
+    // 添加空的 Attribute
+    addEmptyAttribute: () =>
+        set((state) => ({
+            dish: {
+                ...state.dish,
+                dishAttributes: [
+                    ...state.dish.dishAttributes,
+                    {
+                        name: "新屬性",
+                        description: "",
+                        type: "single",
+                        isRequired: false,
+                        attributeOptions: [],
+                    },
+                ],
+            },
+        })),
+
     // 管理 attributeOptions
     addOptionToAttribute: (attrIndex, newOption) =>
         set((state) => ({

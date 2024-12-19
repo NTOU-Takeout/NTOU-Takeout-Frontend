@@ -24,6 +24,7 @@ const DishOptionList = ({ group, groupIndex, onDeleteGroup }) => {
     const updateGroupName = useEditDishStore(
         (state) => state.updateAttributeName,
     );
+    console.log(dish);
 
     useEffect(() => {
         setGroup(groupIndex, {
