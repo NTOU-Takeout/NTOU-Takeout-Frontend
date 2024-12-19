@@ -14,7 +14,7 @@ const Header = ({ title, onLeftClick = () => {} }) => {
     const user = userInfoStore((state) => state.user);
 
     const handleRightClick = () => {
-        if (authToken && user !== undefined) {
+        if (authToken && user !== undefined && user.role === "CUSTOMER") {
             navigate("/cart");
         } else {
             navigate("/auth/login");

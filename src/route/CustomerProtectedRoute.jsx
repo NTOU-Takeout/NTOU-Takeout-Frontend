@@ -2,22 +2,19 @@ import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import userInfoStore from "../stores/user/userInfoStore.js";
 
-const ProtectedRoute = ({ children }) => {
+const CustomerProtectedRoute = ({ children }) => {
     const navigate = useNavigate();
     const user = userInfoStore((state) => state.user);
-    if (!user) {
-        console.debug("user not found");
+    if (user === undefined || user?.role === "MERCHANT") {
+        console.debug("merchant cant accsss");
         navigate("/auth/login");
-        return;
-    } else if (user.role === "CUSTOMER") {
-        navigate("/");
         return;
     }
     return children;
 };
 
-ProtectedRoute.propTypes = {
+CustomerProtectedRoute.propTypes = {
     children: PropTypes.node.isRequired,
 };
 
-export default ProtectedRoute;
+export default CustomerProtectedRoute;

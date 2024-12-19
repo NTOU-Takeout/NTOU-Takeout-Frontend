@@ -15,7 +15,7 @@ export const useCartQuery = (isEnable = true) => {
         },
         enabled: isEnable,
         refetchOnWindowFocus: false,
-        staleTime: 1000 * 60 * 3, // 3 minute
+        retry: 5,
     });
     return {
         cartData,

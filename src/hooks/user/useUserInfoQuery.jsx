@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { getUserInfo } from "../../api/user/getUserInfo.js";
-export const useUserInfoQuery = () => {
+export const useUserInfoQuery = (isEnable) => {
     const {
         data: userInfo,
         isLoading: isUserInfoLoading,
@@ -14,6 +14,7 @@ export const useUserInfoQuery = () => {
             return res.data.data;
         },
         refetchOnWindowFocus: false,
+        enabled: isEnable,
     });
     return {
         userInfo,

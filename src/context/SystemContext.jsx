@@ -5,14 +5,18 @@ import { useCategoryListQuery } from "../hooks/menu/useCategoryListQuery";
 import { useUserInfoQuery } from "../hooks/user/useUserInfoQuery.jsx";
 import PropTypes from "prop-types";
 import userInfoStore from "../stores/user/userInfoStore.js";
+import Cookies from "js-cookie";
 
 const SystemContext = createContext();
 // eslint-disable-next-line react-refresh/only-export-components
 export const useSystemContext = () => useContext(SystemContext);
 
 export const SystemContextProvider = ({ children }) => {
-    console.log("SystemContextProvider mounted");
-    const { userInfo, isUserInfoLoading, isUserInfoError } = useUserInfoQuery();
+    console.debug("SystemContextProvider mounted");
+    const authToken = Cookies.get("authToken");
+    const { userInfo, isUserInfoLoading } = useUserInfoQuery(
+        authToken !== undefined,
+    );
     console.debug("userInfo : ", userInfo);
     const setUser = userInfoStore((state) => state.setUser);
     useEffect(() => {
@@ -25,17 +29,22 @@ export const SystemContextProvider = ({ children }) => {
         isLoading: isCartLoading,
         isError: isCartError,
         refetchCart,
-    } = useCartQuery(isUserInfoError === false);
+    } = useCartQuery(
+        // don't need fetch when user is undefined or role is MERCHANT
+        userInfo !== undefined && userInfo?.role === "CUSTOMER",
+    );
 
     const { merchantData, isMerchantLoading, refetchMerchantData } =
         useMerchantDataQuery(
             cartData?.storeId ?? null,
-            isUserInfoError === false,
+            // don't need fetch when user is undefined or role is MERCHANT
+            userInfo !== undefined && userInfo?.role === "CUSTOMER",
         );
 
     const menuCategoryList = useCategoryListQuery(
         merchantData?.menuId ?? null,
-        isUserInfoError === false,
+        // don't need fetch when user is undefined or role is MERCHANT
+        userInfo !== undefined && userInfo?.role === "CUSTOMER",
     );
 
     // // Calculate total spend
@@ -68,11 +77,10 @@ export const SystemContextProvider = ({ children }) => {
     }, [cartData?.orderedDishes]);
     const cartCount = cartData?.orderedDishes?.length;
     // console.debug("cartCount:", cartCount);
-    // console.debug("cartError:", cartError);
-    // console.debug('cartData:', cartData);
-    // console.debug('merchantData:', merchantData);
-    // console.debug('totalSpend:', totalSpend);
-    // console.debug('totalQuantity:', totalQuantity);
+    // console.debug("cartData:", cartData);
+    // console.debug("merchantData:", merchantData);
+    // console.debug("totalSpend:", totalSpend);
+    // console.debug("totalQuantity:", totalQuantity);
     return (
         <SystemContext.Provider
             value={{

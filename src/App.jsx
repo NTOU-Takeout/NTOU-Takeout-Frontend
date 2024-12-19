@@ -23,7 +23,8 @@ const StoreMenu = lazy(() => import("./pages/store/Menu"));
 const StoreOrder = lazy(() => import("./pages/store/Order"));
 const queryClient = new QueryClient();
 import OrderDetails from "./pages/store/OrderDetailPage";
-import ProtectedRoute from "./route/ProtectedRoute.jsx";
+import MerchantProtectedRoute from "./route/MerchantProtectedRoute.jsx";
+import CustomerProtectedRoute from "./route/CustomerProtectedRoute.jsx";
 
 const router = createBrowserRouter(
     [
@@ -40,7 +41,9 @@ const router = createBrowserRouter(
             path: "/cart",
             element: (
                 <Suspense fallback={<CartSkeleton />}>
-                    <Cart />
+                    <CustomerProtectedRoute>
+                        <Cart />
+                    </CustomerProtectedRoute>
                 </Suspense>
             ),
             errorElement: <NotFound />,
@@ -103,9 +106,9 @@ const router = createBrowserRouter(
             path: "/store/:storeId",
             element: (
                 <Suspense fallback={<HomeSkeleton />}>
-                    <ProtectedRoute>
+                    <MerchantProtectedRoute>
                         <StoreHome />
-                    </ProtectedRoute>
+                    </MerchantProtectedRoute>
                 </Suspense>
             ),
             errorElement: <NotFound />,
