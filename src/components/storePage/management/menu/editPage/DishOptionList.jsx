@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,52 +14,85 @@ const DishOptionList = ({ group, groupIndex, onDeleteGroup }) => {
     const [isEditingGroupName, setIsEditingGroupName] = useState(false);
     const [editingOptionIndex, setEditingOptionIndex] = useState(null);
     const [editingField, setEditingField] = useState(null);
-    const [isSingleSelect, setIsSingleSelect] = useState(true);
+    const [isSingleSelect, setIsSingleSelect] = useState(
+        group.type === "single",
+    );
+
+    const inputRef = useRef(null);
 
     const dish = useEditDishStore((state) => state.dish);
     const updateGroupName = useEditDishStore(
         (state) => state.updateAttributeName,
     );
-    console.log(dish);
+
     useEffect(() => {
-        console.log(groupIndex);
-        console.log(groupName, options, isSingleSelect);
-        setGroup(groupIndex, { groupName, options, isSingleSelect });
+        setGroup(groupIndex, {
+            name: groupName,
+            attributeOptions: options,
+            type: isSingleSelect ? "single" : "multi",
+        });
     }, [options, groupName, isSingleSelect, groupIndex, setGroup]);
+
+    useEffect(() => {
+        if (inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, [editingOptionIndex, editingField]);
 
     const handleDeleteOption = (index) => {
         setOptions((prevOptions) => prevOptions.filter((_, i) => i !== index));
     };
 
     const handleOptionSave = (e, index) => {
-        if (e.key === "Enter") {
-            const newValue = e.target.value;
-            setOptions((prevOptions) =>
-                prevOptions.map((option, i) =>
-                    i === index
-                        ? {
-                              ...option,
-                              [editingField]:
-                                  editingField === "price"
-                                      ? parseFloat(newValue) || 0
-                                      : newValue,
-                          }
-                        : option,
-                ),
-            );
-            setEditingOptionIndex(null);
-            setEditingField(null);
+        const newValue = e.target.value;
+        console.log(e.type, e.key);
+        if (e.type === "keydown" && e.key !== "Enter") {
+            return;
         }
+        setOptions((prevOptions) =>
+            prevOptions.map((option, i) =>
+                i === index
+                    ? {
+                          ...option,
+                          [editingField]:
+                              editingField === "price"
+                                  ? parseFloat(newValue) || 0
+                                  : newValue,
+                      }
+                    : option,
+            ),
+        );
+        setEditingOptionIndex(null);
+        setEditingField(null);
     };
 
-    const seleteOptions = {
-        單選: () => setIsSingleSelect(true),
-        複選: () => setIsSingleSelect(false),
+    const extraCostSave = (e, index) => {
+        const newValue = e.target.value;
+        console.log(e.type, e.key);
+        if (e.type === "keydown" && e.key !== "Enter") {
+            return;
+        }
+        setOptions((prevOptions) =>
+            prevOptions.map((option, i) =>
+                i === index
+                    ? {
+                          ...option,
+                          extraCost: parseFloat(newValue) || 0,
+                      }
+                    : option,
+            ),
+        );
+        setEditingField(null);
     };
 
     const handleSetGroupName = (value) => {
         updateGroupName(groupIndex, value);
         setGroupName(value);
+    };
+
+    const seleteOptions = {
+        單選: () => setIsSingleSelect(true),
+        複選: () => setIsSingleSelect(false),
     };
 
     return (
@@ -79,7 +112,7 @@ const DishOptionList = ({ group, groupIndex, onDeleteGroup }) => {
                         className="border rounded px-2 py-1 text-lg font-bold focus:ring-orange-500 focus:outline-none"
                     />
                 ) : (
-                    <h3 className="font-bold text-lg">{groupName}：</h3>
+                    <h3 className="font-bold text-lg">{groupName}</h3>
                 )}
 
                 <div className="flex space-x-2">
@@ -105,16 +138,13 @@ const DishOptionList = ({ group, groupIndex, onDeleteGroup }) => {
                     className="flex items-center justify-between mb-2"
                 >
                     <div className="flex items-center space-x-4">
-                        <input
-                            type="checkbox"
-                            className="mr-2 w-5 h-5 bg-orange-100 rounded"
-                            disabled
-                        />
                         {editingOptionIndex === index &&
                         editingField === "name" ? (
                             <input
+                                ref={inputRef}
                                 type="text"
                                 defaultValue={option.name}
+                                onBlur={(e) => handleOptionSave(e, index)}
                                 onKeyDown={(e) => handleOptionSave(e, index)}
                                 className="border rounded px-2 py-1 text-sm focus:ring-orange-400"
                             />
@@ -132,9 +162,11 @@ const DishOptionList = ({ group, groupIndex, onDeleteGroup }) => {
                         {editingOptionIndex === index &&
                         editingField === "price" ? (
                             <input
+                                ref={inputRef}
                                 type="number"
-                                defaultValue={option.price}
-                                onKeyDown={(e) => handleOptionSave(e, index)}
+                                defaultValue={option.extraCost}
+                                onBlur={(e) => extraCostSave(e, index)}
+                                onKeyDown={(e) => extraCostSave(e, index)}
                                 className="border rounded px-2 py-1 text-sm focus:ring-orange-400"
                             />
                         ) : (
@@ -145,7 +177,7 @@ const DishOptionList = ({ group, groupIndex, onDeleteGroup }) => {
                                 }}
                                 className="px-3 border rounded-xl text-black border-black cursor-pointer hover:underline"
                             >
-                                + {option.price}元
+                                + {option.extraCost}元
                             </span>
                         )}
                     </div>
@@ -190,6 +222,7 @@ DishOptionList.propTypes = {
                 price: PropTypes.number.isRequired,
             }),
         ).isRequired,
+        type: PropTypes.string.isRequired,
     }).isRequired,
     groupIndex: PropTypes.number.isRequired,
     onDeleteGroup: PropTypes.func.isRequired,
