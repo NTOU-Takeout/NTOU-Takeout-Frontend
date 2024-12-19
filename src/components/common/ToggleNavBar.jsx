@@ -3,8 +3,13 @@ import { useActiveTabStore } from '../../stores/common/useActiveTabStore';
 import PropTypes from 'prop-types';
 
 
-const ToggleNavBar = ({ options, width = 'w-full', height = '50px' }) => {
+const ToggleNavBar = ({ options, width = 'w-full', height = '50px', InitActiveTab }) => {
     const { activeTab, setActiveTab } = useActiveTabStore();
+    useEffect(()=>{
+        if(InitActiveTab){
+            setActiveTab(InitActiveTab);
+        }
+    },[InitActiveTab,setActiveTab]);
     const keys = Object.keys(options);
 
     // Set the first tab as activeTab
@@ -61,6 +66,7 @@ ToggleNavBar.propTypes = {
     width: PropTypes.string,
     height: PropTypes.string,
     options: PropTypes.object.isRequired,
+    InitActiveTab: PropTypes.string,
 };
 
 export default ToggleNavBar;

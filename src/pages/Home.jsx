@@ -3,9 +3,15 @@ import useSidebarStore from "../stores/common/sidebarStore";
 import Sidebar from "../components/homePage/Sidebar";
 import Searchbar from "../components/homePage/Searchbar";
 import MerchantList from "../components/merchantPage/MerchantList";
+import userInfoStore from "../stores/user/userInfoStore.js";
+import { useUserInfoQuery } from "../hooks/user/useUserInfoQuery.jsx";
 
 function Home() {
     const toggleSidebar = useSidebarStore((state) => state.toggleSidebar);
+    const { userInfo, isUserInfoLoading, isError, error } = useUserInfoQuery();
+
+    const user = userInfoStore((state) => state.user);
+
     return (
         <div>
             <Header
