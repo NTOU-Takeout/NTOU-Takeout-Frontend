@@ -14,6 +14,7 @@ export const useSystemContext = () => useContext(SystemContext);
 export const SystemContextProvider = ({ children }) => {
     console.debug("SystemContextProvider mounted");
     const authToken = Cookies.get("authToken");
+    console.debug("Auth token: ", authToken);
     const { userInfo, isUserInfoLoading } = useUserInfoQuery(
         authToken !== undefined,
     );
