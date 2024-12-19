@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getCart } from "../../api/cart/getCart";
 
-export const useCartQuery = () => {
+export const useCartQuery = (isEnable = true) => {
     const {
         data: cartData,
         isLoading,
@@ -13,6 +13,7 @@ export const useCartQuery = () => {
             const res = await getCart(signal);
             return res.data;
         },
+        enabled: isEnable,
         refetchOnWindowFocus: false,
         staleTime: 1000 * 60 * 3, // 3 minute
     });
@@ -21,5 +22,5 @@ export const useCartQuery = () => {
         isLoading,
         isError,
         refetchCart,
-    }
-}
+    };
+};
