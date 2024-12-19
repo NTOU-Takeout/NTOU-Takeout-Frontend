@@ -116,7 +116,7 @@ const DishOptionList = ({ group, groupIndex, onDeleteGroup }) => {
                                 type="text"
                                 defaultValue={option.name}
                                 onKeyDown={(e) => handleOptionSave(e, index)}
-                                className="border rounded px-2 py-1 text-sm focus:ring-orange-500"
+                                className="border rounded px-2 py-1 text-sm focus:ring-orange-400"
                             />
                         ) : (
                             <span
@@ -135,7 +135,7 @@ const DishOptionList = ({ group, groupIndex, onDeleteGroup }) => {
                                 type="number"
                                 defaultValue={option.price}
                                 onKeyDown={(e) => handleOptionSave(e, index)}
-                                className="border rounded px-2 py-1 text-sm focus:ring-orange-500"
+                                className="border rounded px-2 py-1 text-sm focus:ring-orange-400"
                             />
                         ) : (
                             <span
@@ -150,7 +150,7 @@ const DishOptionList = ({ group, groupIndex, onDeleteGroup }) => {
                         )}
                     </div>
                     <button
-                        className="text-red-500 hover:text-red-700"
+                        className="text-red-400 hover:text-red-700"
                         onClick={() => handleDeleteOption(index)}
                     >
                         <FontAwesomeIcon icon={faTrash} size="lg" />

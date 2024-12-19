@@ -82,7 +82,7 @@ function MenuSection({
                     className="w-full mb-8"
                 >
                     <p className="text-2xl font-notoTC mt-3 mb-5 font-bold">
-                        {category.categoryName}
+                        {category.name}
                         <FontAwesomeIcon className="ml-2" icon={faEdit} />
                     </p>
                     <div className="grid gap-4">

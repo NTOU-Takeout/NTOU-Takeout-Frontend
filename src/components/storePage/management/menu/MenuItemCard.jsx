@@ -22,17 +22,32 @@ const MenuItemCard = ({ food, onClick, onDelete, onUp, onDown }) => {
 
     return (
         <div className="w-full cursor-pointer bg-white rounded-lg shadow-lg overflow-hidden">
-            <div className="h-[17rem] flex  bg-white text-white relative">
+            <div
+                className="h-[17rem] flex  bg-white text-white relative"
+                onClick={() => onClick(food)}
+            >
                 {/* Up and Down Icons */}
                 <div className="flex flex-col justify-center absolute mb-10 left-0 h-full p-2">
-                    <button onClick={onUp} className="mb-16">
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation(); // 阻止事件冒泡
+                            onUp();
+                        }}
+                        className="mb-16"
+                    >
                         <FontAwesomeIcon
                             icon={faChevronUp}
                             size="lg"
                             className="text-gray-600 hover:text-black"
                         />
                     </button>
-                    <button onClick={onDown} className="mt-16">
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation(); // 阻止事件冒泡
+                            onDown();
+                        }}
+                        className="mt-16"
+                    >
                         <FontAwesomeIcon
                             icon={faChevronDown}
                             size="lg"
@@ -69,15 +84,15 @@ const MenuItemCard = ({ food, onClick, onDelete, onUp, onDown }) => {
                 </div>
                 <div className="absolute bottom-4 right-5 flex space-x-2">
                     <button
-                        onClick={onDelete}
+                        onClick={(e) => {
+                            e.stopPropagation(); // 阻止事件冒泡
+                            onDelete();
+                        }}
                         className="text-red-500 hover:text-red-600 mr-4 z-20"
                     >
                         <FontAwesomeIcon icon={faTrash} size="xl" />
                     </button>
-                    <button
-                        onClick={() => onClick(food)}
-                        className="text-orange-500 hover:text-orange-600"
-                    >
+                    <button className="text-orange-500 hover:text-orange-600">
                         <FontAwesomeIcon icon={faPenToSquare} size="xl" />
                     </button>
                 </div>

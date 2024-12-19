@@ -4,7 +4,7 @@ const EditHeader = ({ dishName, onSave, onBack }) => {
     const saveButton = (
         <button
             onClick={onSave}
-            className="bg-orange-500 text-white px-4 py-1 rounded-lg font-bold hover:bg-orange-600"
+            className="bg-orange-400 text-white px-4 py-1 rounded-lg font-bold hover:bg-orange-600"
         >
             保存
         </button>
