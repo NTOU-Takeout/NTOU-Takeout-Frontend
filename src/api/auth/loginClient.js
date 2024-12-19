@@ -23,6 +23,7 @@ const loginClient = {
             const res = await response.json();
             const data = res.data;
             const authHeader =  data.token;
+
             // parse token
             const token = authHeader ? authHeader.replace("Bearer ", "") : null;
             if (!token) {
@@ -33,7 +34,7 @@ const loginClient = {
                 secure: true,
                 sameSite: "strict",
             });
-            console.debug("data :",data);
+
             return data;
         } catch(e) {
             console.error(e);

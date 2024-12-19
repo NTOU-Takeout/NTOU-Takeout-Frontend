@@ -2,10 +2,11 @@ import { useMutation } from "@tanstack/react-query";
 import loginClient from "../../api/auth/loginClient";
 import useUserInfoStore from "../../stores/userInfoStore";
 import CryptoJS from "crypto-js";
+import { replace, useNavigate } from "react-router-dom";
 
 export const useLoginMutation = (isEnabled = true) => {
     const { setUserInfo } = useUserInfoStore();
-
+    const navigate = useNavigate();
     const {
         mutateAsync: loginMutation,
         isSuccess: isLoginSuccess,
@@ -20,8 +21,7 @@ export const useLoginMutation = (isEnabled = true) => {
         },
         onSuccess: (data) => {
             setUserInfo(data);
-            console.debug("Login successful return data:", data);
-            window.location.assign("/Order-Now-Frontend/");
+            navigate("/");
         },
         onError: (error) => {
             console.error("Login failed:", error);

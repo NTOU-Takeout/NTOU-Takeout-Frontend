@@ -28,7 +28,7 @@ const Sidebar = () => {
 
     let username = "登入";
 
-    if (authToken && isLogin == true) {
+    if (authToken && isLogin === true) {
         username = id;
     } else {
         username = "登入";
@@ -119,11 +119,11 @@ const Sidebar = () => {
                         />
                     )}
                     <SidebarButton
-                        icon={theme == "light" ? faMoon : faSun}
+                        icon={theme === "light" ? faMoon : faSun}
                         text="切換主題"
                         textStyle={"w-0  invisible"}
                         iconSize="lg"
-                        iconColor={theme == "light" ? "#606162" : "#FFD43B"}
+                        iconColor={theme === "light" ? "#606162" : "#FFD43B"}
                         onClick={toggleTheme}
                     />
                 </div>
