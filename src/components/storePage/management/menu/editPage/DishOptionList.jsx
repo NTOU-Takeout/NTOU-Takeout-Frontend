@@ -14,9 +14,8 @@ const DishOptionList = ({ group, groupIndex, onDeleteGroup }) => {
     const [isEditingGroupName, setIsEditingGroupName] = useState(false);
     const [editingOptionIndex, setEditingOptionIndex] = useState(null);
     const [editingField, setEditingField] = useState(null);
-    const [isSingleSelect, setIsSingleSelect] = useState(
-        group.type === "single",
-    );
+    const [isSingleSelect, setIsSingleSelect] = useState(group.type);
+    const [isNeedSelect, setIsNeedSelect] = useState(group.isRequired);
 
     const inputRef = useRef(null);
 
@@ -24,6 +23,7 @@ const DishOptionList = ({ group, groupIndex, onDeleteGroup }) => {
     const updateGroupName = useEditDishStore(
         (state) => state.updateAttributeName,
     );
+    console.log(group);
     console.log(dish);
 
     useEffect(() => {
@@ -31,8 +31,16 @@ const DishOptionList = ({ group, groupIndex, onDeleteGroup }) => {
             name: groupName,
             attributeOptions: options,
             type: isSingleSelect ? "single" : "multi",
+            isRequired: isNeedSelect ? true : false,
         });
-    }, [options, groupName, isSingleSelect, groupIndex, setGroup]);
+    }, [
+        options,
+        groupName,
+        isSingleSelect,
+        groupIndex,
+        setGroup,
+        isNeedSelect,
+    ]);
 
     useEffect(() => {
         if (inputRef.current) {
@@ -96,6 +104,12 @@ const DishOptionList = ({ group, groupIndex, onDeleteGroup }) => {
         複選: () => setIsSingleSelect(false),
     };
 
+    const toggleNeedSelect = () => {
+        setIsNeedSelect((prevIsNeedSelect) =>
+            prevIsNeedSelect ? false : true,
+        );
+    };
+
     return (
         <div className="p-4 bg-white border rounded-lg shadow-md mb-6">
             {/* Group Header */}
@@ -113,7 +127,17 @@ const DishOptionList = ({ group, groupIndex, onDeleteGroup }) => {
                         className="border rounded px-2 py-1 text-lg font-bold focus:ring-orange-500 focus:outline-none"
                     />
                 ) : (
-                    <h3 className="font-bold text-lg">{groupName}</h3>
+                    <div className="flex items-center space-x-2">
+                        <h3 className="font-bold text-lg">{groupName}</h3>
+                        <span
+                            className={`px-2 py-1 rounded-lg text-white text-sm cursor-pointer ${
+                                isNeedSelect ? "bg-red-500" : "bg-gray-500"
+                            }`}
+                            onClick={toggleNeedSelect}
+                        >
+                            {"必選"}
+                        </span>
+                    </div>
                 )}
 
                 <div className="flex space-x-2">
@@ -224,6 +248,7 @@ DishOptionList.propTypes = {
             }),
         ).isRequired,
         type: PropTypes.string.isRequired,
+        isRequired: PropTypes.bool.isRequired,
     }).isRequired,
     groupIndex: PropTypes.number.isRequired,
     onDeleteGroup: PropTypes.func.isRequired,
