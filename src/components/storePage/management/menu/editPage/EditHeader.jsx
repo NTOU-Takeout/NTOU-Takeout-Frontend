@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import Header from "../../../home/Header";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 const EditHeader = ({ dishName, onSave, onBack }) => {
     const saveButton = (
         <button
@@ -12,6 +13,7 @@ const EditHeader = ({ dishName, onSave, onBack }) => {
 
     return (
         <Header
+            leftIcon={faArrowLeft}
             title={dishName}
             onLeftClick={onBack}
             rightComponents={[saveButton]}
